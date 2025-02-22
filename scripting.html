@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scripting - Learn Bash Scripting</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header with Navigation -->
+  <header>
+    <div class="container">
+      <h1>Learn Bash Scripting</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="basics.html">Bash Basics</a></li>
+          <li><a href="commands.html">Commands</a></li>
+          <li><a href="scripting.html">Scripting</a></li>
+          <li><a href="advanced.html">Advanced Topics</a></li>
+          <li><a href="resources.html">Resources</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main>
+    <!-- Introduction to Scripting -->
+    <section id="introduction">
+      <div class="container">
+        <h2>Introduction to Bash Scripting</h2>
+        <p>Bash scripting is a powerful way to automate tasks, streamline system operations, and solve complex problems with simple code. This page serves as an encyclopedic guide to Bash scripting, covering everything from basic script structure to advanced techniques.</p>
+      </div>
+    </section>
+
+    <!-- Script Structure and Conventions -->
+    <section id="script-structure">
+      <div class="container">
+        <h2>Script Structure and Conventions</h2>
+        <p>Every Bash script begins with a shebang line to indicate which interpreter should execute the script. Adhering to coding conventions and best practices is essential for creating readable and maintainable scripts.</p>
+        <pre><code>#!/bin/bash
+# Example: A basic Bash script
+echo "Hello, World!"</code></pre>
+        <p>Keep your scripts organized by using comments, indentations, and meaningful variable names.</p>
+      </div>
+    </section>
+
+    <!-- Variables, Parameters, and Data Types -->
+    <section id="variables">
+      <div class="container">
+        <h2>Variables, Parameters, and Data Types</h2>
+        <p>Bash variables hold data that can be used and manipulated throughout your script. Although Bash does not enforce data types, understanding how to work with strings, numbers, and arrays is crucial.</p>
+        <pre><code># Variable assignment
+name="Bash Scripting"
+echo "Welcome, $name!"
+
+# Using positional parameters
+echo "Script name: $0"
+echo "First argument: $1"</code></pre>
+      </div>
+    </section>
+
+    <!-- Control Flow and Loops -->
+    <section id="control-flow">
+      <div class="container">
+        <h2>Control Flow and Loops</h2>
+        <p>Control structures allow your script to make decisions and repeat tasks. Bash supports a variety of conditional statements and loops to manage workflow efficiently.</p>
+        
+        <h3>If-Else Statements</h3>
+        <pre><code>if [ $number -gt 10 ]; then
+  echo "Greater than 10"
+else
+  echo "10 or less"
+fi</code></pre>
+        
+        <h3>Case Statements</h3>
+        <pre><code>case $option in
+  1) echo "Option 1 selected";;
+  2) echo "Option 2 selected";;
+  *) echo "Invalid option";;
+esac</code></pre>
+        
+        <h3>Loops</h3>
+        <pre><code># For loop example
+for i in {1..5}; do
+  echo "Iteration $i"
+done
+
+# While loop example
+counter=1
+while [ $counter -le 5 ]; do
+  echo "Count: $counter"
+  ((counter++))
+done</code></pre>
+      </div>
+    </section>
+
+    <!-- Functions and Modular Programming -->
+    <section id="functions">
+      <div class="container">
+        <h2>Functions and Modular Programming</h2>
+        <p>Functions are blocks of reusable code that simplify complex scripts. By breaking your script into functions, you enhance readability and ease maintenance.</p>
+        <pre><code># Define a function
+greet() {
+  echo "Hello, $1!"
+}
+
+# Call the function
+greet "World"</code></pre>
+        <p>Modular programming allows you to separate different parts of your script into logical sections or even separate files, improving overall structure.</p>
+      </div>
+    </section>
+
+    <!-- Error Handling and Debugging -->
+    <section id="error-handling">
+      <div class="container">
+        <h2>Error Handling and Debugging</h2>
+        <p>Robust scripts include mechanisms to handle errors and unexpected conditions. Checking the exit status of commands and using debugging options can help pinpoint issues early.</p>
+        
+        <h3>Exit Status</h3>
+        <p>Every command returns an exit status; <code>$?</code> stores the exit code of the last executed command.</p>
+        <pre><code>command
+if [ $? -ne 0 ]; then
+  echo "An error occurred!"
+fi</code></pre>
+        
+        <h3>Debugging Techniques</h3>
+        <p>Use the <code>-x</code> option to trace script execution:</p>
+        <pre><code>bash -x script.sh</code></pre>
+      </div>
+    </section>
+
+    <!-- Advanced Scripting Techniques -->
+    <section id="advanced-techniques">
+      <div class="container">
+        <h2>Advanced Scripting Techniques</h2>
+        <p>For seasoned scripters, Bash offers advanced features to handle complex tasks efficiently. These include:</p>
+        <ul>
+          <li>Process substitution and command grouping</li>
+          <li>Here documents (heredoc) and here strings</li>
+          <li>Manipulating arrays and associative arrays</li>
+          <li>Regular expressions and pattern matching</li>
+          <li>Signal trapping and job control</li>
+        </ul>
+        <pre><code># Array manipulation example
+fruits=("apple" "banana" "cherry")
+echo "First fruit: ${fruits[0]}"</code></pre>
+        <p>Exploring these features can greatly enhance your scripting capabilities and enable you to write more efficient and powerful scripts.</p>
+      </div>
+    </section>
+
+    <!-- Security Considerations -->
+    <section id="security">
+      <div class="container">
+        <h2>Security Considerations in Bash Scripting</h2>
+        <p>Writing secure Bash scripts is critical to avoid vulnerabilities. Here are some important security practices:</p>
+        <ul>
+          <li>Validate and sanitize user inputs to prevent injection attacks.</li>
+          <li>Use absolute paths and restrict permissions for scripts and files.</li>
+          <li>Avoid using insecure constructs; for example, prefer <code>$(…)</code> over backticks for command substitution.</li>
+          <li>Keep sensitive data secure by using environment variables carefully.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Best Practices -->
+    <section id="best-practices">
+      <div class="container">
+        <h2>Best Practices for Bash Scripting</h2>
+        <p>Following best practices can significantly improve the quality and maintainability of your scripts:</p>
+        <ul>
+          <li>Comment your code effectively.</li>
+          <li>Use meaningful variable and function names.</li>
+          <li>Test your scripts with various inputs and edge cases.</li>
+          <li>Keep your code DRY (Don’t Repeat Yourself) by modularizing functions.</li>
+          <li>Regularly review and refactor your scripts.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Real-World Examples and Case Studies -->
+    <section id="examples">
+      <div class="container">
+        <h2>Real-World Examples and Case Studies</h2>
+        <p>Below are a few examples demonstrating how Bash scripting is used in real-world scenarios:</p>
+        
+        <h3>Backup Script</h3>
+        <pre><code>#!/bin/bash
+# A simple backup script example
+src="/home/user/data"
+dest="/backup/data"
+tar -czvf "$dest/backup-$(date +%Y%m%d).tar.gz" "$src"
+echo "Backup completed."</code></pre>
+        
+        <h3>System Monitoring Script</h3>
+        <pre><code>#!/bin/bash
+# Monitor system load and send an alert if it exceeds a threshold
+load=$(uptime | awk -F'load average:' '{ print $2 }' | cut -d',' -f1)
+threshold=1.5
+if (( $(echo "$load > $threshold" | bc -l) )); then
+  echo "Warning: High system load detected: $load"
+else
+  echo "System load is normal: $load"
+fi</code></pre>
+      </div>
+    </section>
+
+    <!-- Additional Resources -->
+    <section id="resources">
+      <div class="container">
+        <h2>Additional Resources and Tools</h2>
+        <p>Expand your Bash scripting knowledge with these recommended resources:</p>
+        <ul>
+          <li><a href="https://www.gnu.org/software/bash/">GNU Bash Documentation</a></li>
+          <li><a href="https://www.tldp.org/LDP/abs/html/">Advanced Bash-Scripting Guide</a></li>
+          <li><a href="https://wiki.bash-hackers.org/">Bash Hackers Wiki</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Back to Top -->
+    <section id="back-to-top">
+      <div class="container" style="text-align: center; margin-top: 40px;">
+        <a href="#introduction" class="blink" style="text-decoration: none; color: #0f0;">&uarr; Back to Top &uarr;</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Learn Bash Scripting. All rights reserved.</p>
+      <p>Designed by [Your Name]</p>
+    </div>
+  </footer>
+  
+  <script src="script.js"></script>
+</body>
+</html>
