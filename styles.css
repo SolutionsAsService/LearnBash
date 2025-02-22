@@ -1,0 +1,151 @@
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+  font-family: "Courier New", Courier, monospace;
+  background: #1e1e1e; /* Dark terminal background */
+  color: #d4d4d4;    /* Light gray text for readability */
+  line-height: 1.6;
+}
+
+/* Container */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header & Navigation */
+header {
+  background: #333;          /* Slightly lighter dark background */
+  color: #fff;
+  padding: 20px 0;
+  border-bottom: 3px solid #0f0; /* Neon green accent */
+}
+
+header h1 {
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+nav ul {
+  list-style: none;
+  text-align: center;
+  margin-top: 10px;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 15px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #d4d4d4;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: #0f0; /* Neon green on hover */
+}
+
+/* Main Content */
+main {
+  padding: 40px 0;
+}
+
+section {
+  margin-bottom: 40px;
+}
+
+section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #0f0; /* Section headings in neon green */
+  border-bottom: 1px solid #444;
+  padding-bottom: 10px;
+}
+
+article {
+  margin-bottom: 20px;
+}
+
+article h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #0f0;
+}
+
+/* Code and Inline Elements */
+code {
+  background: #2d2d2d;
+  color: #0f0;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Lists */
+ul {
+  margin-left: 20px;
+}
+
+ul li {
+  margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+  background: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  border-top: 3px solid #0f0;
+}
+
+/* Buttons (if needed) */
+button {
+  background: #0f0;
+  color: #1e1e1e;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #00c700;
+}
+
+/* Dynamic Animations */
+/* Blinking cursor effect for any element with the .blink class */
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.blink {
+  animation: blink 1s step-start infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+  }
+  
+  nav ul li {
+    display: block;
+    margin: 10px 0;
+  }
+}
