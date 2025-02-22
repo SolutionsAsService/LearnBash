@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bash Commands Encyclopedia - Learn Bash Scripting</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header with Navigation -->
+  <header>
+    <div class="container">
+      <h1>Learn Bash Scripting</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="basics.html">Bash Basics</a></li>
+          <li><a href="commands.html">Commands</a></li>
+          <li><a href="scripting.html">Scripting</a></li>
+          <li><a href="advanced.html">Advanced Topics</a></li>
+          <li><a href="resources.html">Resources</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main>
+    <!-- Introduction -->
+    <section id="intro">
+      <div class="container">
+        <h2>Bash Commands Encyclopedia</h2>
+        <p>This page serves as a comprehensive encyclopedia for Bash commands. Whether you are a beginner or an advanced user, explore the detailed explanations, examples, and usage tips for various commands that power your Unix/Linux systems.</p>
+      </div>
+    </section>
+
+    <!-- File and Directory Management Commands -->
+    <section id="file-directory">
+      <div class="container">
+        <h2>File and Directory Management Commands</h2>
+        
+        <article id="ls">
+          <h3>ls</h3>
+          <p><strong>Description:</strong> Lists directory contents.</p>
+          <p><strong>Usage:</strong> <code>ls [options] [directory]</code></p>
+          <p><strong>Example:</strong> <code>ls -l /home/user</code> shows a detailed list of files.</p>
+        </article>
+
+        <article id="cd">
+          <h3>cd</h3>
+          <p><strong>Description:</strong> Changes the current working directory.</p>
+          <p><strong>Usage:</strong> <code>cd [directory]</code></p>
+          <p><strong>Example:</strong> <code>cd /var/log</code> navigates to the log directory.</p>
+        </article>
+
+        <article id="pwd">
+          <h3>pwd</h3>
+          <p><strong>Description:</strong> Prints the current working directory.</p>
+          <p><strong>Usage:</strong> <code>pwd</code></p>
+          <p><strong>Example:</strong> Simply type <code>pwd</code> to see your current path.</p>
+        </article>
+
+        <article id="mkdir">
+          <h3>mkdir</h3>
+          <p><strong>Description:</strong> Creates a new directory.</p>
+          <p><strong>Usage:</strong> <code>mkdir [options] directory</code></p>
+          <p><strong>Example:</strong> <code>mkdir new_folder</code> creates a directory named "new_folder".</p>
+        </article>
+
+        <article id="rmdir">
+          <h3>rmdir</h3>
+          <p><strong>Description:</strong> Removes an empty directory.</p>
+          <p><strong>Usage:</strong> <code>rmdir directory</code></p>
+          <p><strong>Example:</strong> <code>rmdir old_folder</code> deletes an empty folder.</p>
+        </article>
+
+        <article id="cp">
+          <h3>cp</h3>
+          <p><strong>Description:</strong> Copies files and directories.</p>
+          <p><strong>Usage:</strong> <code>cp [options] source destination</code></p>
+          <p><strong>Example:</strong> <code>cp file.txt backup_file.txt</code> copies a file.</p>
+        </article>
+
+        <article id="mv">
+          <h3>mv</h3>
+          <p><strong>Description:</strong> Moves or renames files and directories.</p>
+          <p><strong>Usage:</strong> <code>mv [options] source destination</code></p>
+          <p><strong>Example:</strong> <code>mv oldname.txt newname.txt</code> renames a file.</p>
+        </article>
+
+        <article id="rm">
+          <h3>rm</h3>
+          <p><strong>Description:</strong> Removes files or directories.</p>
+          <p><strong>Usage:</strong> <code>rm [options] file</code></p>
+          <p><strong>Example:</strong> <code>rm -r directory</code> removes a directory and its contents.</p>
+        </article>
+
+        <article id="find">
+          <h3>find</h3>
+          <p><strong>Description:</strong> Searches for files and directories based on conditions.</p>
+          <p><strong>Usage:</strong> <code>find [path] [expression]</code></p>
+          <p><strong>Example:</strong> <code>find /home/user -name "*.txt"</code> finds all text files.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- File Content Viewing and Editing -->
+    <section id="viewing-editing">
+      <div class="container">
+        <h2>File Content Viewing and Editing</h2>
+        
+        <article id="cat">
+          <h3>cat</h3>
+          <p><strong>Description:</strong> Concatenates and displays file contents.</p>
+          <p><strong>Usage:</strong> <code>cat [options] file</code></p>
+          <p><strong>Example:</strong> <code>cat /etc/passwd</code> displays the content of the passwd file.</p>
+        </article>
+
+        <article id="less">
+          <h3>less</h3>
+          <p><strong>Description:</strong> Views file contents one page at a time.</p>
+          <p><strong>Usage:</strong> <code>less file</code></p>
+          <p><strong>Example:</strong> <code>less /var/log/syslog</code> for paging through log files.</p>
+        </article>
+
+        <article id="more">
+          <h3>more</h3>
+          <p><strong>Description:</strong> Another pager to view file contents sequentially.</p>
+          <p><strong>Usage:</strong> <code>more file</code></p>
+          <p><strong>Example:</strong> <code>more README.md</code> shows the README file page by page.</p>
+        </article>
+
+        <article id="head">
+          <h3>head</h3>
+          <p><strong>Description:</strong> Displays the first few lines of a file.</p>
+          <p><strong>Usage:</strong> <code>head [options] file</code></p>
+          <p><strong>Example:</strong> <code>head -n 10 file.txt</code> shows the first 10 lines.</p>
+        </article>
+
+        <article id="tail">
+          <h3>tail</h3>
+          <p><strong>Description:</strong> Displays the last few lines of a file.</p>
+          <p><strong>Usage:</strong> <code>tail [options] file</code></p>
+          <p><strong>Example:</strong> <code>tail -f logfile.log</code> continuously displays the end of a log file.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Process Management Commands -->
+    <section id="process-management">
+      <div class="container">
+        <h2>Process Management Commands</h2>
+        
+        <article id="ps">
+          <h3>ps</h3>
+          <p><strong>Description:</strong> Displays information about active processes.</p>
+          <p><strong>Usage:</strong> <code>ps [options]</code></p>
+          <p><strong>Example:</strong> <code>ps aux</code> shows detailed process information.</p>
+        </article>
+
+        <article id="top">
+          <h3>top</h3>
+          <p><strong>Description:</strong> Provides a real-time view of running processes.</p>
+          <p><strong>Usage:</strong> Simply type <code>top</code></p>
+          <p><strong>Example:</strong> Run <code>top</code> to monitor system performance and processes.</p>
+        </article>
+
+        <article id="kill">
+          <h3>kill</h3>
+          <p><strong>Description:</strong> Sends a signal to terminate a process.</p>
+          <p><strong>Usage:</strong> <code>kill [options] PID</code></p>
+          <p><strong>Example:</strong> <code>kill -9 1234</code> forcefully terminates process with PID 1234.</p>
+        </article>
+
+        <article id="pkill">
+          <h3>pkill</h3>
+          <p><strong>Description:</strong> Terminates processes based on name or attributes.</p>
+          <p><strong>Usage:</strong> <code>pkill [options] pattern</code></p>
+          <p><strong>Example:</strong> <code>pkill firefox</code> terminates all Firefox processes.</p>
+        </article>
+
+        <article id="nice">
+          <h3>nice &amp; renice</h3>
+          <p><strong>Description:</strong> Adjusts the priority of running processes.</p>
+          <p><strong>Usage:</strong> Use <code>nice</code> when launching a process, and <code>renice</code> to change the priority of an existing process.</p>
+          <p><strong>Example:</strong> <code>nice -n 10 command</code> starts a command with lower priority.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- File Permissions and Ownership -->
+    <section id="permissions-ownership">
+      <div class="container">
+        <h2>File Permissions and Ownership</h2>
+        
+        <article id="chmod">
+          <h3>chmod</h3>
+          <p><strong>Description:</strong> Changes the file permissions.</p>
+          <p><strong>Usage:</strong> <code>chmod [options] mode file</code></p>
+          <p><strong>Example:</strong> <code>chmod 755 script.sh</code> sets the file to be executable.</p>
+        </article>
+
+        <article id="chown">
+          <h3>chown</h3>
+          <p><strong>Description:</strong> Changes the file owner and group.</p>
+          <p><strong>Usage:</strong> <code>chown [options] owner:group file</code></p>
+          <p><strong>Example:</strong> <code>chown user:staff document.txt</code> changes ownership.</p>
+        </article>
+
+        <article id="chgrp">
+          <h3>chgrp</h3>
+          <p><strong>Description:</strong> Changes the group ownership of a file or directory.</p>
+          <p><strong>Usage:</strong> <code>chgrp [options] group file</code></p>
+          <p><strong>Example:</strong> <code>chgrp developers project_folder</code> assigns a new group.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Networking Commands -->
+    <section id="networking">
+      <div class="container">
+        <h2>Networking Commands</h2>
+        
+        <article id="ping">
+          <h3>ping</h3>
+          <p><strong>Description:</strong> Checks the network connectivity to a host.</p>
+          <p><strong>Usage:</strong> <code>ping [options] host</code></p>
+          <p><strong>Example:</strong> <code>ping google.com</code> to test connectivity.</p>
+        </article>
+
+        <article id="ifconfig-ip">
+          <h3>ifconfig / ip</h3>
+          <p><strong>Description:</strong> Configures or displays network interface parameters. <em>ifconfig</em> is traditional, while <em>ip</em> is the modern replacement.</p>
+          <p><strong>Usage:</strong> <code>ifconfig</code> or <code>ip addr show</code></p>
+          <p><strong>Example:</strong> <code>ip addr</code> displays current network settings.</p>
+        </article>
+
+        <article id="netstat">
+          <h3>netstat</h3>
+          <p><strong>Description:</strong> Displays network connections, routing tables, and interface statistics.</p>
+          <p><strong>Usage:</strong> <code>netstat [options]</code></p>
+          <p><strong>Example:</strong> <code>netstat -tulpn</code> shows active connections and listening ports.</p>
+        </article>
+
+        <article id="ssh">
+          <h3>ssh</h3>
+          <p><strong>Description:</strong> Securely connects to a remote machine via the SSH protocol.</p>
+          <p><strong>Usage:</strong> <code>ssh [options] user@host</code></p>
+          <p><strong>Example:</strong> <code>ssh user@example.com</code> initiates a secure connection.</p>
+        </article>
+
+        <article id="scp">
+          <h3>scp</h3>
+          <p><strong>Description:</strong> Securely copies files between hosts over SSH.</p>
+          <p><strong>Usage:</strong> <code>scp [options] source destination</code></p>
+          <p><strong>Example:</strong> <code>scp file.txt user@example.com:/path/to/destination</code> transfers a file.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- System Information Commands -->
+    <section id="system-info">
+      <div class="container">
+        <h2>System Information Commands</h2>
+        
+        <article id="uname">
+          <h3>uname</h3>
+          <p><strong>Description:</strong> Displays system information.</p>
+          <p><strong>Usage:</strong> <code>uname [options]</code></p>
+          <p><strong>Example:</strong> <code>uname -a</code> prints all available system information.</p>
+        </article>
+
+        <article id="df">
+          <h3>df</h3>
+          <p><strong>Description:</strong> Shows disk space usage for file systems.</p>
+          <p><strong>Usage:</strong> <code>df [options]</code></p>
+          <p><strong>Example:</strong> <code>df -h</code> presents human-readable output.</p>
+        </article>
+
+        <article id="du">
+          <h3>du</h3>
+          <p><strong>Description:</strong> Estimates file and directory space usage.</p>
+          <p><strong>Usage:</strong> <code>du [options] [file/directory]</code></p>
+          <p><strong>Example:</strong> <code>du -sh /var/log</code> shows the size of the log directory.</p>
+        </article>
+
+        <article id="free">
+          <h3>free</h3>
+          <p><strong>Description:</strong> Displays memory usage statistics.</p>
+          <p><strong>Usage:</strong> <code>free [options]</code></p>
+          <p><strong>Example:</strong> <code>free -m</code> shows memory usage in megabytes.</p>
+        </article>
+
+        <article id="uptime">
+          <h3>uptime</h3>
+          <p><strong>Description:</strong> Tells how long the system has been running along with load averages.</p>
+          <p><strong>Usage:</strong> <code>uptime</code></p>
+          <p><strong>Example:</strong> Simply type <code>uptime</code> to see the system's runtime.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Text Processing Commands -->
+    <section id="text-processing">
+      <div class="container">
+        <h2>Text Processing Commands</h2>
+        
+        <article id="grep">
+          <h3>grep</h3>
+          <p><strong>Description:</strong> Searches for patterns within files.</p>
+          <p><strong>Usage:</strong> <code>grep [options] pattern file</code></p>
+          <p><strong>Example:</strong> <code>grep "error" /var/log/syslog</code> finds lines containing "error".</p>
+        </article>
+
+        <article id="sed">
+          <h3>sed</h3>
+          <p><strong>Description:</strong> Stream editor for filtering and transforming text.</p>
+          <p><strong>Usage:</strong> <code>sed [options] 's/pattern/replacement/' file</code></p>
+          <p><strong>Example:</strong> <code>sed 's/old/new/g' file.txt</code> replaces "old" with "new".</p>
+        </article>
+
+        <article id="awk">
+          <h3>awk</h3>
+          <p><strong>Description:</strong> A powerful text processing language and command.</p>
+          <p><strong>Usage:</strong> <code>awk 'pattern {action}' file</code></p>
+          <p><strong>Example:</strong> <code>awk '{print $1}' file.txt</code> prints the first field of each line.</p>
+        </article>
+
+        <article id="sort">
+          <h3>sort</h3>
+          <p><strong>Description:</strong> Sorts lines of text files.</p>
+          <p><strong>Usage:</strong> <code>sort [options] file</code></p>
+          <p><strong>Example:</strong> <code>sort file.txt</code> sorts the file alphabetically.</p>
+        </article>
+
+        <article id="uniq">
+          <h3>uniq</h3>
+          <p><strong>Description:</strong> Filters out repeated lines in a file.</p>
+          <p><strong>Usage:</strong> <code>uniq [options] file</code></p>
+          <p><strong>Example:</strong> <code>sort file.txt | uniq</code> prints unique lines from a sorted file.</p>
+        </article>
+
+        <article id="cut">
+          <h3>cut</h3>
+          <p><strong>Description:</strong> Removes sections from each line of files.</p>
+          <p><strong>Usage:</strong> <code>cut [options] file</code></p>
+          <p><strong>Example:</strong> <code>cut -d: -f1 /etc/passwd</code> extracts the first field from the passwd file.</p>
+        </article>
+
+        <article id="tr">
+          <h3>tr</h3>
+          <p><strong>Description:</strong> Translates or deletes characters.</p>
+          <p><strong>Usage:</strong> <code>tr [options] set1 set2</code></p>
+          <p><strong>Example:</strong> <code>echo "hello" | tr 'a-z' 'A-Z'</code> converts text to uppercase.</p>
+        </article>
+
+        <article id="wc">
+          <h3>wc</h3>
+          <p><strong>Description:</strong> Counts lines, words, and characters in text.</p>
+          <p><strong>Usage:</strong> <code>wc [options] file</code></p>
+          <p><strong>Example:</strong> <code>wc -l file.txt</code> counts the lines in a file.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Shell Built-in and Utility Commands -->
+    <section id="shell-utilities">
+      <div class="container">
+        <h2>Shell Built-in and Utility Commands</h2>
+        
+        <article id="echo">
+          <h3>echo</h3>
+          <p><strong>Description:</strong> Displays a line of text/string passed as an argument.</p>
+          <p><strong>Usage:</strong> <code>echo [options] [string]</code></p>
+          <p><strong>Example:</strong> <code>echo "Hello, Bash!"</code> prints text to the terminal.</p>
+        </article>
+
+        <article id="history">
+          <h3>history</h3>
+          <p><strong>Description:</strong> Displays the command history.</p>
+          <p><strong>Usage:</strong> <code>history</code></p>
+          <p><strong>Example:</strong> Type <code>history</code> to view previously executed commands.</p>
+        </article>
+
+        <article id="alias">
+          <h3>alias</h3>
+          <p><strong>Description:</strong> Creates shortcuts for commands.</p>
+          <p><strong>Usage:</strong> <code>alias name='command'</code></p>
+          <p><strong>Example:</strong> <code>alias ll='ls -l'</code> sets a shortcut for a long listing.</p>
+        </article>
+
+        <article id="export">
+          <h3>export</h3>
+          <p><strong>Description:</strong> Sets environment variables for child processes.</p>
+          <p><strong>Usage:</strong> <code>export VARIABLE=value</code></p>
+          <p><strong>Example:</strong> <code>export PATH=$PATH:/new/path</code> appends a new path.</p>
+        </article>
+
+        <article id="source">
+          <h3>source (.)</h3>
+          <p><strong>Description:</strong> Reads and executes commands from a file in the current shell environment.</p>
+          <p><strong>Usage:</strong> <code>source filename</code> or <code>. filename</code></p>
+          <p><strong>Example:</strong> <code>source ~/.bashrc</code> reloads your Bash configuration.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Advanced Commands and Scripting Utilities -->
+    <section id="advanced-commands">
+      <div class="container">
+        <h2>Advanced Commands and Scripting Utilities</h2>
+        
+        <article id="xargs">
+          <h3>xargs</h3>
+          <p><strong>Description:</strong> Builds and executes command lines from standard input.</p>
+          <p><strong>Usage:</strong> <code>command | xargs [options] command</code></p>
+          <p><strong>Example:</strong> <code>find . -name "*.txt" | xargs grep "search_term"</code> searches for a term within found text files.</p>
+        </article>
+
+        <article id="tar">
+          <h3>tar</h3>
+          <p><strong>Description:</strong> Archives multiple files into a single file, with optional compression.</p>
+          <p><strong>Usage:</strong> <code>tar [options] archive_name.tar file(s)</code></p>
+          <p><strong>Example:</strong> <code>tar -czvf archive.tar.gz folder/</code> creates a compressed archive.</p>
+        </article>
+
+        <article id="zip-unzip">
+          <h3>zip / unzip</h3>
+          <p><strong>Description:</strong> Compresses (zip) or extracts (unzip) files.</p>
+          <p><strong>Usage:</strong> <code>zip archive.zip file(s)</code> and <code>unzip archive.zip</code></p>
+          <p><strong>Example:</strong> Compress files using <code>zip backup.zip *.txt</code>, then extract with <code>unzip backup.zip</code>.</p>
+        </article>
+
+        <article id="curl-wget">
+          <h3>curl / wget</h3>
+          <p><strong>Description:</strong> Retrieves data from URLs. <em>curl</em> is versatile for API requests, while <em>wget</em> is simple for downloading files.</p>
+          <p><strong>Usage:</strong> <code>curl [options] URL</code> or <code>wget [options] URL</code></p>
+          <p><strong>Example:</strong> <code>curl -O http://example.com/file.zip</code> downloads a file.</p>
+        </article>
+
+        <article id="printf">
+          <h3>printf</h3>
+          <p><strong>Description:</strong> Formats and prints data. More powerful than <code>echo</code> for formatted output.</p>
+          <p><strong>Usage:</strong> <code>printf format [arguments]</code></p>
+          <p><strong>Example:</strong> <code>printf "Name: %s\n" "Bash"</code> prints a formatted string.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Miscellaneous and Utility Commands -->
+    <section id="miscellaneous">
+      <div class="container">
+        <h2>Miscellaneous and Utility Commands</h2>
+        
+        <article id="date">
+          <h3>date</h3>
+          <p><strong>Description:</strong> Displays or sets the system date and time.</p>
+          <p><strong>Usage:</strong> <code>date [options]</code></p>
+          <p><strong>Example:</strong> <code>date "+%Y-%m-%d %H:%M:%S"</code> shows the current date and time.</p>
+        </article>
+
+        <article id="sleep">
+          <h3>sleep</h3>
+          <p><strong>Description:</strong> Pauses execution for a specified period.</p>
+          <p><strong>Usage:</strong> <code>sleep seconds</code></p>
+          <p><strong>Example:</strong> <code>sleep 5</code> pauses for 5 seconds.</p>
+        </article>
+
+        <article id="time">
+          <h3>time</h3>
+          <p><strong>Description:</strong> Measures the execution time of a command.</p>
+          <p><strong>Usage:</strong> <code>time command</code></p>
+          <p><strong>Example:</strong> <code>time ls</code> displays how long the <code>ls</code> command took to execute.</p>
+        </article>
+
+        <article id="man">
+          <h3>man</h3>
+          <p><strong>Description:</strong> Displays the manual pages for other commands.</p>
+          <p><strong>Usage:</strong> <code>man command</code></p>
+          <p><strong>Example:</strong> <code>man grep</code> shows the manual for the <code>grep</code> command.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Back to Top -->
+    <section id="back-to-top">
+      <div class="container" style="text-align: center; margin-top: 40px;">
+        <a href="#intro" class="blink" style="text-decoration: none; color: #0f0;">&uarr; Back to Top &uarr;</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Learn Bash Scripting. All rights reserved.</p>
+      <p>Designed by [Your Name]</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
