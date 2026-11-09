@@ -87,3 +87,6 @@ S1 not met (no R3). S2 not met (round 2's changes were judged by measurement, no
 - Not shown on a real phone: thumb reach of the primary button (centre about a third of the way down), scroll feel past the pipe, the animation on a low-end device, sunlight legibility of the dark band.
 - The deployed URL is not set, so og:image is relative until `data/site.json` is filled in.
 - At 360 x 640 only the top of the pipe is above the fold.
+
+## Grade of round 2: A- (recorded by the owner, 2026-11-09)
+Up from C (round 1): the landing's measured pipe is liked and kept. The site is added to the studio portfolio (guides group). The look is now the adopted dada design pack `shell-session` 1.0.0 (grade A-). The previous version is on the branch `legacy/pre-redesign`. What stands between A- and A is the Open lists above: no real-phone check, the demo still about 1.5 screens tall on a phone before the first card, and the live address not yet set in `data/site.json`.
