@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="dark light">
 <title>Learn Bash: every output is real</title>
 <meta name="description" content="Learn the Bash shell with 151 examples that were actually run, a command reference marked by what each command can do to your files, and a tool that explains a command line.">
-<meta property="og:title" content="Learn Bash: every output is real"><meta property="og:description" content="Learn the Bash shell with 151 examples that were actually run, a command reference marked by what each command can do to your files, and a tool that explains a command line."><meta property="og:type" content="website">
+<meta property="og:title" content="Learn Bash: every output is real"><meta property="og:description" content="Learn the Bash shell with 151 examples that were actually run, a command reference marked by what each command can do to your files, and a tool that explains a command line."><meta property="og:type" content="website"><meta property="og:image" content="social.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="social.png">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -18,26 +18,25 @@
 </header>
 <main id="main">
 
-<section class="hero" aria-labelledby="h1">
+<section class="hero hero-dark" aria-labelledby="h1">
   <p class="kicker">The Bash shell, from first command to scripts</p>
-  <h1 id="h1">Learn Bash</h1>
+  <h1 id="h1"><span class="ps" aria-hidden="true">$ </span>learn bash<span class="blk" aria-hidden="true"></span></h1>
   <p class="lede">Every example on this site was run for real, and the output you see is what Bash printed.</p>
   <p class="cta"><a class="btn" href="basics.html">Start with the basics</a><a class="btn ghost" href="explain.html">Explain a command</a></p>
+  <figure class="win">
+    <div class="winbar" aria-hidden="true"><i></i><i></i><i></i><span>~/demo: bash</span></div>
+    <p class="winq"><span class="ps" aria-hidden="true">$</span> Which pages are missing, and how often are they asked for? <span class="muted">(7 commands, joined by pipes)</span></p>
+    <ol class="funnel" aria-label="The pipeline, stage by stage; the number is how many lines come out of each stage"><li class="fs" style="--a:120;--b:48"><span class="fn">40<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">cat access.log</code></li><li class="fs" style="--a:48;--b:48"><span class="fn">16<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">grep &#x27; 404 &#x27;</code></li><li class="fs" style="--a:48;--b:48"><span class="fn">16<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">awk &#x27;{print $7}&#x27;</code></li><li class="fs" style="--a:48;--b:14"><span class="fn">16<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">sort</code></li><li class="fs" style="--a:14;--b:14"><span class="fn">3<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">uniq -c</code></li><li class="fs" style="--a:14;--b:14"><span class="fn">3<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">sort -rn</code></li><li class="fs" style="--a:14;--b:14"><span class="fn">3<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">head -n 3</code></li></ol>
+    <pre class="out final" aria-label="Final output of the pipeline"><code>      9 /old-page
+      5 /missing.png
+      2 /favicon.ico</code></pre>
+    <figcaption>The pipe gets thinner as each command throws lines away: 40 to 16 to 3 lines, measured by running every prefix of the pipeline on a sample log of 40 lines. <a class="more" href="scripting.html#example">See it explained, step by step</a></figcaption>
+  </figure>
 </section>
 
 <section aria-labelledby="h-where">
   <h2 id="h-where" class="sech">Where to go</h2>
   <ul class="cards"><li class="card"><p class="tag">28 examples, all run</p><h3><a href="basics.html">Basics</a></h3><p>Commands, paths, wildcards, quoting, variables, exit status, pipes and redirection.</p></li><li class="card"><p class="tag">45 commands, 109 flags</p><h3><a href="commands.html">Commands</a></h3><p>A reference where every command says whether it only reads, changes things, or can delete data.</p></li><li class="card"><p class="tag">25 examples, all run</p><h3><a href="scripting.html">Scripting</a></h3><p>Write scripts that take arguments, decide, loop, define functions and fail safely.</p></li><li class="card"><p class="tag">18 examples, all run</p><h3><a href="advanced.html">Advanced topics</a></h3><p>File descriptors, here-documents, process substitution, jobs, traps, debugging and portability.</p></li><li class="card"><p class="tag">paste one, get a breakdown</p><h3><a href="explain.html">Explain a command</a></h3><p>Break a command line into its parts and see what each does, and whether it is safe. It never runs anything.</p></li><li class="card"><p class="tag">a short, honest list</p><h3><a href="resources.html">Resources</a></h3><p>The manual, ShellCheck and a few guides worth your time.</p></li></ul>
-</section>
-
-<section class="pipesec" aria-labelledby="h-pipe">
-  <h2 id="h-pipe" class="sech">One example of what Bash is for</h2>
-  <p class="lede2">A web server keeps a log with one line per request. The question: <strong>which pages are missing, and how often are they asked for?</strong> 7 small commands joined by pipes answer it. Each box is the pipeline run up to that point on a sample log of 40 lines, and the number is how many lines come out of it.</p>
-  <ol class="pipe" aria-label="The pipeline, stage by stage"><li class="stage"><code>cat access.log</code><span class="n">40<small> lines out</small></span></li><li class="stage"><code>grep &#x27; 404 &#x27;</code><span class="n">16<small> lines out</small></span></li><li class="stage"><code>awk &#x27;{print $7}&#x27;</code><span class="n">16<small> lines out</small></span></li><li class="stage"><code>sort</code><span class="n">16<small> lines out</small></span></li><li class="stage"><code>uniq -c</code><span class="n">3<small> lines out</small></span></li><li class="stage"><code>sort -rn</code><span class="n">3<small> lines out</small></span></li><li class="stage"><code>head -n 3</code><span class="n">3<small> lines out</small></span></li></ol>
-<pre class="out final" aria-label="Final output of the pipeline"><code>      9 /old-page
-      5 /missing.png
-      2 /favicon.ico</code></pre>
-  <p class="small">The counts were measured by running each prefix of the pipeline, not typed in. <a class="more" href="scripting.html#example">See it explained, step by step</a></p>
 </section>
 
 <section class="band" aria-labelledby="h-safe">

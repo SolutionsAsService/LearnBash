@@ -66,7 +66,7 @@ def mark(level):
     return f'<span class="mk mk-{level}"><i aria-hidden="true"></i>{e(MARKS[level][0])}</span>'
 
 
-def head(title, desc, page):
+def head(title, desc, page, og_image=None):
     nav = "".join(f'<a href="{h}"' + (' aria-current="page"' if h == page else "") + f">{t}</a>" for h, t in NAV)
     return f'''<!doctype html>
 <html lang="en">
@@ -76,7 +76,7 @@ def head(title, desc, page):
 <meta name="color-scheme" content="dark light">
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
-<meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:type" content="website">
+<meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:type" content="website">{(f'<meta property="og:image" content="{og_image}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{og_image}">' if og_image else "")}
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -120,16 +120,17 @@ def term(code, run=True, note=None, status_ok=True):
     return f'<figure class="term"><pre class="cmd"><code>{shown}</code></pre>{out}{nt}</figure>'
 
 
-def pipeline_strip():
-    stages = PL["stages"]
-    counts, firsts = OUTS["pipeline"]["counts"], OUTS["pipeline"]["first_line"]
-    boxes = []
+def funnel():
+    """The pipeline drawn as a pipe: each stage's thickness is the number of lines still flowing through it."""
+    stages, counts = PL["stages"], OUTS["pipeline"]["counts"]
+    top = counts[0]
+    size = lambda c: max(14, round(120 * c / top))
+    items = []
     for i, st in enumerate(stages):
-        last = i == len(stages) - 1
-        boxes.append(f'<li class="stage"><code>{e(st)}</code><span class="n">{counts[i]}<small> line{"" if counts[i] == 1 else "s"} out</small></span></li>')
-    final = e(OUTS["pipeline"]["final"])
-    return f'''<ol class="pipe" aria-label="The pipeline, stage by stage">{"".join(boxes)}</ol>
-<pre class="out final" aria-label="Final output of the pipeline"><code>{final}</code></pre>'''
+        a_ = size(counts[i]); b_ = size(counts[i + 1]) if i + 1 < len(stages) else a_
+        items.append(f'<li class="fs" style="--a:{a_};--b:{b_}"><span class="fn">{counts[i]}<small>line{"" if counts[i] == 1 else "s"}</small></span>'
+                     f'<span class="fp" aria-hidden="true"></span><code class="fc">{e(st)}</code></li>')
+    return f'<ol class="funnel" aria-label="The pipeline, stage by stage; the number is how many lines come out of each stage">{"".join(items)}</ol>'
 
 
 def index():
@@ -141,25 +142,26 @@ def index():
              ("resources.html", "Resources", "a short, honest list", "The manual, ShellCheck and a few guides worth your time.")]
     ch = "".join(f'<li class="card"><p class="tag">{e(t)}</p><h3><a href="{h}">{e(n)}</a></h3><p>{e(d)}</p></li>' for h, n, t, d in cards)
     lg = "".join(f'<li>{mark(k)}<span>{e(v[1])}</span></li>' for k, v in MARKS.items() if k != "unknown")
-    n_stage = len(PL["stages"])
-    return head("Learn Bash: every output is real", f"Learn the Bash shell with {N_PRINTED} examples that were actually run, a command reference marked by what each command can do to your files, and a tool that explains a command line.", "index.html") + f'''
-<section class="hero" aria-labelledby="h1">
+    n_stage = len(PL["stages"]); total = OUTS["pipeline"]["counts"][0]
+    q = PL["question"]
+    return head("Learn Bash: every output is real", f"Learn the Bash shell with {N_PRINTED} examples that were actually run, a command reference marked by what each command can do to your files, and a tool that explains a command line.", "index.html", "social.png") + f'''
+<section class="hero hero-dark" aria-labelledby="h1">
   <p class="kicker">The Bash shell, from first command to scripts</p>
-  <h1 id="h1">Learn Bash</h1>
+  <h1 id="h1"><span class="ps" aria-hidden="true">$ </span>learn bash<span class="blk" aria-hidden="true"></span></h1>
   <p class="lede">Every example on this site was run for real, and the output you see is what Bash printed.</p>
   <p class="cta"><a class="btn" href="basics.html">Start with the basics</a><a class="btn ghost" href="explain.html">Explain a command</a></p>
+  <figure class="win">
+    <div class="winbar" aria-hidden="true"><i></i><i></i><i></i><span>~/demo: bash</span></div>
+    <p class="winq"><span class="ps" aria-hidden="true">$</span> {e(q)} <span class="muted">({n_stage} commands, joined by pipes)</span></p>
+    {funnel()}
+    <pre class="out final" aria-label="Final output of the pipeline"><code>{e(OUTS["pipeline"]["final"])}</code></pre>
+    <figcaption>The pipe gets thinner as each command throws lines away: {" to ".join(str(c) for c in dict.fromkeys(OUTS["pipeline"]["counts"]))} lines, measured by running every prefix of the pipeline on a sample log of {total} lines. <a class="more" href="scripting.html#example">See it explained, step by step</a></figcaption>
+  </figure>
 </section>
 
 <section aria-labelledby="h-where">
   <h2 id="h-where" class="sech">Where to go</h2>
   <ul class="cards">{ch}</ul>
-</section>
-
-<section class="pipesec" aria-labelledby="h-pipe">
-  <h2 id="h-pipe" class="sech">One example of what Bash is for</h2>
-  <p class="lede2">A web server keeps a log with one line per request. The question: <strong>{e(PL["question"][0].lower() + PL["question"][1:])}</strong> {n_stage} small commands joined by pipes answer it. Each box is the pipeline run up to that point on a sample log of {OUTS["pipeline"]["counts"][0]} lines, and the number is how many lines come out of it.</p>
-  {pipeline_strip()}
-  <p class="small">The counts were measured by running each prefix of the pipeline, not typed in. <a class="more" href="scripting.html#example">See it explained, step by step</a></p>
 </section>
 
 <section class="band" aria-labelledby="h-safe">
