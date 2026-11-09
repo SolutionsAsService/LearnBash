@@ -1,92 +1,27 @@
-# Learn Bash Scripting Website
+# Learn Bash
 
-Welcome to the **Learn Bash Scripting** website repository! This project aims to provide a comprehensive platform for individuals interested in mastering Bash scripting, catering to both beginners and advanced users.
+A small site for learning the Bash shell, from the first command to scripts. Its distinguishing idea: **every output shown was printed by Bash**. Each example runs in a sandbox with a few sample files when the site is built, and the page shows what came out, so nothing on a page is typed by hand.
 
-## Table of Contents
+- **Basics, Scripting, Advanced:** 71 runnable examples.
+- **Commands:** 42 commands and 120 flags, each marked *Only reads*, *Changes things* or *Can delete data*, with examples that were run.
+- **Explain a command:** paste a command line and see its parts and the worst it can do. It never runs the command and nothing leaves the browser.
 
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
-- [Acknowledgements](#acknowledgements)
+The previous version of this site is kept on the `legacy/pre-redesign` branch.
 
-## Project Overview
+## How it is built
 
-The **Learn Bash Scripting** website is structured to offer an in-depth learning experience through various sections:
+Everything is data plus three small scripts (Python 3 standard library, and Bash with GNU tools for the examples):
 
-- **Home:** Introduction to Bash and its significance.
-- **Bash Basics:** Fundamental concepts and commands.
-- **Commands:** Detailed exploration of essential Bash commands.
-- **Scripting:** Guide to writing and understanding Bash scripts.
-- **Advanced Topics:** Coverage of complex scripting techniques.
-- **Resources:** Curated list of books, tutorials, tools, and community forums.
+```bash
+python3 scripts/run_examples.py     # run every example for real, write data/outputs.json
+python3 scripts/build.py            # generate the pages (refuses if any example has no recorded output)
+python3 scripts/build.py --check    # exit 1 if a generated page is stale
+python3 scripts/run_examples.py --check   # exit 1 if a recorded output differs from a fresh run
+node scripts/check-explain.js       # the explainer judges 34 command lines as expected
+```
 
-## Features
-
-- **Responsive Design:** Optimized for various devices.
-- **Syntax Highlighting:** Enhances code readability.
-- **Interactive Examples:** Provides hands-on practice.
-- **Extensive Resource Compilation:** Links to external materials for further learning.
-
-## Getting Started
-
-### Prerequisites
-
-Ensure you have the following installed:
-
-- Web browser (e.g., Chrome, Firefox)
-- Code editor (e.g., Visual Studio Code)
-- Basic understanding of HTML and CSS
-
-### Installation
-
-1. **Clone the Repository:**
-
-   ```bash
-   git clone https://github.com/yourusername/learn-bash-scripting.git
-Navigate to the Project Directory:
-
-bash
-cd learn-bash-scripting
-Open index.html in Your Browser:
-
-Open the file directly or use a live server extension in your code editor.
-Usage
-Navigate through the website sections:
-
-Bash Basics: Start here if you're new to Bash.
-Commands: Learn essential commands.
-Scripting: Understand how to write effective Bash scripts.
-Advanced Topics: Explore complex scripting scenarios.
-Resources: Access additional learning materials.
-Feel free to modify and expand the content to suit your objectives.
+Data lives in `data/` (`commands.json`, `lessons.json`, `pipeline.json`). The sample files the examples run against are in `scripts/fixture.py`; dates are fixed so listings are reproducible. Outputs were produced with GNU bash 5.2 on Linux (GNU coreutils, mawk). macOS and BSD tools differ in some flags, and the pages say where it matters.
 
 ## Contributing
-Contributions are welcome! To contribute:
 
-Fork the repository.
-Create a new branch (git checkout -b feature/YourFeature).
-Commit your changes (git commit -m 'Add YourFeature').
-Push to the branch (git push origin feature/YourFeature).
-Open a Pull Request.
-Ensure your code adheres to the project's coding standards and includes appropriate documentation.
-
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-## Contact
-For questions or suggestions, please contact:
-
-Your Name
-Email: your.email@example.com
-GitHub: yourusername
-Acknowledgements
-GNU Bash Manual
-Advanced Bash-Scripting Guide
-Bash Hackers Wiki
-freeCodeCamp
+Open an issue with a correction, ideally naming the page and the command. See `CONTRIBUTING.md`. Code and text are MIT-licensed (see `LICENSE`).

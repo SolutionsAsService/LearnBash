@@ -1,0 +1,622 @@
+{
+ "bash": "GNU bash, version 5.2.21(1)-release (x86_64-pc-linux-gnu)",
+ "examples": {
+  "b5eb9c5b82f97097": {
+   "out": "bash\nbash\nls\ncd\nBash",
+   "status": 0
+  },
+  "39fe70aaf2ab8581": {
+   "out": "43",
+   "status": 0
+  },
+  "dcc2b753a04e318f": {
+   "out": "ana\ncho",
+   "status": 0
+  },
+  "82cdb210b8552dc3": {
+   "out": "bash is a shell\nbash is also a scripting language\nls lists files\ncd changes directory\nBash was first released in 1989",
+   "status": 0
+  },
+  "462ab9487a1da28a": {
+   "out": "     1\tapple\n     2\tbanana\n     3\tcherry\n     4\tapple\n     5\tbanana\n     6\tapple",
+   "status": 0
+  },
+  "10b614057cbd16e0": {
+   "out": "apple\nbanana\ncherry\napple\nbanana\napple\n10\n9\n100\n1",
+   "status": 0
+  },
+  "7ff309c0c973f68a": {
+   "out": "/home/you/demo/projects",
+   "status": 0
+  },
+  "fac1f2a6beb46c3f": {
+   "out": "/home/you/demo/projects/api",
+   "status": 0
+  },
+  "c4c478056a795aef": {
+   "out": "-rw-r--r--",
+   "status": 0
+  },
+  "2b120ce0875653c9": {
+   "out": "-rwxr--r--\nHello, Ana!",
+   "status": 0
+  },
+  "fe3f158e1976d05b": {
+   "out": "bash is a shell\nbash is also a scripting language\nls lists files\ncd changes directory\nBash was first released in 1989",
+   "status": 0
+  },
+  "cdb95f6fd8537ac4": {
+   "out": "api\nweb",
+   "status": 0
+  },
+  "6eb6f7aade765303": {
+   "out": "'notes.txt' -> 'copy.txt'",
+   "status": 0
+  },
+  "0488c0e0cfc1b984": {
+   "out": "name,score\nana,12\nben,7\ncho,9\ndee,15",
+   "status": 0
+  },
+  "627be9f2e215a9b3": {
+   "out": "bash\nbash\nls l\ncd c\nBash",
+   "status": 0
+  },
+  "d4426af5e9148ba2": {
+   "out": "2025-03-04",
+   "status": 0
+  },
+  "19f4cd452a2cd9b8": {
+   "out": "Tuesday",
+   "status": 0
+  },
+  "19ff434564dfe169": {
+   "out": "1,6c1,5\n< apple\n< banana\n< cherry",
+   "status": 0
+  },
+  "1d42efe2233a11ee": {
+   "out": "--- projects/api/notes.txt\t2025-01-01 08:00:00.000000000 +0000\n+++ docs/readme.md\t2025-01-01 08:00:00.000000000 +0000\n@@ -1 +1,2 @@\n-TODO: add tests\n+# Docs\n+See notes.txt",
+   "status": 0
+  },
+  "9c03c5b020d75c39": {
+   "out": "hello world",
+   "status": 0
+  },
+  "86f8266e9a8d4dd8": {
+   "out": "no newline ... then this",
+   "status": 0
+  },
+  "f689a239e617fa38": {
+   "out": "2",
+   "status": 0
+  },
+  "079f9297e2b30559": {
+   "out": "[]",
+   "status": 0
+  },
+  "a0457c70d23846a6": {
+   "out": "[Ana]",
+   "status": 0
+  },
+  "0cb8764735226703": {
+   "out": "./fruits.txt\n./notes.txt\n./numbers.txt\n./projects/api/notes.txt",
+   "status": 0
+  },
+  "29f58850cf85722d": {
+   "out": "projects/api/notes.txt\nprojects/api/server.py\nprojects/web/index.html\nprojects/web/style.css",
+   "status": 0
+  },
+  "29e87d15d40aab78": {
+   "out": ".\n./projects\n./scripts\n./docs",
+   "status": 0
+  },
+  "18be3e51f3f7e269": {
+   "out": "6 ./fruits.txt\n5 ./notes.txt\n4 ./numbers.txt\n1 ./projects/api/notes.txt",
+   "status": 0
+  },
+  "feee391cbb859b74": {
+   "out": "bash is a shell\nbash is also a scripting language",
+   "status": 0
+  },
+  "9dfab357ac0b6de8": {
+   "out": "1:bash is a shell\n2:bash is also a scripting language\n5:Bash was first released in 1989",
+   "status": 0
+  },
+  "14fbf83a71cec91a": {
+   "out": "3",
+   "status": 0
+  },
+  "1498d165727e3e3b": {
+   "out": "docs/readme.md",
+   "status": 0
+  },
+  "544cc34a587ef073": {
+   "out": "ls lists files\ncd changes directory\nBash was first released in 1989",
+   "status": 0
+  },
+  "1ad0f00af570e0e8": {
+   "out": "ls lists files\ncd changes directory",
+   "status": 0
+  },
+  "cdc5bed0e8d4af0a": {
+   "out": "bash is a shell\nbash is also a scripting language",
+   "status": 0
+  },
+  "1654322e38266109": {
+   "out": "203.0.113.5 - - [10/Nov/2025:10:00:00 +0000] \"GET /index.html HTTP/1.1\" 200 1043\n198.51.100.7 - - [10/Nov/2025:10:00:07 +0000] \"GET /about.html HTTP/1.1\" 200 512\n203.0.113.5 - - [10/Nov/2025:10:00:14 +0000] \"GET /missing.png HTTP/1.1\" 404 150",
+   "status": 0
+  },
+  "22ce552a5de0f543": {
+   "out": " 1) SIGHUP\t 2) SIGINT\t 3) SIGQUIT\t 4) SIGILL\t 5) SIGTRAP\n 6) SIGABRT\t 7) SIGBUS\t 8) SIGFPE\t 9) SIGKILL\t10) SIGUSR1\n11) SIGSEGV\t12) SIGUSR2\t13) SIGPIPE\t14) SIGALRM\t15) SIGTERM",
+   "status": 0
+  },
+  "9beb9729afe94827": {
+   "out": "bash is a shell",
+   "status": 0
+  },
+  "ebfdec641529d4b5": {
+   "out": "access.log\ndata.csv\ndocs\nfruits.txt\nnotes.txt\nnumbers.txt\nprojects\nscripts",
+   "status": 0
+  },
+  "fda17aa65051cb57": {
+   "out": ".\n..\n.hidden\naccess.log\ndata.csv\ndocs\nfruits.txt\nnotes.txt\nnumbers.txt\nprojects\nscripts",
+   "status": 0
+  },
+  "471def950331d5dd": {
+   "out": "docs\nprojects\nscripts\nnotes.txt\nfruits.txt\nnumbers.txt\ndata.csv\naccess.log",
+   "status": 0
+  },
+  "71a826bb85a2642a": {
+   "out": "api\nweb",
+   "status": 0
+  },
+  "b391983d1e4a8d26": {
+   "out": "projects:\napi\nweb\n\nprojects/api:\nnotes.txt\nserver.py\n\nprojects/web:\nindex.html\nstyle.css",
+   "status": 0
+  },
+  "c523c3179c0a4f0d": {
+   "out": "mkdir: created directory 'backup'\nmkdir: created directory 'backup/2025'\nmkdir: created directory 'backup/2025/jan'\nbackup:\n2025\n\nbackup/2025:\njan\n\nbackup/2025/jan:",
+   "status": 0
+  },
+  "08556e9e16ba9a7e": {
+   "out": "mkdir: cannot create directory 'docs': File exists",
+   "status": 1
+  },
+  "ece15504f8213706": {
+   "out": "renamed.txt",
+   "status": 0
+  },
+  "e0bc5b85af8eac99": {
+   "out": "renamed 'fruits.txt' -> 'docs/fruits.txt'",
+   "status": 0
+  },
+  "342038ae78ba2ddf": {
+   "out": "/home/you/demo/docs",
+   "status": 0
+  },
+  "9a80e320ac650448": {
+   "out": "access.log\ndata.csv\ndocs\nfruits.txt\nnotes.txt\nprojects\nscripts",
+   "status": 0
+  },
+  "37cdc42c6bb050eb": {
+   "out": "removed 'docs/readme.md'\nremoved directory 'docs'",
+   "status": 0
+  },
+  "38d34e078729e3cb": {
+   "out": "rm: cannot remove 'nothere.txt': No such file or directory",
+   "status": 1
+  },
+  "21042dd7189c8b70": {
+   "out": "ok",
+   "status": 0
+  },
+  "2bbbcc087d062a10": {
+   "out": "removed",
+   "status": 0
+  },
+  "7f10fae382c9d94d": {
+   "out": "rmdir: failed to remove 'docs': Directory not empty",
+   "status": 1
+  },
+  "875e98de06ae108e": {
+   "out": "BASH is a shell\nBASH is also a scripting language\nls lists files\ncd changes directory\nBash was first released in 1989",
+   "status": 0
+  },
+  "0471d90f82fc0dc3": {
+   "out": "bash is also a scripting language\nls lists files",
+   "status": 0
+  },
+  "8c960a9b2fcb0832": {
+   "out": "pear\nbanana",
+   "status": 0
+  },
+  "99b5ff1b68146899": {
+   "out": "BASH is a shell",
+   "status": 0
+  },
+  "8dca16925ae6a26b": {
+   "out": "apple\napple\napple\nbanana\nbanana\ncherry",
+   "status": 0
+  },
+  "6973a2ed7b4de412": {
+   "out": "1\n10\n100\n9",
+   "status": 0
+  },
+  "9e8fbdd2eeacecff": {
+   "out": "1\n9\n10\n100",
+   "status": 0
+  },
+  "8bcc6a4b41a80026": {
+   "out": "name,team,score\nben,blue,7\ncho,red,9\nana,red,12\ndee,blue,15",
+   "status": 0
+  },
+  "bd3e14a1b710f698": {
+   "out": "cd changes directory\nBash was first released in 1989",
+   "status": 0
+  },
+  "5b275668e3fd5e7e": {
+   "out": "docs/\ndocs/readme.md\nprojects/\nprojects/api/\nprojects/api/notes.txt\nprojects/api/server.py\nprojects/web/\nprojects/web/index.html\nprojects/web/style.css",
+   "status": 0
+  },
+  "6a83c40adb5c0ffd": {
+   "out": "projects",
+   "status": 0
+  },
+  "d2a07c63fa3c1939": {
+   "out": "hi\nhi",
+   "status": 0
+  },
+  "c0975db7e4860953": {
+   "out": "new.txt",
+   "status": 0
+  },
+  "6185c3bc8a0b98d6": {
+   "out": "HELLO",
+   "status": 0
+  },
+  "33d6b5d743e17aba": {
+   "out": "abc",
+   "status": 0
+  },
+  "5c1e8cb45da54318": {
+   "out": "too many spaces",
+   "status": 0
+  },
+  "34f909298f0c3859": {
+   "out": "cd is a shell builtin",
+   "status": 0
+  },
+  "5632af8790e4f84d": {
+   "out": "builtin\nfile\nkeyword",
+   "status": 0
+  },
+  "504aa39072ef9f4e": {
+   "out": "apple\nbanana\ncherry",
+   "status": 0
+  },
+  "01acc8c5570fe378": {
+   "out": "      3 apple\n      2 banana\n      1 cherry",
+   "status": 0
+  },
+  "6fd0728a23003b71": {
+   "out": "apple\nbanana\ncherry\napple\nbanana\napple",
+   "status": 0
+  },
+  "727db574abcbec65": {
+   "out": "40 access.log",
+   "status": 0
+  },
+  "186dca5356dd11e2": {
+   "out": "  5  22 118 notes.txt",
+   "status": 0
+  },
+  "8e11a6981d6b5d1b": {
+   "out": "6",
+   "status": 0
+  },
+  "f9969891ea0562f7": {
+   "out": "item a\nitem b\nitem c",
+   "status": 0
+  },
+  "537b8be511f8848f": {
+   "out": "  6 fruits.txt\n  5 notes.txt\n  4 numbers.txt\n 15 total",
+   "status": 0
+  },
+  "f5b671140aa00446": {
+   "out": "one two three",
+   "status": 0
+  },
+  "ea484c5276c5d9ee": {
+   "out": "-rw-r--r--",
+   "status": 0
+  },
+  "37fa265330ad83ea": {
+   "out": "/home/you/demo",
+   "status": 0
+  },
+  "4f286471b28ae51e": {
+   "out": "/home/you/demo/projects/web\n/home/you/demo/projects",
+   "status": 0
+  },
+  "ea61c227a6deb8ca": {
+   "out": "notes.txt\nserver.py",
+   "status": 0
+  },
+  "0c2cfa613f189c10": {
+   "out": "/home/you/demo/docs",
+   "status": 0
+  },
+  "0270db571e2fd1ee": {
+   "out": "fruits.txt\nnotes.txt\nnumbers.txt",
+   "status": 0
+  },
+  "5a38c0b015c92dfd": {
+   "out": "notes.txt",
+   "status": 0
+  },
+  "e290d2f378f9e3fa": {
+   "out": "fruits.txt\nnotes.txt\nnumbers.txt",
+   "status": 0
+  },
+  "a9f5ad87da1ee451": {
+   "out": "projects/web/index.html",
+   "status": 0
+  },
+  "d142dbb38dded2e0": {
+   "out": "docs/*.pdf",
+   "status": 0
+  },
+  "c8c0b43af4ee8cd8": {
+   "out": "Hello, Ana Lee\nHello, $name\nHello, $name",
+   "status": 0
+  },
+  "5adc0917eb6582b9": {
+   "out": "[a]\n[b]\n[a b]",
+   "status": 0
+  },
+  "05c0d1c315078879": {
+   "out": "hello\nhello_world",
+   "status": 0
+  },
+  "5ebecfbc3bd8e412": {
+   "out": "notes.txt has 5 lines",
+   "status": 0
+  },
+  "e87e7a94b4702ddd": {
+   "out": "child sees: []\nchild sees: [blue]",
+   "status": 0
+  },
+  "703b20e1b815ca4c": {
+   "out": "0\n1",
+   "status": 0
+  },
+  "86510b4a3ad97756": {
+   "out": "found",
+   "status": 0
+  },
+  "ed7961dae1d658d3": {
+   "out": "missing",
+   "status": 0
+  },
+  "403de5f82bdc9648": {
+   "out": "ls: cannot access 'nothere': No such file or directory\nthat failed",
+   "status": 0
+  },
+  "6fecc5f98e409695": {
+   "out": "2",
+   "status": 0
+  },
+  "6e2e1c742228b4ce": {
+   "out": "hi\nagain",
+   "status": 0
+  },
+  "b408e396be0c8b0c": {
+   "out": "ls: cannot access 'nothere': No such file or directory",
+   "status": 0
+  },
+  "4874d4196d0892d6": {
+   "out": "      3 apple\n      2 banana\n      1 cherry",
+   "status": 0
+  },
+  "27142572730b3dcc": {
+   "out": "pwd: pwd [-LP]\n    Print the name of the current working directory.\n    ",
+   "status": 0
+  },
+  "9571d87c4d8575af": {
+   "out": "Usage: ls [OPTION]... [FILE]...\nList information about the FILEs (the current directory by default).",
+   "status": 0
+  },
+  "6ecbba593ce0060f": {
+   "out": "Hello, world! (0 argument(s))\nHello, Ana! (1 argument(s))",
+   "status": 0
+  },
+  "16d91723e4a88688": {
+   "out": "arg: [one]\narg: [two words]\narg: [three]",
+   "status": 0
+  },
+  "b783aef0bae089bf": {
+   "out": "big",
+   "status": 0
+  },
+  "0b269d2b656184a1": {
+   "out": "notes.txt: file\nnothere.txt: missing\ndocs: directory",
+   "status": 0
+  },
+  "5b7fd7cb8dc8f1bd": {
+   "out": "berry",
+   "status": 0
+  },
+  "0d0d8b20953778d1": {
+   "out": "fruits.txt has 6 lines\nnotes.txt has 5 lines\nnumbers.txt has 4 lines",
+   "status": 0
+  },
+  "6ef4c4d169f0531f": {
+   "out": "round 1\nround 2\nround 3",
+   "status": 0
+  },
+  "cceca795e683caf7": {
+   "out": "> apple\n> banana\n> cherry",
+   "status": 0
+  },
+  "e86e598cdada38d3": {
+   "out": "1\n3",
+   "status": 0
+  },
+  "4298079a3a88449e": {
+   "out": "Hi, friend\nHi, Ana",
+   "status": 0
+  },
+  "888eeef8179eb100": {
+   "out": "4 is even\n7 is odd",
+   "status": 0
+  },
+  "126df96f19faf87b": {
+   "out": "QUIET",
+   "status": 0
+  },
+  "f2dcb98b00a77932": {
+   "out": "report.final\ntxt\nreport.draft.txt\n16",
+   "status": 0
+  },
+  "42fe8c745cc9ed2f": {
+   "out": "no colour set",
+   "status": 0
+  },
+  "78e0fb95a5bcf035": {
+   "out": "notes.txt\n/home/you/demo",
+   "status": 0
+  },
+  "19f32ea05f4fdf86": {
+   "out": "first: apple\ncount: 3\n- apple\n- sweet pear\n- cherry",
+   "status": 0
+  },
+  "d84bbcdf10e0aa00": {
+   "out": "ana is 31",
+   "status": 0
+  },
+  "8ec2ab758973e40c": {
+   "out": "still running",
+   "status": 0
+  },
+  "0207dbb1f165247f": {
+   "out": "exit status: 1",
+   "status": 0
+  },
+  "14560bcc5f4293c3": {
+   "out": "without pipefail: 0\nwith pipefail: 1",
+   "status": 0
+  },
+  "a1be9292fde67888": {
+   "out": "bash: line 1: dirr: unbound variable",
+   "status": 127
+  },
+  "610ebb9bdfc91d73": {
+   "out": "      9 /old-page\n      5 /missing.png\n      2 /favicon.ico",
+   "status": 0
+  },
+  "7987c310928479f0": {
+   "out": "      9 /old-page\n      5 /missing.png\ntop404.sh: line 3: 1: usage: top404.sh LOGFILE [COUNT]",
+   "status": 1
+  },
+  "16099c1c7bd634b7": {
+   "out": "rm -rf docs/",
+   "status": 0
+  },
+  "f7a2ef3368123241": {
+   "out": "temporary directory created",
+   "status": 0
+  },
+  "7b9bfded174d4020": {
+   "out": "ls: cannot access 'nothere': No such file or directory\nnotes.txt",
+   "status": 0
+  },
+  "14fa37a35050986a": {
+   "out": "ls: cannot access 'nothere': No such file or directory\n--- file:\nnotes.txt",
+   "status": 0
+  },
+  "5f23cbe6bbbe2bdb": {
+   "out": "status: 2",
+   "status": 0
+  },
+  "61c391b83a689ed1": {
+   "out": "Hello, Ana\nHome is a variable here too.",
+   "status": 0
+  },
+  "2a1936f37e93dcd3": {
+   "out": "Hello, $name (not expanded)",
+   "status": 0
+  },
+  "45d83279310c6009": {
+   "out": "alpha | beta gamma",
+   "status": 0
+  },
+  "88283cfbc43e2903": {
+   "out": "3c3\n< cherry\n---\n> date",
+   "status": 1
+  },
+  "2dcb9ed0fce5450a": {
+   "out": "/home/you/demo/projects\n/home/you/demo",
+   "status": 0
+  },
+  "332aa4bbae0a83db": {
+   "out": "one\ntwo",
+   "status": 0
+  },
+  "3544191fc1a7e3d1": {
+   "out": "a.txt b.txt c.txt\nfile1 file2 file3\nA B C D E",
+   "status": 0
+  },
+  "fb04121a5865f602": {
+   "out": "42\n3 2",
+   "status": 0
+  },
+  "6c0881d0c5b34229": {
+   "out": "SHELL shell",
+   "status": 0
+  },
+  "ff7da3cacd81af91": {
+   "out": "started in the background\nfinished",
+   "status": 0
+  },
+  "55eb16ea99b81872": {
+   "out": "job A done\njob B done\nall done",
+   "status": 0
+  },
+  "86fc2612dcafd456": {
+   "out": "working\ncleaning up",
+   "status": 3
+  },
+  "49531a077ca4e6c3": {
+   "out": "+ x=2\n+ echo 42\n42",
+   "status": 0
+  },
+  "654d729ccba2cf6b": {
+   "out": "bad.sh: line 3: syntax error: unexpected end of file\nsyntax check status: 2",
+   "status": 0
+  },
+  "5c281aa68e44d7d1": {
+   "out": "5.2.21",
+   "status": 0
+  }
+ },
+ "pipeline": {
+  "counts": [
+   40,
+   16,
+   16,
+   16,
+   3,
+   3,
+   3
+  ],
+  "first_line": [
+   "203.0.113.5 - - [10/Nov/2025:10:00:00 +0000] \"GET /index.html HTTP/1.1\" 200 1043",
+   "203.0.113.5 - - [10/Nov/2025:10:00:14 +0000] \"GET /missing.png HTTP/1.1\" 404 150",
+   "/missing.png",
+   "/favicon.ico",
+   "      2 /favicon.ico",
+   "      9 /old-page",
+   "      9 /old-page"
+  ],
+  "final": "      9 /old-page\n      5 /missing.png\n      2 /favicon.ico"
+ }
+}

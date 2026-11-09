@@ -1,0 +1,1079 @@
+{
+ "groups": [
+  {
+   "id": "files",
+   "name": "Files and directories"
+  },
+  {
+   "id": "view",
+   "name": "Viewing files"
+  },
+  {
+   "id": "text",
+   "name": "Searching and text processing"
+  },
+  {
+   "id": "system",
+   "name": "Processes, permissions and system"
+  },
+  {
+   "id": "net",
+   "name": "Archives and networking"
+  },
+  {
+   "id": "shell",
+   "name": "The shell itself"
+  }
+ ],
+ "commands": [
+  {
+   "name": "alias",
+   "group": "shell",
+   "danger": "reads",
+   "summary": "Give a command another name for this session.",
+   "synopsis": "alias [NAME=VALUE]",
+   "flags": [],
+   "examples": [],
+   "note": "Aliases are lost when the shell exits; put them in ~/.bashrc to keep them. Scripts do not see them."
+  },
+  {
+   "name": "awk",
+   "group": "text",
+   "danger": "reads",
+   "summary": "Process text one record (line) at a time, split into fields.",
+   "synopsis": "awk [-F SEP] 'PATTERN { ACTION }' [FILE]...",
+   "flags": [
+    {
+     "flag": "-F",
+     "text": "Field separator."
+    },
+    {
+     "flag": "$1, $2, ...",
+     "text": "The first, second, ... field of the current line; $0 is the whole line."
+    },
+    {
+     "flag": "NR",
+     "text": "The number of the current line."
+    },
+    {
+     "flag": "NF",
+     "text": "The number of fields on the current line."
+    }
+   ],
+   "examples": [
+    "awk '{print $1}' notes.txt",
+    "awk -F, 'NR > 1 {sum += $3} END {print sum}' data.csv",
+    "awk -F, '$2 == \"red\" {print $1}' data.csv"
+   ],
+   "note": "Examples avoid features only GNU awk has, so they behave the same under mawk and macOS awk."
+  },
+  {
+   "name": "cat",
+   "group": "view",
+   "danger": "reads",
+   "summary": "Print files, or join several one after another.",
+   "synopsis": "cat [OPTION]... [FILE]...",
+   "flags": [
+    {
+     "flag": "-n",
+     "text": "Number every output line."
+    }
+   ],
+   "examples": [
+    "cat notes.txt",
+    "cat -n fruits.txt",
+    "cat fruits.txt numbers.txt"
+   ]
+  },
+  {
+   "name": "cd",
+   "group": "files",
+   "danger": "reads",
+   "summary": "Change the current directory of the shell.",
+   "synopsis": "cd [DIRECTORY]",
+   "flags": [
+    {
+     "flag": "-",
+     "text": "Go back to the previous directory."
+    },
+    {
+     "flag": "~",
+     "text": "Your home directory (also the default when no argument is given)."
+    },
+    {
+     "flag": "..",
+     "text": "The parent directory."
+    }
+   ],
+   "examples": [
+    "cd projects && pwd",
+    "cd projects/web && cd ../api && pwd"
+   ],
+   "note": "A shell builtin: it changes where the shell is, not any file."
+  },
+  {
+   "name": "chmod",
+   "group": "system",
+   "danger": "changes",
+   "summary": "Change who can read, write or run a file.",
+   "synopsis": "chmod [OPTION]... MODE FILE...",
+   "flags": [
+    {
+     "flag": "u+x",
+     "text": "Give the owner (u) execute (x) permission. g is group, o is others, a is all."
+    },
+    {
+     "flag": "644",
+     "text": "Octal: owner read and write, everyone else read only."
+    },
+    {
+     "flag": "755",
+     "text": "Octal: owner everything, others read and execute."
+    },
+    {
+     "flag": "-R",
+     "text": "Apply to a directory and everything in it.",
+     "danger": "changes"
+    }
+   ],
+   "examples": [
+    "ls -l scripts/hello.sh | cut -c1-10",
+    "chmod u+x scripts/hello.sh && ls -l scripts/hello.sh | cut -c1-10 && scripts/hello.sh Ana"
+   ]
+  },
+  {
+   "name": "chown",
+   "group": "system",
+   "danger": "changes",
+   "summary": "Change the owner and group of a file. Usually needs sudo.",
+   "synopsis": "chown [OPTION]... OWNER[:GROUP] FILE...",
+   "flags": [
+    {
+     "flag": "-R",
+     "text": "Apply recursively.",
+     "danger": "changes"
+    }
+   ],
+   "examples": [],
+   "note": "Not run here: changing ownership needs administrator rights."
+  },
+  {
+   "name": "cp",
+   "group": "files",
+   "danger": "changes",
+   "summary": "Copy files and directories.",
+   "synopsis": "cp [OPTION]... SOURCE... DEST",
+   "flags": [
+    {
+     "flag": "-r",
+     "text": "Copy directories recursively (also -R)."
+    },
+    {
+     "flag": "-i",
+     "text": "Ask before overwriting an existing file."
+    },
+    {
+     "flag": "-n",
+     "text": "Never overwrite an existing file."
+    },
+    {
+     "flag": "-v",
+     "text": "Print each copy as it happens."
+    },
+    {
+     "flag": "-p",
+     "text": "Keep mode, ownership and timestamps."
+    }
+   ],
+   "examples": [
+    "cp notes.txt copy.txt && cat copy.txt",
+    "cp -r projects backup && ls backup",
+    "cp -v notes.txt copy.txt"
+   ],
+   "note": "By default cp overwrites an existing destination without asking. -i asks first; -n never overwrites (recent GNU versions warn that its behaviour is non-portable and suggest --update=none)."
+  },
+  {
+   "name": "curl",
+   "group": "net",
+   "danger": "reads",
+   "summary": "Transfer data from or to a URL.",
+   "synopsis": "curl [OPTION]... URL",
+   "flags": [
+    {
+     "flag": "-s",
+     "text": "Silent: no progress meter."
+    },
+    {
+     "flag": "-o",
+     "text": "Write output to a file instead of the screen.",
+     "danger": "changes"
+    },
+    {
+     "flag": "-O",
+     "text": "Save under the name used in the URL.",
+     "danger": "changes"
+    },
+    {
+     "flag": "-L",
+     "text": "Follow redirects."
+    },
+    {
+     "flag": "-I",
+     "text": "Fetch headers only."
+    },
+    {
+     "flag": "-X",
+     "text": "Choose the HTTP method."
+    },
+    {
+     "flag": "-H",
+     "text": "Add a request header."
+    },
+    {
+     "flag": "-d",
+     "text": "Send data in the request body."
+    }
+   ],
+   "examples": [],
+   "note": "Not run here: it needs the network. Never pipe a download straight into a shell (curl ... | bash): you run code you have not read."
+  },
+  {
+   "name": "cut",
+   "group": "text",
+   "danger": "reads",
+   "summary": "Cut out columns from each line.",
+   "synopsis": "cut -d DELIM -f LIST [FILE]",
+   "flags": [
+    {
+     "flag": "-d",
+     "text": "Field delimiter (one character)."
+    },
+    {
+     "flag": "-f",
+     "text": "Which fields to keep, such as 1,3 or 2-4."
+    },
+    {
+     "flag": "-c",
+     "text": "Which characters to keep."
+    }
+   ],
+   "examples": [
+    "cut -d, -f1,3 data.csv",
+    "cut -c1-4 notes.txt"
+   ]
+  },
+  {
+   "name": "date",
+   "group": "system",
+   "danger": "reads",
+   "summary": "Print or format the date and time.",
+   "synopsis": "date [+FORMAT]",
+   "flags": [
+    {
+     "flag": "+%F",
+     "text": "Format: the date as YYYY-MM-DD."
+    },
+    {
+     "flag": "+%T",
+     "text": "Format: the time as HH:MM:SS."
+    },
+    {
+     "flag": "-d",
+     "text": "Use a given date instead of now (GNU; BSD uses -j -f)."
+    }
+   ],
+   "examples": [
+    "date -d 2025-03-04 +%F",
+    "date -d 2025-03-04 +%A"
+   ],
+   "note": "Examples use a fixed date so the output does not change."
+  },
+  {
+   "name": "df",
+   "group": "system",
+   "danger": "reads",
+   "summary": "Show free and used space on mounted file systems.",
+   "synopsis": "df [OPTION]... [FILE]...",
+   "flags": [
+    {
+     "flag": "-h",
+     "text": "Human-readable sizes."
+    }
+   ],
+   "examples": [],
+   "note": "Output depends on the machine, so no example is run."
+  },
+  {
+   "name": "diff",
+   "group": "text",
+   "danger": "reads",
+   "summary": "Show the differences between two files.",
+   "synopsis": "diff [OPTION]... FILE1 FILE2",
+   "flags": [
+    {
+     "flag": "-u",
+     "text": "Unified format, the one patches and code review use."
+    },
+    {
+     "flag": "-r",
+     "text": "Compare directories recursively."
+    }
+   ],
+   "examples": [
+    "diff fruits.txt notes.txt | head -n 4",
+    "diff -u projects/api/notes.txt docs/readme.md | head -n 6"
+   ],
+   "note": "Exit status is 0 when the files are identical, 1 when they differ."
+  },
+  {
+   "name": "du",
+   "group": "system",
+   "danger": "reads",
+   "summary": "Show how much disk space files and directories use.",
+   "synopsis": "du [OPTION]... [FILE]...",
+   "flags": [
+    {
+     "flag": "-h",
+     "text": "Human-readable sizes."
+    },
+    {
+     "flag": "-s",
+     "text": "Only a total for each argument."
+    }
+   ],
+   "examples": [],
+   "note": "Sizes depend on the file system, so no example is run."
+  },
+  {
+   "name": "echo",
+   "group": "shell",
+   "danger": "reads",
+   "summary": "Print its arguments.",
+   "synopsis": "echo [-ne] [STRING]...",
+   "flags": [
+    {
+     "flag": "-n",
+     "text": "Do not print the trailing newline."
+    },
+    {
+     "flag": "-e",
+     "text": "Interpret backslash escapes such as \\n (bash). Use printf when you need portability."
+    }
+   ],
+   "examples": [
+    "echo hello world",
+    "echo -n no newline; echo ' ... then this'",
+    "echo \"two words\" | wc -w"
+   ]
+  },
+  {
+   "name": "export",
+   "group": "shell",
+   "danger": "reads",
+   "summary": "Mark a variable so child processes inherit it.",
+   "synopsis": "export NAME[=VALUE]...",
+   "flags": [],
+   "examples": [
+    "NAME=Ana; bash -c 'echo [$NAME]'",
+    "export NAME=Ana; bash -c 'echo [$NAME]'"
+   ],
+   "note": "A builtin. The first example shows an exported-less variable is invisible to a child shell."
+  },
+  {
+   "name": "find",
+   "group": "text",
+   "danger": "reads",
+   "summary": "Search a directory tree for files by name, type, age or size.",
+   "synopsis": "find [PATH]... [EXPRESSION]",
+   "flags": [
+    {
+     "flag": "-name",
+     "text": "Match the file name against a glob such as '*.txt' (quote it)."
+    },
+    {
+     "flag": "-type",
+     "text": "f for files, d for directories."
+    },
+    {
+     "flag": "-mtime",
+     "text": "Modified N days ago; +N means more than N, -N less than N."
+    },
+    {
+     "flag": "-size",
+     "text": "File size, such as +1M."
+    },
+    {
+     "flag": "-maxdepth",
+     "text": "Do not go deeper than N levels."
+    },
+    {
+     "flag": "-exec",
+     "text": "Run a command on each match; {} stands for the file and \\; ends the command.",
+     "danger": "changes"
+    },
+    {
+     "flag": "-delete",
+     "text": "Delete every match. Put it last, and run the same find without it first.",
+     "danger": "destroys"
+    }
+   ],
+   "examples": [
+    "find . -name '*.txt' | sort",
+    "find projects -type f | sort",
+    "find . -maxdepth 1 -type d",
+    "find . -name '*.txt' -exec wc -l {} \\; | sort -k2"
+   ],
+   "note": "Without -delete or -exec, find only reads. It lists matches in whatever order the file system gives them, so the examples sort the result."
+  },
+  {
+   "name": "grep",
+   "group": "text",
+   "danger": "reads",
+   "summary": "Print lines that match a pattern.",
+   "synopsis": "grep [OPTION]... PATTERN [FILE]...",
+   "flags": [
+    {
+     "flag": "-i",
+     "text": "Ignore case."
+    },
+    {
+     "flag": "-v",
+     "text": "Invert: print lines that do not match."
+    },
+    {
+     "flag": "-n",
+     "text": "Show line numbers."
+    },
+    {
+     "flag": "-r",
+     "text": "Search directories recursively."
+    },
+    {
+     "flag": "-c",
+     "text": "Print only the number of matching lines."
+    },
+    {
+     "flag": "-l",
+     "text": "Print only the names of files that match."
+    },
+    {
+     "flag": "-w",
+     "text": "Match whole words only."
+    },
+    {
+     "flag": "-E",
+     "text": "Use extended regular expressions."
+    },
+    {
+     "flag": "-o",
+     "text": "Print only the matching part of each line."
+    },
+    {
+     "flag": "-F",
+     "text": "Treat the pattern as a fixed string, not a regular expression."
+    }
+   ],
+   "examples": [
+    "grep bash notes.txt",
+    "grep -in bash notes.txt",
+    "grep -c apple fruits.txt",
+    "grep -rl notes projects docs",
+    "grep -v bash notes.txt",
+    "grep -E '^(ls|cd)' notes.txt"
+   ],
+   "note": "Exit status is 0 if something matched, 1 if nothing did, which scripts use in if statements."
+  },
+  {
+   "name": "head",
+   "group": "view",
+   "danger": "reads",
+   "summary": "Print the first lines of a file.",
+   "synopsis": "head [-n COUNT] [FILE]...",
+   "flags": [
+    {
+     "flag": "-n",
+     "text": "How many lines (default 10)."
+    }
+   ],
+   "examples": [
+    "head -n 2 notes.txt",
+    "head -n 3 access.log"
+   ]
+  },
+  {
+   "name": "history",
+   "group": "shell",
+   "danger": "reads",
+   "summary": "List the commands you typed earlier.",
+   "synopsis": "history [N]",
+   "flags": [
+    {
+     "flag": "!!",
+     "text": "Re-run the last command."
+    },
+    {
+     "flag": "Ctrl-R",
+     "text": "Search your history as you type."
+    }
+   ],
+   "examples": [],
+   "note": "Interactive, so it is not run here."
+  },
+  {
+   "name": "kill",
+   "group": "system",
+   "danger": "changes",
+   "summary": "Send a signal to a process, by default asking it to terminate.",
+   "synopsis": "kill [-SIGNAL] PID...",
+   "flags": [
+    {
+     "flag": "-l",
+     "text": "List signal names."
+    },
+    {
+     "flag": "-9",
+     "text": "SIGKILL: the process cannot catch it and gets no chance to clean up. Try plain kill first.",
+     "danger": "changes"
+    }
+   ],
+   "examples": [
+    "kill -l | head -n 3"
+   ]
+  },
+  {
+   "name": "less",
+   "group": "view",
+   "danger": "reads",
+   "summary": "Page through a file one screen at a time.",
+   "synopsis": "less [OPTION]... FILE",
+   "flags": [
+    {
+     "flag": "q",
+     "text": "Quit."
+    },
+    {
+     "flag": "/word",
+     "text": "Search forward for word; n finds the next match."
+    },
+    {
+     "flag": "space",
+     "text": "Next page."
+    }
+   ],
+   "examples": [],
+   "note": "Interactive, so it cannot be run in a page; try it on a long file."
+  },
+  {
+   "name": "ln",
+   "group": "files",
+   "danger": "changes",
+   "summary": "Make links between files.",
+   "synopsis": "ln [OPTION]... TARGET LINK_NAME",
+   "flags": [
+    {
+     "flag": "-s",
+     "text": "Make a symbolic link (a pointer by name) instead of a hard link."
+    }
+   ],
+   "examples": [
+    "ln -s notes.txt shortcut && cat shortcut | head -n 1"
+   ]
+  },
+  {
+   "name": "ls",
+   "group": "files",
+   "danger": "reads",
+   "summary": "List the contents of a directory.",
+   "synopsis": "ls [OPTION]... [FILE]...",
+   "flags": [
+    {
+     "flag": "-l",
+     "text": "Long format: permissions, owner, size and date."
+    },
+    {
+     "flag": "-a",
+     "text": "Include hidden entries (names starting with a dot)."
+    },
+    {
+     "flag": "-h",
+     "text": "With -l, print sizes like 1K or 234M."
+    },
+    {
+     "flag": "-t",
+     "text": "Sort by modification time, newest first."
+    },
+    {
+     "flag": "-r",
+     "text": "Reverse the sort order."
+    },
+    {
+     "flag": "-R",
+     "text": "List subdirectories recursively."
+    },
+    {
+     "flag": "-1",
+     "text": "One entry per line."
+    },
+    {
+     "flag": "-S",
+     "text": "Sort by size, largest first (GNU and BSD)."
+    }
+   ],
+   "examples": [
+    "ls",
+    "ls -a",
+    "ls -1t",
+    "ls projects",
+    "ls -R projects"
+   ],
+   "note": "Colour and column layout depend on your terminal; output here is plain."
+  },
+  {
+   "name": "man",
+   "group": "shell",
+   "danger": "reads",
+   "summary": "Open the manual page for a command.",
+   "synopsis": "man [SECTION] NAME",
+   "flags": [
+    {
+     "flag": "-k",
+     "text": "Search page titles and descriptions for a word."
+    }
+   ],
+   "examples": [],
+   "note": "Interactive (it opens a pager). Quit with q. For a short summary, try tldr."
+  },
+  {
+   "name": "mkdir",
+   "group": "files",
+   "danger": "changes",
+   "summary": "Create directories.",
+   "synopsis": "mkdir [OPTION]... DIRECTORY...",
+   "flags": [
+    {
+     "flag": "-p",
+     "text": "Create missing parent directories, and do not fail if the directory already exists."
+    },
+    {
+     "flag": "-v",
+     "text": "Print a line for each directory created."
+    }
+   ],
+   "examples": [
+    "mkdir -pv backup/2025/jan && ls -R backup",
+    "mkdir docs"
+   ],
+   "note": "Without -p, creating an existing directory is an error, as the second example shows."
+  },
+  {
+   "name": "mv",
+   "group": "files",
+   "danger": "changes",
+   "summary": "Move or rename files and directories.",
+   "synopsis": "mv [OPTION]... SOURCE... DEST",
+   "flags": [
+    {
+     "flag": "-i",
+     "text": "Ask before overwriting."
+    },
+    {
+     "flag": "-n",
+     "text": "Never overwrite."
+    },
+    {
+     "flag": "-v",
+     "text": "Print each move."
+    }
+   ],
+   "examples": [
+    "mv notes.txt renamed.txt && ls renamed.txt",
+    "mv -v fruits.txt docs/"
+   ],
+   "note": "Like cp, mv replaces an existing destination silently unless you give -i or -n."
+  },
+  {
+   "name": "ps",
+   "group": "system",
+   "danger": "reads",
+   "summary": "List running processes.",
+   "synopsis": "ps [OPTIONS]",
+   "flags": [
+    {
+     "flag": "aux",
+     "text": "All users' processes with details (BSD style, no dash)."
+    },
+    {
+     "flag": "-ef",
+     "text": "Every process, full format (POSIX style)."
+    }
+   ],
+   "examples": [],
+   "note": "Output depends on the machine, so no example is run."
+  },
+  {
+   "name": "pwd",
+   "group": "files",
+   "danger": "reads",
+   "summary": "Print the directory the shell is in.",
+   "synopsis": "pwd [-LP]",
+   "flags": [
+    {
+     "flag": "-P",
+     "text": "Print the physical path, with symbolic links resolved."
+    },
+    {
+     "flag": "-L",
+     "text": "Print the logical path (the default)."
+    }
+   ],
+   "examples": [
+    "cd docs && pwd"
+   ]
+  },
+  {
+   "name": "rm",
+   "group": "files",
+   "danger": "destroys",
+   "summary": "Remove files and directories. There is no recycle bin and no undo.",
+   "synopsis": "rm [OPTION]... FILE...",
+   "flags": [
+    {
+     "flag": "-r",
+     "text": "Remove directories and everything in them.",
+     "danger": "destroys"
+    },
+    {
+     "flag": "-f",
+     "text": "Ignore missing files and never ask. Combined with -r it is the command that empties disks.",
+     "danger": "destroys"
+    },
+    {
+     "flag": "-i",
+     "text": "Ask before every removal."
+    },
+    {
+     "flag": "-v",
+     "text": "Print each removal."
+    },
+    {
+     "flag": "-d",
+     "text": "Remove empty directories."
+    }
+   ],
+   "examples": [
+    "rm numbers.txt && ls",
+    "rm -rv docs",
+    "rm nothere.txt",
+    "rm -f nothere.txt && echo ok"
+   ],
+   "note": "Check what a pattern matches before deleting it: run ls with the same pattern first."
+  },
+  {
+   "name": "rmdir",
+   "group": "files",
+   "danger": "changes",
+   "summary": "Remove empty directories.",
+   "synopsis": "rmdir [OPTION]... DIRECTORY...",
+   "flags": [
+    {
+     "flag": "-p",
+     "text": "Also remove the parent directories, if they become empty."
+    }
+   ],
+   "examples": [
+    "mkdir empty && rmdir empty && echo removed",
+    "rmdir docs"
+   ],
+   "note": "It refuses to remove a directory that has anything in it, which makes it a safe way to delete."
+  },
+  {
+   "name": "sed",
+   "group": "text",
+   "danger": "reads",
+   "summary": "Edit a stream of text, most often to substitute.",
+   "synopsis": "sed [OPTION]... 'SCRIPT' [FILE]...",
+   "flags": [
+    {
+     "flag": "-n",
+     "text": "Print only lines you ask for with p."
+    },
+    {
+     "flag": "-e",
+     "text": "Add a script (use it several times)."
+    },
+    {
+     "flag": "-E",
+     "text": "Use extended regular expressions."
+    },
+    {
+     "flag": "-i",
+     "text": "Edit the file in place, overwriting it. BSD/macOS sed needs -i '' (an argument).",
+     "danger": "changes"
+    }
+   ],
+   "examples": [
+    "sed 's/bash/BASH/' notes.txt",
+    "sed -n '2,3p' notes.txt",
+    "sed 's/apple/pear/g' fruits.txt | head -n 2",
+    "sed -i 's/bash/BASH/' notes.txt && head -n 1 notes.txt"
+   ],
+   "note": "Without -i it prints the edited text and leaves the file alone."
+  },
+  {
+   "name": "sort",
+   "group": "text",
+   "danger": "reads",
+   "summary": "Sort lines.",
+   "synopsis": "sort [OPTION]... [FILE]...",
+   "flags": [
+    {
+     "flag": "-n",
+     "text": "Compare numerically (so 9 sorts before 10)."
+    },
+    {
+     "flag": "-r",
+     "text": "Reverse the order."
+    },
+    {
+     "flag": "-u",
+     "text": "Keep only the first of equal lines."
+    },
+    {
+     "flag": "-k",
+     "text": "Sort by a key: field number, such as -k2."
+    },
+    {
+     "flag": "-t",
+     "text": "Field separator for -k."
+    }
+   ],
+   "examples": [
+    "sort fruits.txt",
+    "sort numbers.txt",
+    "sort -n numbers.txt",
+    "sort -t, -k3 -n data.csv"
+   ]
+  },
+  {
+   "name": "sudo",
+   "group": "system",
+   "danger": "changes",
+   "summary": "Run one command with administrator rights.",
+   "synopsis": "sudo COMMAND",
+   "flags": [],
+   "examples": [],
+   "note": "Everything the command does, it does with full rights. Read a command twice before putting sudo in front of it, and never pipe a download into sudo bash."
+  },
+  {
+   "name": "tail",
+   "group": "view",
+   "danger": "reads",
+   "summary": "Print the last lines of a file.",
+   "synopsis": "tail [-n COUNT] [-f] [FILE]...",
+   "flags": [
+    {
+     "flag": "-n",
+     "text": "How many lines (default 10)."
+    },
+    {
+     "flag": "-f",
+     "text": "Keep the file open and print new lines as they are added; stop with Ctrl-C."
+    }
+   ],
+   "examples": [
+    "tail -n 2 notes.txt"
+   ]
+  },
+  {
+   "name": "tar",
+   "group": "net",
+   "danger": "changes",
+   "summary": "Bundle files into one archive, and unpack it.",
+   "synopsis": "tar [OPTION]... [FILE]...",
+   "flags": [
+    {
+     "flag": "-c",
+     "text": "Create an archive."
+    },
+    {
+     "flag": "-x",
+     "text": "Extract an archive.",
+     "danger": "changes"
+    },
+    {
+     "flag": "-t",
+     "text": "List the contents without extracting."
+    },
+    {
+     "flag": "-z",
+     "text": "Compress with gzip (use with -c or -x)."
+    },
+    {
+     "flag": "-v",
+     "text": "Verbose: list files as they are handled."
+    },
+    {
+     "flag": "-f",
+     "text": "The archive file name. It must come right before the name."
+    }
+   ],
+   "examples": [
+    "tar -czf docs.tar.gz docs projects && tar -tzf docs.tar.gz | sort",
+    "tar -czf p.tar.gz projects && mkdir out && tar -xzf p.tar.gz -C out && ls out"
+   ],
+   "note": "-x overwrites existing files of the same name. Use -t first when you do not know what is inside."
+  },
+  {
+   "name": "tee",
+   "group": "text",
+   "danger": "changes",
+   "summary": "Copy standard input to a file and also to standard output.",
+   "synopsis": "tee [-a] FILE...",
+   "flags": [
+    {
+     "flag": "-a",
+     "text": "Append to the file instead of overwriting it."
+    }
+   ],
+   "examples": [
+    "echo hi | tee out.txt && cat out.txt"
+   ],
+   "note": "Without -a it overwrites the file."
+  },
+  {
+   "name": "touch",
+   "group": "files",
+   "danger": "changes",
+   "summary": "Create an empty file, or update a file's timestamps.",
+   "synopsis": "touch [OPTION]... FILE...",
+   "flags": [
+    {
+     "flag": "-c",
+     "text": "Do not create the file if it does not exist."
+    },
+    {
+     "flag": "-d",
+     "text": "Use the given date instead of now (GNU; BSD uses -t)."
+    }
+   ],
+   "examples": [
+    "touch new.txt && ls new.txt"
+   ]
+  },
+  {
+   "name": "tr",
+   "group": "text",
+   "danger": "reads",
+   "summary": "Translate or delete characters (reads standard input only).",
+   "synopsis": "tr [OPTION]... SET1 [SET2]",
+   "flags": [
+    {
+     "flag": "-d",
+     "text": "Delete the characters in SET1."
+    },
+    {
+     "flag": "-s",
+     "text": "Squeeze repeats of a character into one."
+    }
+   ],
+   "examples": [
+    "echo hello | tr a-z A-Z",
+    "echo 'a,b,c' | tr -d ,",
+    "echo 'too    many   spaces' | tr -s ' '"
+   ]
+  },
+  {
+   "name": "type",
+   "group": "shell",
+   "danger": "reads",
+   "summary": "Say what a name means: builtin, alias, function or program.",
+   "synopsis": "type [-a] NAME...",
+   "flags": [
+    {
+     "flag": "-a",
+     "text": "Show every meaning, not just the first."
+    }
+   ],
+   "examples": [
+    "type cd",
+    "type -t cd ls if"
+   ],
+   "note": "'which' is a separate program; 'type' knows about builtins and functions. -t prints just the kind: builtin, file, alias, function or keyword."
+  },
+  {
+   "name": "uniq",
+   "group": "text",
+   "danger": "reads",
+   "summary": "Collapse adjacent repeated lines.",
+   "synopsis": "uniq [OPTION]... [INPUT]",
+   "flags": [
+    {
+     "flag": "-c",
+     "text": "Prefix each line with how many times it occurred."
+    },
+    {
+     "flag": "-d",
+     "text": "Print only lines that were repeated."
+    }
+   ],
+   "examples": [
+    "sort fruits.txt | uniq",
+    "sort fruits.txt | uniq -c",
+    "uniq fruits.txt"
+   ],
+   "note": "It only compares neighbouring lines, so sort the input first (the last example shows what happens if you do not)."
+  },
+  {
+   "name": "wc",
+   "group": "view",
+   "danger": "reads",
+   "summary": "Count lines, words and bytes.",
+   "synopsis": "wc [OPTION]... [FILE]...",
+   "flags": [
+    {
+     "flag": "-l",
+     "text": "Lines only."
+    },
+    {
+     "flag": "-w",
+     "text": "Words only."
+    },
+    {
+     "flag": "-c",
+     "text": "Bytes only."
+    }
+   ],
+   "examples": [
+    "wc -l access.log",
+    "wc notes.txt",
+    "cat fruits.txt | wc -l"
+   ]
+  },
+  {
+   "name": "xargs",
+   "group": "text",
+   "danger": "changes",
+   "summary": "Build and run commands from standard input.",
+   "synopsis": "xargs [OPTION]... COMMAND [ARG]...",
+   "flags": [
+    {
+     "flag": "-n",
+     "text": "Use at most N arguments per command."
+    },
+    {
+     "flag": "-I",
+     "text": "Replace a placeholder (such as {}) with each input line."
+    },
+    {
+     "flag": "-0",
+     "text": "Input is separated by NUL characters, for names with spaces; pair with find -print0."
+    }
+   ],
+   "examples": [
+    "echo 'a b c' | xargs -n 1 echo item",
+    "ls *.txt | xargs wc -l"
+   ],
+   "note": "It runs whatever command you give it, so it is as dangerous as that command."
+  }
+ ]
+}

@@ -1,503 +1,288 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bash Commands Encyclopedia - Learn Bash Scripting</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<title>Bash command reference: Learn Bash</title>
+<meta name="description" content="42 Bash commands with 120 flags, each marked as only reading, changing things or able to delete data, with examples that were actually run.">
+<meta property="og:title" content="Bash command reference: Learn Bash"><meta property="og:description" content="42 Bash commands with 120 flags, each marked as only reading, changing things or able to delete data, with examples that were actually run."><meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Header with Navigation -->
-  <header>
-    <div class="container">
-      <h1>Learn Bash Scripting</h1>
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="basics.html">Bash Basics</a></li>
-          <li><a href="commands.html">Commands</a></li>
-          <li><a href="scripting.html">Scripting</a></li>
-          <li><a href="advanced.html">Advanced Topics</a></li>
-          <li><a href="resources.html">Resources</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+<a class="skip" href="#main">Skip to the content</a>
+<header class="mast">
+  <a class="brand" href="index.html"><span class="ps" aria-hidden="true">$</span> learn-bash<span class="cur" aria-hidden="true">_</span></a>
+  <nav aria-label="Pages"><a href="basics.html">Basics</a><a href="commands.html" aria-current="page">Commands</a><a href="scripting.html">Scripting</a><a href="advanced.html">Advanced</a><a href="explain.html">Explain</a></nav>
+</header>
+<main id="main">
 
-  <!-- Main Content Area -->
-  <main>
-    <!-- Introduction -->
-    <section id="intro">
-      <div class="container">
-        <h2>Bash Commands Encyclopedia</h2>
-        <p>This page serves as a comprehensive encyclopedia for Bash commands. Whether you are a beginner or an advanced user, explore the detailed explanations, examples, and usage tips for various commands that power your Unix/Linux systems.</p>
-      </div>
-    </section>
+<section class="page-head"><p class="kicker">Reference</p><h1>42 commands, and what each can do</h1>
+<p class="lede">Each command carries a mark for the worst it can do in its everyday form; a flag that is more dangerous than the command says so.</p>
+<ul class="legend"><li><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span><span>Does not change files or the system. (It may change the current shell session.)</span></li><li><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span><span>Creates, modifies or moves files or system state.</span></li><li><span class="mk mk-destroys"><i aria-hidden="true"></i>Can delete data</span><span>Can permanently remove or overwrite data. There is no undo.</span></li></ul>
+<p class="small">GNU (Linux) flags are shown; where macOS/BSD differs, the entry says so.</p></section>
+<section aria-labelledby="h-find">
+  <h2 id="h-find" class="sr">Find a command</h2>
+  <div class="tools" id="cmd-tools" hidden>
+    <label class="f"><span class="label">Search commands</span><input id="q" type="search" placeholder="for example copy, count, search" autocomplete="off"></label>
+    <div class="chips" id="group-chips" role="group" aria-label="Filter by kind of task"><button type="button" class="chip on" data-group="">All</button><button type="button" class="chip" data-group="files">Files and directories</button><button type="button" class="chip" data-group="view">Viewing files</button><button type="button" class="chip" data-group="text">Searching and text processing</button><button type="button" class="chip" data-group="system">Processes, permissions and system</button><button type="button" class="chip" data-group="net">Archives and networking</button><button type="button" class="chip" data-group="shell">The shell itself</button></div>
+  </div>
+  <p class="count" id="count" role="status" aria-live="polite"></p>
+  <div class="cmds"><article class="cmd-card" id="cmd-alias" data-group="shell" data-name="alias" data-text="give a command another name for this session."><header><h3><code>alias</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Give a command another name for this session.</p><p class="syn"><code>alias [NAME=VALUE]</code></p><p class="cnote">Aliases are lost when the shell exits; put them in ~/.bashrc to keep them. Scripts do not see them.</p></article><article class="cmd-card" id="cmd-awk" data-group="text" data-name="awk" data-text="process text one record (line) at a time, split into fields."><header><h3><code>awk</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Process text one record (line) at a time, split into fields.</p><p class="syn"><code>awk [-F SEP] &#x27;PATTERN { ACTION }&#x27; [FILE]...</code></p><p class="cnote">Examples avoid features only GNU awk has, so they behave the same under mawk and macOS awk.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-F</code><span>Field separator.</span></li><li><code class="fl">$1, $2, ...</code><span>The first, second, ... field of the current line; $0 is the whole line.</span></li><li><code class="fl">NR</code><span>The number of the current line.</span></li><li><code class="fl">NF</code><span>The number of fields on the current line.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> awk &#x27;{print $1}&#x27; notes.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>bash
+bash
+ls
+cd
+Bash</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> awk -F, &#x27;NR &gt; 1 {sum += $3} END {print sum}&#x27; data.csv</span>
+</code></pre><pre class="out" aria-label="Output"><code>43</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> awk -F, &#x27;$2 == &quot;red&quot; {print $1}&#x27; data.csv</span>
+</code></pre><pre class="out" aria-label="Output"><code>ana
+cho</code></pre></figure></article><article class="cmd-card" id="cmd-cat" data-group="view" data-name="cat" data-text="print files, or join several one after another."><header><h3><code>cat</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Print files, or join several one after another.</p><p class="syn"><code>cat [OPTION]... [FILE]...</code></p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-n</code><span>Number every output line.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> cat notes.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>bash is a shell
+bash is also a scripting language
+ls lists files
+cd changes directory
+Bash was first released in 1989</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> cat -n fruits.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>     1	apple
+     2	banana
+     3	cherry
+     4	apple
+     5	banana
+     6	apple</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> cat fruits.txt numbers.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>apple
+banana
+cherry
+apple
+banana
+apple
+10
+9
+100
+1</code></pre></figure></article><article class="cmd-card" id="cmd-cd" data-group="files" data-name="cd" data-text="change the current directory of the shell."><header><h3><code>cd</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Change the current directory of the shell.</p><p class="syn"><code>cd [DIRECTORY]</code></p><p class="cnote">A shell builtin: it changes where the shell is, not any file.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-</code><span>Go back to the previous directory.</span></li><li><code class="fl">~</code><span>Your home directory (also the default when no argument is given).</span></li><li><code class="fl">..</code><span>The parent directory.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> cd projects &amp;&amp; pwd</span>
+</code></pre><pre class="out" aria-label="Output"><code>/home/you/demo/projects</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> cd projects/web &amp;&amp; cd ../api &amp;&amp; pwd</span>
+</code></pre><pre class="out" aria-label="Output"><code>/home/you/demo/projects/api</code></pre></figure></article><article class="cmd-card" id="cmd-chmod" data-group="system" data-name="chmod" data-text="change who can read, write or run a file."><header><h3><code>chmod</code></h3><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></header><p class="sum">Change who can read, write or run a file.</p><p class="syn"><code>chmod [OPTION]... MODE FILE...</code></p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">u+x</code><span>Give the owner (u) execute (x) permission. g is group, o is others, a is all.</span></li><li><code class="fl">644</code><span>Octal: owner read and write, everyone else read only.</span></li><li><code class="fl">755</code><span>Octal: owner everything, others read and execute.</span></li><li><code class="fl">-R</code><span>Apply to a directory and everything in it.</span><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> ls -l scripts/hello.sh | cut -c1-10</span>
+</code></pre><pre class="out" aria-label="Output"><code>-rw-r--r--</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> chmod u+x scripts/hello.sh &amp;&amp; ls -l scripts/hello.sh | cut -c1-10 &amp;&amp; scripts/hello.sh Ana</span>
+</code></pre><pre class="out" aria-label="Output"><code>-rwxr--r--
+Hello, Ana!</code></pre></figure></article><article class="cmd-card" id="cmd-chown" data-group="system" data-name="chown" data-text="change the owner and group of a file. usually needs sudo."><header><h3><code>chown</code></h3><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></header><p class="sum">Change the owner and group of a file. Usually needs sudo.</p><p class="syn"><code>chown [OPTION]... OWNER[:GROUP] FILE...</code></p><p class="cnote">Not run here: changing ownership needs administrator rights.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-R</code><span>Apply recursively.</span><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></li></ul></article><article class="cmd-card" id="cmd-cp" data-group="files" data-name="cp" data-text="copy files and directories."><header><h3><code>cp</code></h3><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></header><p class="sum">Copy files and directories.</p><p class="syn"><code>cp [OPTION]... SOURCE... DEST</code></p><p class="cnote">By default cp overwrites an existing destination without asking. -i asks first; -n never overwrites (recent GNU versions warn that its behaviour is non-portable and suggest --update=none).</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-r</code><span>Copy directories recursively (also -R).</span></li><li><code class="fl">-i</code><span>Ask before overwriting an existing file.</span></li><li><code class="fl">-n</code><span>Never overwrite an existing file.</span></li><li><code class="fl">-v</code><span>Print each copy as it happens.</span></li><li><code class="fl">-p</code><span>Keep mode, ownership and timestamps.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> cp notes.txt copy.txt &amp;&amp; cat copy.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>bash is a shell
+bash is also a scripting language
+ls lists files
+cd changes directory
+Bash was first released in 1989</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> cp -r projects backup &amp;&amp; ls backup</span>
+</code></pre><pre class="out" aria-label="Output"><code>api
+web</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> cp -v notes.txt copy.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>&#x27;notes.txt&#x27; -&gt; &#x27;copy.txt&#x27;</code></pre></figure></article><article class="cmd-card" id="cmd-curl" data-group="net" data-name="curl" data-text="transfer data from or to a url."><header><h3><code>curl</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Transfer data from or to a URL.</p><p class="syn"><code>curl [OPTION]... URL</code></p><p class="cnote">Not run here: it needs the network. Never pipe a download straight into a shell (curl ... | bash): you run code you have not read.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-s</code><span>Silent: no progress meter.</span></li><li><code class="fl">-o</code><span>Write output to a file instead of the screen.</span><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></li><li><code class="fl">-O</code><span>Save under the name used in the URL.</span><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></li><li><code class="fl">-L</code><span>Follow redirects.</span></li><li><code class="fl">-I</code><span>Fetch headers only.</span></li><li><code class="fl">-X</code><span>Choose the HTTP method.</span></li><li><code class="fl">-H</code><span>Add a request header.</span></li><li><code class="fl">-d</code><span>Send data in the request body.</span></li></ul></article><article class="cmd-card" id="cmd-cut" data-group="text" data-name="cut" data-text="cut out columns from each line."><header><h3><code>cut</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Cut out columns from each line.</p><p class="syn"><code>cut -d DELIM -f LIST [FILE]</code></p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-d</code><span>Field delimiter (one character).</span></li><li><code class="fl">-f</code><span>Which fields to keep, such as 1,3 or 2-4.</span></li><li><code class="fl">-c</code><span>Which characters to keep.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> cut -d, -f1,3 data.csv</span>
+</code></pre><pre class="out" aria-label="Output"><code>name,score
+ana,12
+ben,7
+cho,9
+dee,15</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> cut -c1-4 notes.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>bash
+bash
+ls l
+cd c
+Bash</code></pre></figure></article><article class="cmd-card" id="cmd-date" data-group="system" data-name="date" data-text="print or format the date and time."><header><h3><code>date</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Print or format the date and time.</p><p class="syn"><code>date [+FORMAT]</code></p><p class="cnote">Examples use a fixed date so the output does not change.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">+%F</code><span>Format: the date as YYYY-MM-DD.</span></li><li><code class="fl">+%T</code><span>Format: the time as HH:MM:SS.</span></li><li><code class="fl">-d</code><span>Use a given date instead of now (GNU; BSD uses -j -f).</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> date -d 2025-03-04 +%F</span>
+</code></pre><pre class="out" aria-label="Output"><code>2025-03-04</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> date -d 2025-03-04 +%A</span>
+</code></pre><pre class="out" aria-label="Output"><code>Tuesday</code></pre></figure></article><article class="cmd-card" id="cmd-df" data-group="system" data-name="df" data-text="show free and used space on mounted file systems."><header><h3><code>df</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Show free and used space on mounted file systems.</p><p class="syn"><code>df [OPTION]... [FILE]...</code></p><p class="cnote">Output depends on the machine, so no example is run.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-h</code><span>Human-readable sizes.</span></li></ul></article><article class="cmd-card" id="cmd-diff" data-group="text" data-name="diff" data-text="show the differences between two files."><header><h3><code>diff</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Show the differences between two files.</p><p class="syn"><code>diff [OPTION]... FILE1 FILE2</code></p><p class="cnote">Exit status is 0 when the files are identical, 1 when they differ.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-u</code><span>Unified format, the one patches and code review use.</span></li><li><code class="fl">-r</code><span>Compare directories recursively.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> diff fruits.txt notes.txt | head -n 4</span>
+</code></pre><pre class="out" aria-label="Output"><code>1,6c1,5
+&lt; apple
+&lt; banana
+&lt; cherry</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> diff -u projects/api/notes.txt docs/readme.md | head -n 6</span>
+</code></pre><pre class="out" aria-label="Output"><code>--- projects/api/notes.txt	2025-01-01 08:00:00.000000000 +0000
++++ docs/readme.md	2025-01-01 08:00:00.000000000 +0000
+@@ -1 +1,2 @@
+-TODO: add tests
++# Docs
++See notes.txt</code></pre></figure></article><article class="cmd-card" id="cmd-du" data-group="system" data-name="du" data-text="show how much disk space files and directories use."><header><h3><code>du</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Show how much disk space files and directories use.</p><p class="syn"><code>du [OPTION]... [FILE]...</code></p><p class="cnote">Sizes depend on the file system, so no example is run.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-h</code><span>Human-readable sizes.</span></li><li><code class="fl">-s</code><span>Only a total for each argument.</span></li></ul></article><article class="cmd-card" id="cmd-echo" data-group="shell" data-name="echo" data-text="print its arguments."><header><h3><code>echo</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Print its arguments.</p><p class="syn"><code>echo [-ne] [STRING]...</code></p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-n</code><span>Do not print the trailing newline.</span></li><li><code class="fl">-e</code><span>Interpret backslash escapes such as \n (bash). Use printf when you need portability.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> echo hello world</span>
+</code></pre><pre class="out" aria-label="Output"><code>hello world</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> echo -n no newline; echo &#x27; ... then this&#x27;</span>
+</code></pre><pre class="out" aria-label="Output"><code>no newline ... then this</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> echo &quot;two words&quot; | wc -w</span>
+</code></pre><pre class="out" aria-label="Output"><code>2</code></pre></figure></article><article class="cmd-card" id="cmd-export" data-group="shell" data-name="export" data-text="mark a variable so child processes inherit it."><header><h3><code>export</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Mark a variable so child processes inherit it.</p><p class="syn"><code>export NAME[=VALUE]...</code></p><p class="cnote">A builtin. The first example shows an exported-less variable is invisible to a child shell.</p><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> NAME=Ana; bash -c &#x27;echo [$NAME]&#x27;</span>
+</code></pre><pre class="out" aria-label="Output"><code>[]</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> export NAME=Ana; bash -c &#x27;echo [$NAME]&#x27;</span>
+</code></pre><pre class="out" aria-label="Output"><code>[Ana]</code></pre></figure></article><article class="cmd-card" id="cmd-find" data-group="text" data-name="find" data-text="search a directory tree for files by name, type, age or size."><header><h3><code>find</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Search a directory tree for files by name, type, age or size.</p><p class="syn"><code>find [PATH]... [EXPRESSION]</code></p><p class="cnote">Without -delete or -exec, find only reads. It lists matches in whatever order the file system gives them, so the examples sort the result.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-name</code><span>Match the file name against a glob such as &#x27;*.txt&#x27; (quote it).</span></li><li><code class="fl">-type</code><span>f for files, d for directories.</span></li><li><code class="fl">-mtime</code><span>Modified N days ago; +N means more than N, -N less than N.</span></li><li><code class="fl">-size</code><span>File size, such as +1M.</span></li><li><code class="fl">-maxdepth</code><span>Do not go deeper than N levels.</span></li><li><code class="fl">-exec</code><span>Run a command on each match; {} stands for the file and \; ends the command.</span><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></li><li><code class="fl">-delete</code><span>Delete every match. Put it last, and run the same find without it first.</span><span class="mk mk-destroys"><i aria-hidden="true"></i>Can delete data</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> find . -name &#x27;*.txt&#x27; | sort</span>
+</code></pre><pre class="out" aria-label="Output"><code>./fruits.txt
+./notes.txt
+./numbers.txt
+./projects/api/notes.txt</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> find projects -type f | sort</span>
+</code></pre><pre class="out" aria-label="Output"><code>projects/api/notes.txt
+projects/api/server.py
+projects/web/index.html
+projects/web/style.css</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> find . -maxdepth 1 -type d</span>
+</code></pre><pre class="out" aria-label="Output"><code>.
+./projects
+./scripts
+./docs</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> find . -name &#x27;*.txt&#x27; -exec wc -l {} \; | sort -k2</span>
+</code></pre><pre class="out" aria-label="Output"><code>6 ./fruits.txt
+5 ./notes.txt
+4 ./numbers.txt
+1 ./projects/api/notes.txt</code></pre></figure></article><article class="cmd-card" id="cmd-grep" data-group="text" data-name="grep" data-text="print lines that match a pattern."><header><h3><code>grep</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Print lines that match a pattern.</p><p class="syn"><code>grep [OPTION]... PATTERN [FILE]...</code></p><p class="cnote">Exit status is 0 if something matched, 1 if nothing did, which scripts use in if statements.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-i</code><span>Ignore case.</span></li><li><code class="fl">-v</code><span>Invert: print lines that do not match.</span></li><li><code class="fl">-n</code><span>Show line numbers.</span></li><li><code class="fl">-r</code><span>Search directories recursively.</span></li><li><code class="fl">-c</code><span>Print only the number of matching lines.</span></li><li><code class="fl">-l</code><span>Print only the names of files that match.</span></li><li><code class="fl">-w</code><span>Match whole words only.</span></li><li><code class="fl">-E</code><span>Use extended regular expressions.</span></li><li><code class="fl">-o</code><span>Print only the matching part of each line.</span></li><li><code class="fl">-F</code><span>Treat the pattern as a fixed string, not a regular expression.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> grep bash notes.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>bash is a shell
+bash is also a scripting language</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> grep -in bash notes.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>1:bash is a shell
+2:bash is also a scripting language
+5:Bash was first released in 1989</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> grep -c apple fruits.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>3</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> grep -rl notes projects docs</span>
+</code></pre><pre class="out" aria-label="Output"><code>docs/readme.md</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> grep -v bash notes.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>ls lists files
+cd changes directory
+Bash was first released in 1989</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> grep -E &#x27;^(ls|cd)&#x27; notes.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>ls lists files
+cd changes directory</code></pre></figure></article><article class="cmd-card" id="cmd-head" data-group="view" data-name="head" data-text="print the first lines of a file."><header><h3><code>head</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Print the first lines of a file.</p><p class="syn"><code>head [-n COUNT] [FILE]...</code></p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-n</code><span>How many lines (default 10).</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> head -n 2 notes.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>bash is a shell
+bash is also a scripting language</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> head -n 3 access.log</span>
+</code></pre><pre class="out" aria-label="Output"><code>203.0.113.5 - - [10/Nov/2025:10:00:00 +0000] &quot;GET /index.html HTTP/1.1&quot; 200 1043
+198.51.100.7 - - [10/Nov/2025:10:00:07 +0000] &quot;GET /about.html HTTP/1.1&quot; 200 512
+203.0.113.5 - - [10/Nov/2025:10:00:14 +0000] &quot;GET /missing.png HTTP/1.1&quot; 404 150</code></pre></figure></article><article class="cmd-card" id="cmd-history" data-group="shell" data-name="history" data-text="list the commands you typed earlier."><header><h3><code>history</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">List the commands you typed earlier.</p><p class="syn"><code>history [N]</code></p><p class="cnote">Interactive, so it is not run here.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">!!</code><span>Re-run the last command.</span></li><li><code class="fl">Ctrl-R</code><span>Search your history as you type.</span></li></ul></article><article class="cmd-card" id="cmd-kill" data-group="system" data-name="kill" data-text="send a signal to a process, by default asking it to terminate."><header><h3><code>kill</code></h3><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></header><p class="sum">Send a signal to a process, by default asking it to terminate.</p><p class="syn"><code>kill [-SIGNAL] PID...</code></p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-l</code><span>List signal names.</span></li><li><code class="fl">-9</code><span>SIGKILL: the process cannot catch it and gets no chance to clean up. Try plain kill first.</span><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> kill -l | head -n 3</span>
+</code></pre><pre class="out" aria-label="Output"><code> 1) SIGHUP	 2) SIGINT	 3) SIGQUIT	 4) SIGILL	 5) SIGTRAP
+ 6) SIGABRT	 7) SIGBUS	 8) SIGFPE	 9) SIGKILL	10) SIGUSR1
+11) SIGSEGV	12) SIGUSR2	13) SIGPIPE	14) SIGALRM	15) SIGTERM</code></pre></figure></article><article class="cmd-card" id="cmd-less" data-group="view" data-name="less" data-text="page through a file one screen at a time."><header><h3><code>less</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Page through a file one screen at a time.</p><p class="syn"><code>less [OPTION]... FILE</code></p><p class="cnote">Interactive, so it cannot be run in a page; try it on a long file.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">q</code><span>Quit.</span></li><li><code class="fl">/word</code><span>Search forward for word; n finds the next match.</span></li><li><code class="fl">space</code><span>Next page.</span></li></ul></article><article class="cmd-card" id="cmd-ln" data-group="files" data-name="ln" data-text="make links between files."><header><h3><code>ln</code></h3><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></header><p class="sum">Make links between files.</p><p class="syn"><code>ln [OPTION]... TARGET LINK_NAME</code></p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-s</code><span>Make a symbolic link (a pointer by name) instead of a hard link.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> ln -s notes.txt shortcut &amp;&amp; cat shortcut | head -n 1</span>
+</code></pre><pre class="out" aria-label="Output"><code>bash is a shell</code></pre></figure></article><article class="cmd-card" id="cmd-ls" data-group="files" data-name="ls" data-text="list the contents of a directory."><header><h3><code>ls</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">List the contents of a directory.</p><p class="syn"><code>ls [OPTION]... [FILE]...</code></p><p class="cnote">Colour and column layout depend on your terminal; output here is plain.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-l</code><span>Long format: permissions, owner, size and date.</span></li><li><code class="fl">-a</code><span>Include hidden entries (names starting with a dot).</span></li><li><code class="fl">-h</code><span>With -l, print sizes like 1K or 234M.</span></li><li><code class="fl">-t</code><span>Sort by modification time, newest first.</span></li><li><code class="fl">-r</code><span>Reverse the sort order.</span></li><li><code class="fl">-R</code><span>List subdirectories recursively.</span></li><li><code class="fl">-1</code><span>One entry per line.</span></li><li><code class="fl">-S</code><span>Sort by size, largest first (GNU and BSD).</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> ls</span>
+</code></pre><pre class="out" aria-label="Output"><code>access.log
+data.csv
+docs
+fruits.txt
+notes.txt
+numbers.txt
+projects
+scripts</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> ls -a</span>
+</code></pre><pre class="out" aria-label="Output"><code>.
+..
+.hidden
+access.log
+data.csv
+docs
+fruits.txt
+notes.txt
+numbers.txt
+projects
+scripts</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> ls -1t</span>
+</code></pre><pre class="out" aria-label="Output"><code>docs
+projects
+scripts
+notes.txt
+fruits.txt
+numbers.txt
+data.csv
+access.log</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> ls projects</span>
+</code></pre><pre class="out" aria-label="Output"><code>api
+web</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> ls -R projects</span>
+</code></pre><pre class="out" aria-label="Output"><code>projects:
+api
+web
 
-    <!-- File and Directory Management Commands -->
-    <section id="file-directory">
-      <div class="container">
-        <h2>File and Directory Management Commands</h2>
-        
-        <article id="ls">
-          <h3>ls</h3>
-          <p><strong>Description:</strong> Lists directory contents.</p>
-          <p><strong>Usage:</strong> <code>ls [options] [directory]</code></p>
-          <p><strong>Example:</strong> <code>ls -l /home/user</code> shows a detailed list of files.</p>
-        </article>
+projects/api:
+notes.txt
+server.py
 
-        <article id="cd">
-          <h3>cd</h3>
-          <p><strong>Description:</strong> Changes the current working directory.</p>
-          <p><strong>Usage:</strong> <code>cd [directory]</code></p>
-          <p><strong>Example:</strong> <code>cd /var/log</code> navigates to the log directory.</p>
-        </article>
+projects/web:
+index.html
+style.css</code></pre></figure></article><article class="cmd-card" id="cmd-man" data-group="shell" data-name="man" data-text="open the manual page for a command."><header><h3><code>man</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Open the manual page for a command.</p><p class="syn"><code>man [SECTION] NAME</code></p><p class="cnote">Interactive (it opens a pager). Quit with q. For a short summary, try tldr.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-k</code><span>Search page titles and descriptions for a word.</span></li></ul></article><article class="cmd-card" id="cmd-mkdir" data-group="files" data-name="mkdir" data-text="create directories."><header><h3><code>mkdir</code></h3><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></header><p class="sum">Create directories.</p><p class="syn"><code>mkdir [OPTION]... DIRECTORY...</code></p><p class="cnote">Without -p, creating an existing directory is an error, as the second example shows.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-p</code><span>Create missing parent directories, and do not fail if the directory already exists.</span></li><li><code class="fl">-v</code><span>Print a line for each directory created.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> mkdir -pv backup/2025/jan &amp;&amp; ls -R backup</span>
+</code></pre><pre class="out" aria-label="Output"><code>mkdir: created directory &#x27;backup&#x27;
+mkdir: created directory &#x27;backup/2025&#x27;
+mkdir: created directory &#x27;backup/2025/jan&#x27;
+backup:
+2025
 
-        <article id="pwd">
-          <h3>pwd</h3>
-          <p><strong>Description:</strong> Prints the current working directory.</p>
-          <p><strong>Usage:</strong> <code>pwd</code></p>
-          <p><strong>Example:</strong> Simply type <code>pwd</code> to see your current path.</p>
-        </article>
+backup/2025:
+jan
 
-        <article id="mkdir">
-          <h3>mkdir</h3>
-          <p><strong>Description:</strong> Creates a new directory.</p>
-          <p><strong>Usage:</strong> <code>mkdir [options] directory</code></p>
-          <p><strong>Example:</strong> <code>mkdir new_folder</code> creates a directory named "new_folder".</p>
-        </article>
-
-        <article id="rmdir">
-          <h3>rmdir</h3>
-          <p><strong>Description:</strong> Removes an empty directory.</p>
-          <p><strong>Usage:</strong> <code>rmdir directory</code></p>
-          <p><strong>Example:</strong> <code>rmdir old_folder</code> deletes an empty folder.</p>
-        </article>
-
-        <article id="cp">
-          <h3>cp</h3>
-          <p><strong>Description:</strong> Copies files and directories.</p>
-          <p><strong>Usage:</strong> <code>cp [options] source destination</code></p>
-          <p><strong>Example:</strong> <code>cp file.txt backup_file.txt</code> copies a file.</p>
-        </article>
-
-        <article id="mv">
-          <h3>mv</h3>
-          <p><strong>Description:</strong> Moves or renames files and directories.</p>
-          <p><strong>Usage:</strong> <code>mv [options] source destination</code></p>
-          <p><strong>Example:</strong> <code>mv oldname.txt newname.txt</code> renames a file.</p>
-        </article>
-
-        <article id="rm">
-          <h3>rm</h3>
-          <p><strong>Description:</strong> Removes files or directories.</p>
-          <p><strong>Usage:</strong> <code>rm [options] file</code></p>
-          <p><strong>Example:</strong> <code>rm -r directory</code> removes a directory and its contents.</p>
-        </article>
-
-        <article id="find">
-          <h3>find</h3>
-          <p><strong>Description:</strong> Searches for files and directories based on conditions.</p>
-          <p><strong>Usage:</strong> <code>find [path] [expression]</code></p>
-          <p><strong>Example:</strong> <code>find /home/user -name "*.txt"</code> finds all text files.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- File Content Viewing and Editing -->
-    <section id="viewing-editing">
-      <div class="container">
-        <h2>File Content Viewing and Editing</h2>
-        
-        <article id="cat">
-          <h3>cat</h3>
-          <p><strong>Description:</strong> Concatenates and displays file contents.</p>
-          <p><strong>Usage:</strong> <code>cat [options] file</code></p>
-          <p><strong>Example:</strong> <code>cat /etc/passwd</code> displays the content of the passwd file.</p>
-        </article>
-
-        <article id="less">
-          <h3>less</h3>
-          <p><strong>Description:</strong> Views file contents one page at a time.</p>
-          <p><strong>Usage:</strong> <code>less file</code></p>
-          <p><strong>Example:</strong> <code>less /var/log/syslog</code> for paging through log files.</p>
-        </article>
-
-        <article id="more">
-          <h3>more</h3>
-          <p><strong>Description:</strong> Another pager to view file contents sequentially.</p>
-          <p><strong>Usage:</strong> <code>more file</code></p>
-          <p><strong>Example:</strong> <code>more README.md</code> shows the README file page by page.</p>
-        </article>
-
-        <article id="head">
-          <h3>head</h3>
-          <p><strong>Description:</strong> Displays the first few lines of a file.</p>
-          <p><strong>Usage:</strong> <code>head [options] file</code></p>
-          <p><strong>Example:</strong> <code>head -n 10 file.txt</code> shows the first 10 lines.</p>
-        </article>
-
-        <article id="tail">
-          <h3>tail</h3>
-          <p><strong>Description:</strong> Displays the last few lines of a file.</p>
-          <p><strong>Usage:</strong> <code>tail [options] file</code></p>
-          <p><strong>Example:</strong> <code>tail -f logfile.log</code> continuously displays the end of a log file.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- Process Management Commands -->
-    <section id="process-management">
-      <div class="container">
-        <h2>Process Management Commands</h2>
-        
-        <article id="ps">
-          <h3>ps</h3>
-          <p><strong>Description:</strong> Displays information about active processes.</p>
-          <p><strong>Usage:</strong> <code>ps [options]</code></p>
-          <p><strong>Example:</strong> <code>ps aux</code> shows detailed process information.</p>
-        </article>
-
-        <article id="top">
-          <h3>top</h3>
-          <p><strong>Description:</strong> Provides a real-time view of running processes.</p>
-          <p><strong>Usage:</strong> Simply type <code>top</code></p>
-          <p><strong>Example:</strong> Run <code>top</code> to monitor system performance and processes.</p>
-        </article>
-
-        <article id="kill">
-          <h3>kill</h3>
-          <p><strong>Description:</strong> Sends a signal to terminate a process.</p>
-          <p><strong>Usage:</strong> <code>kill [options] PID</code></p>
-          <p><strong>Example:</strong> <code>kill -9 1234</code> forcefully terminates process with PID 1234.</p>
-        </article>
-
-        <article id="pkill">
-          <h3>pkill</h3>
-          <p><strong>Description:</strong> Terminates processes based on name or attributes.</p>
-          <p><strong>Usage:</strong> <code>pkill [options] pattern</code></p>
-          <p><strong>Example:</strong> <code>pkill firefox</code> terminates all Firefox processes.</p>
-        </article>
-
-        <article id="nice">
-          <h3>nice &amp; renice</h3>
-          <p><strong>Description:</strong> Adjusts the priority of running processes.</p>
-          <p><strong>Usage:</strong> Use <code>nice</code> when launching a process, and <code>renice</code> to change the priority of an existing process.</p>
-          <p><strong>Example:</strong> <code>nice -n 10 command</code> starts a command with lower priority.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- File Permissions and Ownership -->
-    <section id="permissions-ownership">
-      <div class="container">
-        <h2>File Permissions and Ownership</h2>
-        
-        <article id="chmod">
-          <h3>chmod</h3>
-          <p><strong>Description:</strong> Changes the file permissions.</p>
-          <p><strong>Usage:</strong> <code>chmod [options] mode file</code></p>
-          <p><strong>Example:</strong> <code>chmod 755 script.sh</code> sets the file to be executable.</p>
-        </article>
-
-        <article id="chown">
-          <h3>chown</h3>
-          <p><strong>Description:</strong> Changes the file owner and group.</p>
-          <p><strong>Usage:</strong> <code>chown [options] owner:group file</code></p>
-          <p><strong>Example:</strong> <code>chown user:staff document.txt</code> changes ownership.</p>
-        </article>
-
-        <article id="chgrp">
-          <h3>chgrp</h3>
-          <p><strong>Description:</strong> Changes the group ownership of a file or directory.</p>
-          <p><strong>Usage:</strong> <code>chgrp [options] group file</code></p>
-          <p><strong>Example:</strong> <code>chgrp developers project_folder</code> assigns a new group.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- Networking Commands -->
-    <section id="networking">
-      <div class="container">
-        <h2>Networking Commands</h2>
-        
-        <article id="ping">
-          <h3>ping</h3>
-          <p><strong>Description:</strong> Checks the network connectivity to a host.</p>
-          <p><strong>Usage:</strong> <code>ping [options] host</code></p>
-          <p><strong>Example:</strong> <code>ping google.com</code> to test connectivity.</p>
-        </article>
-
-        <article id="ifconfig-ip">
-          <h3>ifconfig / ip</h3>
-          <p><strong>Description:</strong> Configures or displays network interface parameters. <em>ifconfig</em> is traditional, while <em>ip</em> is the modern replacement.</p>
-          <p><strong>Usage:</strong> <code>ifconfig</code> or <code>ip addr show</code></p>
-          <p><strong>Example:</strong> <code>ip addr</code> displays current network settings.</p>
-        </article>
-
-        <article id="netstat">
-          <h3>netstat</h3>
-          <p><strong>Description:</strong> Displays network connections, routing tables, and interface statistics.</p>
-          <p><strong>Usage:</strong> <code>netstat [options]</code></p>
-          <p><strong>Example:</strong> <code>netstat -tulpn</code> shows active connections and listening ports.</p>
-        </article>
-
-        <article id="ssh">
-          <h3>ssh</h3>
-          <p><strong>Description:</strong> Securely connects to a remote machine via the SSH protocol.</p>
-          <p><strong>Usage:</strong> <code>ssh [options] user@host</code></p>
-          <p><strong>Example:</strong> <code>ssh user@example.com</code> initiates a secure connection.</p>
-        </article>
-
-        <article id="scp">
-          <h3>scp</h3>
-          <p><strong>Description:</strong> Securely copies files between hosts over SSH.</p>
-          <p><strong>Usage:</strong> <code>scp [options] source destination</code></p>
-          <p><strong>Example:</strong> <code>scp file.txt user@example.com:/path/to/destination</code> transfers a file.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- System Information Commands -->
-    <section id="system-info">
-      <div class="container">
-        <h2>System Information Commands</h2>
-        
-        <article id="uname">
-          <h3>uname</h3>
-          <p><strong>Description:</strong> Displays system information.</p>
-          <p><strong>Usage:</strong> <code>uname [options]</code></p>
-          <p><strong>Example:</strong> <code>uname -a</code> prints all available system information.</p>
-        </article>
-
-        <article id="df">
-          <h3>df</h3>
-          <p><strong>Description:</strong> Shows disk space usage for file systems.</p>
-          <p><strong>Usage:</strong> <code>df [options]</code></p>
-          <p><strong>Example:</strong> <code>df -h</code> presents human-readable output.</p>
-        </article>
-
-        <article id="du">
-          <h3>du</h3>
-          <p><strong>Description:</strong> Estimates file and directory space usage.</p>
-          <p><strong>Usage:</strong> <code>du [options] [file/directory]</code></p>
-          <p><strong>Example:</strong> <code>du -sh /var/log</code> shows the size of the log directory.</p>
-        </article>
-
-        <article id="free">
-          <h3>free</h3>
-          <p><strong>Description:</strong> Displays memory usage statistics.</p>
-          <p><strong>Usage:</strong> <code>free [options]</code></p>
-          <p><strong>Example:</strong> <code>free -m</code> shows memory usage in megabytes.</p>
-        </article>
-
-        <article id="uptime">
-          <h3>uptime</h3>
-          <p><strong>Description:</strong> Tells how long the system has been running along with load averages.</p>
-          <p><strong>Usage:</strong> <code>uptime</code></p>
-          <p><strong>Example:</strong> Simply type <code>uptime</code> to see the system's runtime.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- Text Processing Commands -->
-    <section id="text-processing">
-      <div class="container">
-        <h2>Text Processing Commands</h2>
-        
-        <article id="grep">
-          <h3>grep</h3>
-          <p><strong>Description:</strong> Searches for patterns within files.</p>
-          <p><strong>Usage:</strong> <code>grep [options] pattern file</code></p>
-          <p><strong>Example:</strong> <code>grep "error" /var/log/syslog</code> finds lines containing "error".</p>
-        </article>
-
-        <article id="sed">
-          <h3>sed</h3>
-          <p><strong>Description:</strong> Stream editor for filtering and transforming text.</p>
-          <p><strong>Usage:</strong> <code>sed [options] 's/pattern/replacement/' file</code></p>
-          <p><strong>Example:</strong> <code>sed 's/old/new/g' file.txt</code> replaces "old" with "new".</p>
-        </article>
-
-        <article id="awk">
-          <h3>awk</h3>
-          <p><strong>Description:</strong> A powerful text processing language and command.</p>
-          <p><strong>Usage:</strong> <code>awk 'pattern {action}' file</code></p>
-          <p><strong>Example:</strong> <code>awk '{print $1}' file.txt</code> prints the first field of each line.</p>
-        </article>
-
-        <article id="sort">
-          <h3>sort</h3>
-          <p><strong>Description:</strong> Sorts lines of text files.</p>
-          <p><strong>Usage:</strong> <code>sort [options] file</code></p>
-          <p><strong>Example:</strong> <code>sort file.txt</code> sorts the file alphabetically.</p>
-        </article>
-
-        <article id="uniq">
-          <h3>uniq</h3>
-          <p><strong>Description:</strong> Filters out repeated lines in a file.</p>
-          <p><strong>Usage:</strong> <code>uniq [options] file</code></p>
-          <p><strong>Example:</strong> <code>sort file.txt | uniq</code> prints unique lines from a sorted file.</p>
-        </article>
-
-        <article id="cut">
-          <h3>cut</h3>
-          <p><strong>Description:</strong> Removes sections from each line of files.</p>
-          <p><strong>Usage:</strong> <code>cut [options] file</code></p>
-          <p><strong>Example:</strong> <code>cut -d: -f1 /etc/passwd</code> extracts the first field from the passwd file.</p>
-        </article>
-
-        <article id="tr">
-          <h3>tr</h3>
-          <p><strong>Description:</strong> Translates or deletes characters.</p>
-          <p><strong>Usage:</strong> <code>tr [options] set1 set2</code></p>
-          <p><strong>Example:</strong> <code>echo "hello" | tr 'a-z' 'A-Z'</code> converts text to uppercase.</p>
-        </article>
-
-        <article id="wc">
-          <h3>wc</h3>
-          <p><strong>Description:</strong> Counts lines, words, and characters in text.</p>
-          <p><strong>Usage:</strong> <code>wc [options] file</code></p>
-          <p><strong>Example:</strong> <code>wc -l file.txt</code> counts the lines in a file.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- Shell Built-in and Utility Commands -->
-    <section id="shell-utilities">
-      <div class="container">
-        <h2>Shell Built-in and Utility Commands</h2>
-        
-        <article id="echo">
-          <h3>echo</h3>
-          <p><strong>Description:</strong> Displays a line of text/string passed as an argument.</p>
-          <p><strong>Usage:</strong> <code>echo [options] [string]</code></p>
-          <p><strong>Example:</strong> <code>echo "Hello, Bash!"</code> prints text to the terminal.</p>
-        </article>
-
-        <article id="history">
-          <h3>history</h3>
-          <p><strong>Description:</strong> Displays the command history.</p>
-          <p><strong>Usage:</strong> <code>history</code></p>
-          <p><strong>Example:</strong> Type <code>history</code> to view previously executed commands.</p>
-        </article>
-
-        <article id="alias">
-          <h3>alias</h3>
-          <p><strong>Description:</strong> Creates shortcuts for commands.</p>
-          <p><strong>Usage:</strong> <code>alias name='command'</code></p>
-          <p><strong>Example:</strong> <code>alias ll='ls -l'</code> sets a shortcut for a long listing.</p>
-        </article>
-
-        <article id="export">
-          <h3>export</h3>
-          <p><strong>Description:</strong> Sets environment variables for child processes.</p>
-          <p><strong>Usage:</strong> <code>export VARIABLE=value</code></p>
-          <p><strong>Example:</strong> <code>export PATH=$PATH:/new/path</code> appends a new path.</p>
-        </article>
-
-        <article id="source">
-          <h3>source (.)</h3>
-          <p><strong>Description:</strong> Reads and executes commands from a file in the current shell environment.</p>
-          <p><strong>Usage:</strong> <code>source filename</code> or <code>. filename</code></p>
-          <p><strong>Example:</strong> <code>source ~/.bashrc</code> reloads your Bash configuration.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- Advanced Commands and Scripting Utilities -->
-    <section id="advanced-commands">
-      <div class="container">
-        <h2>Advanced Commands and Scripting Utilities</h2>
-        
-        <article id="xargs">
-          <h3>xargs</h3>
-          <p><strong>Description:</strong> Builds and executes command lines from standard input.</p>
-          <p><strong>Usage:</strong> <code>command | xargs [options] command</code></p>
-          <p><strong>Example:</strong> <code>find . -name "*.txt" | xargs grep "search_term"</code> searches for a term within found text files.</p>
-        </article>
-
-        <article id="tar">
-          <h3>tar</h3>
-          <p><strong>Description:</strong> Archives multiple files into a single file, with optional compression.</p>
-          <p><strong>Usage:</strong> <code>tar [options] archive_name.tar file(s)</code></p>
-          <p><strong>Example:</strong> <code>tar -czvf archive.tar.gz folder/</code> creates a compressed archive.</p>
-        </article>
-
-        <article id="zip-unzip">
-          <h3>zip / unzip</h3>
-          <p><strong>Description:</strong> Compresses (zip) or extracts (unzip) files.</p>
-          <p><strong>Usage:</strong> <code>zip archive.zip file(s)</code> and <code>unzip archive.zip</code></p>
-          <p><strong>Example:</strong> Compress files using <code>zip backup.zip *.txt</code>, then extract with <code>unzip backup.zip</code>.</p>
-        </article>
-
-        <article id="curl-wget">
-          <h3>curl / wget</h3>
-          <p><strong>Description:</strong> Retrieves data from URLs. <em>curl</em> is versatile for API requests, while <em>wget</em> is simple for downloading files.</p>
-          <p><strong>Usage:</strong> <code>curl [options] URL</code> or <code>wget [options] URL</code></p>
-          <p><strong>Example:</strong> <code>curl -O http://example.com/file.zip</code> downloads a file.</p>
-        </article>
-
-        <article id="printf">
-          <h3>printf</h3>
-          <p><strong>Description:</strong> Formats and prints data. More powerful than <code>echo</code> for formatted output.</p>
-          <p><strong>Usage:</strong> <code>printf format [arguments]</code></p>
-          <p><strong>Example:</strong> <code>printf "Name: %s\n" "Bash"</code> prints a formatted string.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- Miscellaneous and Utility Commands -->
-    <section id="miscellaneous">
-      <div class="container">
-        <h2>Miscellaneous and Utility Commands</h2>
-        
-        <article id="date">
-          <h3>date</h3>
-          <p><strong>Description:</strong> Displays or sets the system date and time.</p>
-          <p><strong>Usage:</strong> <code>date [options]</code></p>
-          <p><strong>Example:</strong> <code>date "+%Y-%m-%d %H:%M:%S"</code> shows the current date and time.</p>
-        </article>
-
-        <article id="sleep">
-          <h3>sleep</h3>
-          <p><strong>Description:</strong> Pauses execution for a specified period.</p>
-          <p><strong>Usage:</strong> <code>sleep seconds</code></p>
-          <p><strong>Example:</strong> <code>sleep 5</code> pauses for 5 seconds.</p>
-        </article>
-
-        <article id="time">
-          <h3>time</h3>
-          <p><strong>Description:</strong> Measures the execution time of a command.</p>
-          <p><strong>Usage:</strong> <code>time command</code></p>
-          <p><strong>Example:</strong> <code>time ls</code> displays how long the <code>ls</code> command took to execute.</p>
-        </article>
-
-        <article id="man">
-          <h3>man</h3>
-          <p><strong>Description:</strong> Displays the manual pages for other commands.</p>
-          <p><strong>Usage:</strong> <code>man command</code></p>
-          <p><strong>Example:</strong> <code>man grep</code> shows the manual for the <code>grep</code> command.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- Back to Top -->
-    <section id="back-to-top">
-      <div class="container" style="text-align: center; margin-top: 40px;">
-        <a href="#intro" class="blink" style="text-decoration: none; color: #0f0;">&uarr; Back to Top &uarr;</a>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 Learn Bash Scripting. All rights reserved.</p>
-      <p>Designed by [Your Name]</p>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
+backup/2025/jan:</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> mkdir docs</span>
+</code></pre><pre class="out" aria-label="Output"><code>mkdir: cannot create directory &#x27;docs&#x27;: File exists</code></pre><p class="stl"><span class="st">exit status 1</span></p></figure></article><article class="cmd-card" id="cmd-mv" data-group="files" data-name="mv" data-text="move or rename files and directories."><header><h3><code>mv</code></h3><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></header><p class="sum">Move or rename files and directories.</p><p class="syn"><code>mv [OPTION]... SOURCE... DEST</code></p><p class="cnote">Like cp, mv replaces an existing destination silently unless you give -i or -n.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-i</code><span>Ask before overwriting.</span></li><li><code class="fl">-n</code><span>Never overwrite.</span></li><li><code class="fl">-v</code><span>Print each move.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> mv notes.txt renamed.txt &amp;&amp; ls renamed.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>renamed.txt</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> mv -v fruits.txt docs/</span>
+</code></pre><pre class="out" aria-label="Output"><code>renamed &#x27;fruits.txt&#x27; -&gt; &#x27;docs/fruits.txt&#x27;</code></pre></figure></article><article class="cmd-card" id="cmd-ps" data-group="system" data-name="ps" data-text="list running processes."><header><h3><code>ps</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">List running processes.</p><p class="syn"><code>ps [OPTIONS]</code></p><p class="cnote">Output depends on the machine, so no example is run.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">aux</code><span>All users&#x27; processes with details (BSD style, no dash).</span></li><li><code class="fl">-ef</code><span>Every process, full format (POSIX style).</span></li></ul></article><article class="cmd-card" id="cmd-pwd" data-group="files" data-name="pwd" data-text="print the directory the shell is in."><header><h3><code>pwd</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Print the directory the shell is in.</p><p class="syn"><code>pwd [-LP]</code></p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-P</code><span>Print the physical path, with symbolic links resolved.</span></li><li><code class="fl">-L</code><span>Print the logical path (the default).</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> cd docs &amp;&amp; pwd</span>
+</code></pre><pre class="out" aria-label="Output"><code>/home/you/demo/docs</code></pre></figure></article><article class="cmd-card" id="cmd-rm" data-group="files" data-name="rm" data-text="remove files and directories. there is no recycle bin and no undo."><header><h3><code>rm</code></h3><span class="mk mk-destroys"><i aria-hidden="true"></i>Can delete data</span></header><p class="sum">Remove files and directories. There is no recycle bin and no undo.</p><p class="syn"><code>rm [OPTION]... FILE...</code></p><p class="cnote">Check what a pattern matches before deleting it: run ls with the same pattern first.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-r</code><span>Remove directories and everything in them.</span><span class="mk mk-destroys"><i aria-hidden="true"></i>Can delete data</span></li><li><code class="fl">-f</code><span>Ignore missing files and never ask. Combined with -r it is the command that empties disks.</span><span class="mk mk-destroys"><i aria-hidden="true"></i>Can delete data</span></li><li><code class="fl">-i</code><span>Ask before every removal.</span></li><li><code class="fl">-v</code><span>Print each removal.</span></li><li><code class="fl">-d</code><span>Remove empty directories.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> rm numbers.txt &amp;&amp; ls</span>
+</code></pre><pre class="out" aria-label="Output"><code>access.log
+data.csv
+docs
+fruits.txt
+notes.txt
+projects
+scripts</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> rm -rv docs</span>
+</code></pre><pre class="out" aria-label="Output"><code>removed &#x27;docs/readme.md&#x27;
+removed directory &#x27;docs&#x27;</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> rm nothere.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>rm: cannot remove &#x27;nothere.txt&#x27;: No such file or directory</code></pre><p class="stl"><span class="st">exit status 1</span></p></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> rm -f nothere.txt &amp;&amp; echo ok</span>
+</code></pre><pre class="out" aria-label="Output"><code>ok</code></pre></figure></article><article class="cmd-card" id="cmd-rmdir" data-group="files" data-name="rmdir" data-text="remove empty directories."><header><h3><code>rmdir</code></h3><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></header><p class="sum">Remove empty directories.</p><p class="syn"><code>rmdir [OPTION]... DIRECTORY...</code></p><p class="cnote">It refuses to remove a directory that has anything in it, which makes it a safe way to delete.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-p</code><span>Also remove the parent directories, if they become empty.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> mkdir empty &amp;&amp; rmdir empty &amp;&amp; echo removed</span>
+</code></pre><pre class="out" aria-label="Output"><code>removed</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> rmdir docs</span>
+</code></pre><pre class="out" aria-label="Output"><code>rmdir: failed to remove &#x27;docs&#x27;: Directory not empty</code></pre><p class="stl"><span class="st">exit status 1</span></p></figure></article><article class="cmd-card" id="cmd-sed" data-group="text" data-name="sed" data-text="edit a stream of text, most often to substitute."><header><h3><code>sed</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Edit a stream of text, most often to substitute.</p><p class="syn"><code>sed [OPTION]... &#x27;SCRIPT&#x27; [FILE]...</code></p><p class="cnote">Without -i it prints the edited text and leaves the file alone.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-n</code><span>Print only lines you ask for with p.</span></li><li><code class="fl">-e</code><span>Add a script (use it several times).</span></li><li><code class="fl">-E</code><span>Use extended regular expressions.</span></li><li><code class="fl">-i</code><span>Edit the file in place, overwriting it. BSD/macOS sed needs -i &#x27;&#x27; (an argument).</span><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> sed &#x27;s/bash/BASH/&#x27; notes.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>BASH is a shell
+BASH is also a scripting language
+ls lists files
+cd changes directory
+Bash was first released in 1989</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> sed -n &#x27;2,3p&#x27; notes.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>bash is also a scripting language
+ls lists files</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> sed &#x27;s/apple/pear/g&#x27; fruits.txt | head -n 2</span>
+</code></pre><pre class="out" aria-label="Output"><code>pear
+banana</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> sed -i &#x27;s/bash/BASH/&#x27; notes.txt &amp;&amp; head -n 1 notes.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>BASH is a shell</code></pre></figure></article><article class="cmd-card" id="cmd-sort" data-group="text" data-name="sort" data-text="sort lines."><header><h3><code>sort</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Sort lines.</p><p class="syn"><code>sort [OPTION]... [FILE]...</code></p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-n</code><span>Compare numerically (so 9 sorts before 10).</span></li><li><code class="fl">-r</code><span>Reverse the order.</span></li><li><code class="fl">-u</code><span>Keep only the first of equal lines.</span></li><li><code class="fl">-k</code><span>Sort by a key: field number, such as -k2.</span></li><li><code class="fl">-t</code><span>Field separator for -k.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> sort fruits.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>apple
+apple
+apple
+banana
+banana
+cherry</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> sort numbers.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>1
+10
+100
+9</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> sort -n numbers.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>1
+9
+10
+100</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> sort -t, -k3 -n data.csv</span>
+</code></pre><pre class="out" aria-label="Output"><code>name,team,score
+ben,blue,7
+cho,red,9
+ana,red,12
+dee,blue,15</code></pre></figure></article><article class="cmd-card" id="cmd-sudo" data-group="system" data-name="sudo" data-text="run one command with administrator rights."><header><h3><code>sudo</code></h3><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></header><p class="sum">Run one command with administrator rights.</p><p class="syn"><code>sudo COMMAND</code></p><p class="cnote">Everything the command does, it does with full rights. Read a command twice before putting sudo in front of it, and never pipe a download into sudo bash.</p></article><article class="cmd-card" id="cmd-tail" data-group="view" data-name="tail" data-text="print the last lines of a file."><header><h3><code>tail</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Print the last lines of a file.</p><p class="syn"><code>tail [-n COUNT] [-f] [FILE]...</code></p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-n</code><span>How many lines (default 10).</span></li><li><code class="fl">-f</code><span>Keep the file open and print new lines as they are added; stop with Ctrl-C.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> tail -n 2 notes.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>cd changes directory
+Bash was first released in 1989</code></pre></figure></article><article class="cmd-card" id="cmd-tar" data-group="net" data-name="tar" data-text="bundle files into one archive, and unpack it."><header><h3><code>tar</code></h3><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></header><p class="sum">Bundle files into one archive, and unpack it.</p><p class="syn"><code>tar [OPTION]... [FILE]...</code></p><p class="cnote">-x overwrites existing files of the same name. Use -t first when you do not know what is inside.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-c</code><span>Create an archive.</span></li><li><code class="fl">-x</code><span>Extract an archive.</span><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></li><li><code class="fl">-t</code><span>List the contents without extracting.</span></li><li><code class="fl">-z</code><span>Compress with gzip (use with -c or -x).</span></li><li><code class="fl">-v</code><span>Verbose: list files as they are handled.</span></li><li><code class="fl">-f</code><span>The archive file name. It must come right before the name.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> tar -czf docs.tar.gz docs projects &amp;&amp; tar -tzf docs.tar.gz | sort</span>
+</code></pre><pre class="out" aria-label="Output"><code>docs/
+docs/readme.md
+projects/
+projects/api/
+projects/api/notes.txt
+projects/api/server.py
+projects/web/
+projects/web/index.html
+projects/web/style.css</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> tar -czf p.tar.gz projects &amp;&amp; mkdir out &amp;&amp; tar -xzf p.tar.gz -C out &amp;&amp; ls out</span>
+</code></pre><pre class="out" aria-label="Output"><code>projects</code></pre></figure></article><article class="cmd-card" id="cmd-tee" data-group="text" data-name="tee" data-text="copy standard input to a file and also to standard output."><header><h3><code>tee</code></h3><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></header><p class="sum">Copy standard input to a file and also to standard output.</p><p class="syn"><code>tee [-a] FILE...</code></p><p class="cnote">Without -a it overwrites the file.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-a</code><span>Append to the file instead of overwriting it.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> echo hi | tee out.txt &amp;&amp; cat out.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>hi
+hi</code></pre></figure></article><article class="cmd-card" id="cmd-touch" data-group="files" data-name="touch" data-text="create an empty file, or update a file&#x27;s timestamps."><header><h3><code>touch</code></h3><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></header><p class="sum">Create an empty file, or update a file&#x27;s timestamps.</p><p class="syn"><code>touch [OPTION]... FILE...</code></p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-c</code><span>Do not create the file if it does not exist.</span></li><li><code class="fl">-d</code><span>Use the given date instead of now (GNU; BSD uses -t).</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> touch new.txt &amp;&amp; ls new.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>new.txt</code></pre></figure></article><article class="cmd-card" id="cmd-tr" data-group="text" data-name="tr" data-text="translate or delete characters (reads standard input only)."><header><h3><code>tr</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Translate or delete characters (reads standard input only).</p><p class="syn"><code>tr [OPTION]... SET1 [SET2]</code></p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-d</code><span>Delete the characters in SET1.</span></li><li><code class="fl">-s</code><span>Squeeze repeats of a character into one.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> echo hello | tr a-z A-Z</span>
+</code></pre><pre class="out" aria-label="Output"><code>HELLO</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> echo &#x27;a,b,c&#x27; | tr -d ,</span>
+</code></pre><pre class="out" aria-label="Output"><code>abc</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> echo &#x27;too    many   spaces&#x27; | tr -s &#x27; &#x27;</span>
+</code></pre><pre class="out" aria-label="Output"><code>too many spaces</code></pre></figure></article><article class="cmd-card" id="cmd-type" data-group="shell" data-name="type" data-text="say what a name means: builtin, alias, function or program."><header><h3><code>type</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Say what a name means: builtin, alias, function or program.</p><p class="syn"><code>type [-a] NAME...</code></p><p class="cnote">&#x27;which&#x27; is a separate program; &#x27;type&#x27; knows about builtins and functions. -t prints just the kind: builtin, file, alias, function or keyword.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-a</code><span>Show every meaning, not just the first.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> type cd</span>
+</code></pre><pre class="out" aria-label="Output"><code>cd is a shell builtin</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> type -t cd ls if</span>
+</code></pre><pre class="out" aria-label="Output"><code>builtin
+file
+keyword</code></pre></figure></article><article class="cmd-card" id="cmd-uniq" data-group="text" data-name="uniq" data-text="collapse adjacent repeated lines."><header><h3><code>uniq</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Collapse adjacent repeated lines.</p><p class="syn"><code>uniq [OPTION]... [INPUT]</code></p><p class="cnote">It only compares neighbouring lines, so sort the input first (the last example shows what happens if you do not).</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-c</code><span>Prefix each line with how many times it occurred.</span></li><li><code class="fl">-d</code><span>Print only lines that were repeated.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> sort fruits.txt | uniq</span>
+</code></pre><pre class="out" aria-label="Output"><code>apple
+banana
+cherry</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> sort fruits.txt | uniq -c</span>
+</code></pre><pre class="out" aria-label="Output"><code>      3 apple
+      2 banana
+      1 cherry</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> uniq fruits.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>apple
+banana
+cherry
+apple
+banana
+apple</code></pre></figure></article><article class="cmd-card" id="cmd-wc" data-group="view" data-name="wc" data-text="count lines, words and bytes."><header><h3><code>wc</code></h3><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span></header><p class="sum">Count lines, words and bytes.</p><p class="syn"><code>wc [OPTION]... [FILE]...</code></p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-l</code><span>Lines only.</span></li><li><code class="fl">-w</code><span>Words only.</span></li><li><code class="fl">-c</code><span>Bytes only.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> wc -l access.log</span>
+</code></pre><pre class="out" aria-label="Output"><code>40 access.log</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> wc notes.txt</span>
+</code></pre><pre class="out" aria-label="Output"><code>  5  22 118 notes.txt</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> cat fruits.txt | wc -l</span>
+</code></pre><pre class="out" aria-label="Output"><code>6</code></pre></figure></article><article class="cmd-card" id="cmd-xargs" data-group="text" data-name="xargs" data-text="build and run commands from standard input."><header><h3><code>xargs</code></h3><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span></header><p class="sum">Build and run commands from standard input.</p><p class="syn"><code>xargs [OPTION]... COMMAND [ARG]...</code></p><p class="cnote">It runs whatever command you give it, so it is as dangerous as that command.</p><h4 class="h4">Flags</h4><ul class="flags"><li><code class="fl">-n</code><span>Use at most N arguments per command.</span></li><li><code class="fl">-I</code><span>Replace a placeholder (such as {}) with each input line.</span></li><li><code class="fl">-0</code><span>Input is separated by NUL characters, for names with spaces; pair with find -print0.</span></li></ul><h4 class="h4">Examples, run for real</h4><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> echo &#x27;a b c&#x27; | xargs -n 1 echo item</span>
+</code></pre><pre class="out" aria-label="Output"><code>item a
+item b
+item c</code></pre></figure><figure class="term"><pre class="cmd"><code><span class="ln"><span class="ps" aria-hidden="true">$</span> ls *.txt | xargs wc -l</span>
+</code></pre><pre class="out" aria-label="Output"><code>  6 fruits.txt
+  5 notes.txt
+  4 numbers.txt
+ 15 total</code></pre></figure></article></div>
+</section>
+</main>
+<footer class="foot">
+  <nav class="footnav" aria-label="Pages"><a href="index.html">Home</a><a href="basics.html">Basics</a><a href="commands.html">Commands</a><a href="scripting.html">Scripting</a><a href="advanced.html">Advanced</a><a href="explain.html">Explain</a><a href="resources.html">Resources</a></nav>
+  <p><strong>Every output here is real.</strong> Each example was run in a sandbox with Bash 5.2.21 on Linux (GNU coreutils, mawk) when this site was built. macOS and BSD tools differ in some flags; the pages say where it matters. External links were not checked from the build environment.</p>
+  <p class="small">Code and text are MIT-licensed. Nothing on this site loads from another domain, and the explainer never runs what you paste.</p>
+</footer>
+<script src="commands.js"></script>
 </body>
 </html>

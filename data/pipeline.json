@@ -1,0 +1,13 @@
+{
+  "file": "access.log",
+  "question": "Which pages are missing, and how often are they asked for?",
+  "stages": [
+    "cat access.log",
+    "grep ' 404 '",
+    "awk '{print $7}'",
+    "sort",
+    "uniq -c",
+    "sort -rn",
+    "head -n 3"
+  ]
+}
