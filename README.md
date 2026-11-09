@@ -20,7 +20,7 @@ python3 scripts/run_examples.py --check   # exit 1 if a recorded output differs 
 node scripts/check-explain.js       # the explainer judges 75 command lines as expected, and refuses malformed ones
 ```
 
-Data lives in `data/` (`commands.json`, `lessons.json`, `pipeline.json`). The sample files the examples run against are in `scripts/fixture.py`; dates are fixed so listings are reproducible. Outputs were produced with GNU bash 5.2 on Linux (GNU coreutils, mawk). macOS and BSD tools differ in some flags, and the pages say where it matters.
+Data lives in `data/` (`commands.json`, `lessons.json`, `pipeline.json`, `site.json`). After deploying, put the live address in `data/site.json` (`{ "url": "https://..." }`) and rebuild, so the social card and canonical links become absolute. The sample files the examples run against are in `scripts/fixture.py`; dates are fixed so listings are reproducible. Outputs were produced with GNU bash 5.2 on Linux (GNU coreutils, mawk). macOS and BSD tools differ in some flags, and the pages say where it matters.
 
 ## Contributing
 

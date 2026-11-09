@@ -24,6 +24,8 @@ commands, groups = CM["commands"], {g["id"]: g for g in CM["groups"]}
 pages = {p["id"]: p for p in LS["pages"]}
 BASH = OUTS["bash"].replace("GNU bash, version ", "Bash ").split("(")[0]
 REPO = "https://github.com/SolutionsAsService/LearnBash"
+_site = ROOT / "data" / "site.json"
+SITE_URL = (json.loads(_site.read_text(encoding="utf-8")).get("url", "").rstrip("/") if _site.exists() else "")
 
 MARKS = {
     "reads": ("Only reads", "Does not change your files or the system. It can still change the current shell session (cd, export and alias do)."),
@@ -76,14 +78,14 @@ def head(title, desc, page, og_image=None):
 <meta name="color-scheme" content="dark light">
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
-<meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:type" content="website">{(f'<meta property="og:image" content="{og_image}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{og_image}">' if og_image else "")}
+<meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(desc)}"><meta property="og:type" content="website">{(f'<meta property="og:image" content="{(SITE_URL + "/" if SITE_URL else "") + og_image}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{(SITE_URL + "/" if SITE_URL else "") + og_image}">' if og_image else "")}{(f'<meta property="og:url" content="{SITE_URL}/{page}"><link rel="canonical" href="{SITE_URL}/{page}">' if SITE_URL else "")}
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="{'home' if page == 'index.html' else ''}">
 <a class="skip" href="#main">Skip to the content</a>
 <header class="mast">
-  <a class="brand" href="index.html"><span class="ps" aria-hidden="true">$</span> learn-bash<span class="cur" aria-hidden="true">_</span></a>
+  <a class="brand" href="index.html"><span class="ps" aria-hidden="true">$</span> learn-bash</a>
   <nav aria-label="Pages">{nav}</nav>
 </header>
 <main id="main">
@@ -121,16 +123,16 @@ def term(code, run=True, note=None, status_ok=True):
 
 
 def funnel():
-    """The pipeline drawn as a pipe: each stage's thickness is the number of lines still flowing through it."""
+    """The pipeline drawn as one pipe at an exact scale (3.6 px per line). Each segment runs from the number of lines that
+    came into the command to the number it let out, so the pipe narrows at the commands that throw lines away."""
     stages, counts = PL["stages"], OUTS["pipeline"]["counts"]
-    top = counts[0]
-    size = lambda c: max(14, round(120 * c / top))
+    PX = 3.6
     items = []
     for i, st in enumerate(stages):
-        a_ = size(counts[i]); b_ = size(counts[i + 1]) if i + 1 < len(stages) else a_
-        items.append(f'<li class="fs" style="--a:{a_};--b:{b_}"><span class="fn">{counts[i]}<small>line{"" if counts[i] == 1 else "s"}</small></span>'
+        into = counts[i - 1] if i > 0 else counts[0]
+        items.append(f'<li class="fs" style="--a:{round(into * PX, 1)};--b:{round(counts[i] * PX, 1)}"><span class="fn">{counts[i]}<small>line{"" if counts[i] == 1 else "s"}</small></span>'
                      f'<span class="fp" aria-hidden="true"></span><code class="fc">{e(st)}</code></li>')
-    return f'<ol class="funnel" aria-label="The pipeline, stage by stage; the number is how many lines come out of each stage">{"".join(items)}</ol>'
+    return f'<ol class="funnel" aria-label="The pipeline, stage by stage; the number is how many lines come out of each command">{"".join(items)}</ol>'
 
 
 def index():
@@ -146,16 +148,19 @@ def index():
     q = PL["question"]
     return head("Learn Bash: every output is real", f"Learn the Bash shell with {N_PRINTED} examples that were actually run, a command reference marked by what each command can do to your files, and a tool that explains a command line.", "index.html", "social.png") + f'''
 <section class="hero hero-dark" aria-labelledby="h1">
-  <p class="kicker">The Bash shell, from first command to scripts</p>
-  <h1 id="h1"><span class="ps" aria-hidden="true">$ </span>learn bash<span class="blk" aria-hidden="true"></span></h1>
-  <p class="lede">Every example on this site was run for real, and the output you see is what Bash printed.</p>
-  <p class="cta"><a class="btn" href="basics.html">Start with the basics</a><a class="btn ghost" href="explain.html">Explain a command</a></p>
+  <div class="herohead">
+    <div class="ht"><p class="kicker">Learn the Bash shell, from your first command to real scripts</p>
+    <h1 id="h1"><span class="ps" aria-hidden="true">$ </span>learn bash<span class="blk" aria-hidden="true"></span></h1></div>
+    <div class="hc"><p class="lede">Every example on this site was run for real, and the output you see is what Bash printed.</p>
+    <p class="cta"><a class="btn" href="basics.html">Start with the basics</a><a class="btn ghost" href="explain.html">Explain a command</a></p></div>
+  </div>
   <figure class="win">
     <div class="winbar" aria-hidden="true"><i></i><i></i><i></i><span>~/demo: bash</span></div>
-    <p class="winq"><span class="ps" aria-hidden="true">$</span> {e(q)} <span class="muted">({n_stage} commands, joined by pipes)</span></p>
+    <p class="winq"><span class="ps" aria-hidden="true">$</span> {e(q)} <span class="muted">Seven small commands, one after another.</span></p>
+    <p class="key"><span aria-hidden="true">&#9654;</span> The pipe is as thick as the number of lines left after each command.</p>
     {funnel()}
     <pre class="out final" aria-label="Final output of the pipeline"><code>{e(OUTS["pipeline"]["final"])}</code></pre>
-    <figcaption>The pipe gets thinner as each command throws lines away: {" to ".join(str(c) for c in dict.fromkeys(OUTS["pipeline"]["counts"]))} lines, measured by running every prefix of the pipeline on a sample log of {total} lines. <a class="more" href="scripting.html#example">See it explained, step by step</a></figcaption>
+    <p class="wincap">The pipe narrows where a command throws lines away: {" to ".join(str(c) for c in dict.fromkeys(OUTS["pipeline"]["counts"]))} lines, measured by running every prefix of the pipeline on a sample log of {total} lines. <a class="btn ghost small-btn" href="scripting.html#example">See it explained, step by step</a></p>
   </figure>
 </section>
 

@@ -176,3 +176,53 @@ details.toc > ul a { display: inline-flex; align-items: center; min-height: 44px
 @media print { .hero-dark { background: #fff; box-shadow: none; } }
 
 .hero-dark a.btn { color: var(--on-accent); } .hero-dark a.btn.ghost { color: var(--accent); }
+
+/* ===== landing round 2: the pipe is the hero ===== */
+/* the header joins the dark band on the landing: one poster, no seam */
+.home .mast { background: #0a0d0f; box-shadow: 0 0 0 100vmax #0a0d0f; clip-path: inset(0 -100vmax); border-bottom: 0; --ink: #e9f2f5; --ink2: #bccbd2; --accent: #4ade80; }
+.home .mast nav a[aria-current="page"] { border-bottom-color: #e9f2f5; }
+.home .hero-dark { clip-path: inset(0 -100vmax); }
+/* saturated green is for the pipe and the primary action only */
+.hero-dark .kicker { color: #9db0b9; }
+.hero-dark h1 { font-size: clamp(2.1rem, 8.6vw, 5.2rem); text-shadow: none; white-space: normal; overflow-wrap: anywhere; margin-bottom: .6rem; }
+.hero-dark h1 .ps { color: #8fa3ac; } .hero-dark h1 .blk { background: #eef7f2; box-shadow: none; }
+.hero-dark .btn.ghost { border-color: #8fa3ac; color: #e9f2f5; } .hero-dark a.btn.ghost { color: #e9f2f5; }
+.hero-dark a:focus-visible, .hero-dark button:focus-visible { outline-color: #ffffff; }
+.hero-dark .btn { box-shadow: none; }
+.herohead { display: grid; gap: .2rem 2.4rem; align-items: end; }
+.herohead .lede { margin: 0 0 1rem; max-width: 36ch; font-size: clamp(1.05rem, 1.2vw + .75rem, 1.3rem); } .herohead .cta { margin: 0; }
+@media (min-width: 900px) { .herohead { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } .herohead .lede { margin-top: 1.2rem; } }
+.win { margin-top: clamp(1rem, 2.6vw, 1.8rem); box-shadow: 0 24px 70px rgba(0, 0, 0, .5), 0 0 0 1px rgba(74, 222, 128, .10); }
+.winq { padding-top: .7rem; padding-bottom: .1rem; font-size: 15px; } .winq .ps { color: #8fa3ac; }
+.key { margin: 0; padding: 0 1rem .2rem; font: 600 14px/1.4 var(--sans); color: #c3d1d8; } .key span { color: #4ade80; font-size: 11px; margin-right: .3rem; }
+.fn { color: #eef7f2; text-shadow: none; } .fn small { color: #9db0b9; }
+.funnel { padding: .4rem 1rem .6rem; }
+.fp { filter: none; clip-path: polygon(calc(50% - var(--a) * .5px) 0, calc(50% + var(--a) * .5px) 0, calc(50% + var(--b) * .5px) 100%, calc(50% - var(--b) * .5px) 100%); }
+.fs { min-height: 3.4rem; } .fp { min-height: 3.4rem; }
+.wincap { margin: 0; padding: .7rem 1rem 1rem; font-size: 15px; color: #a9bac2; border-top: 1px solid #1c272d; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
+.small-btn { min-height: 44px; font-size: 14.5px; padding: 0 1rem; }
+@media (min-width: 900px) {
+  .funnel { padding: .6rem 1rem .8rem; }
+  .fs { grid-template-rows: auto 150px auto; padding: 0; margin: 0 -.5px; } .fp { min-height: 150px; }
+  .fp { clip-path: polygon(0 calc(50% - var(--a) * .5px), 100% calc(50% - var(--b) * .5px), 100% calc(50% + var(--b) * .5px), 0 calc(50% + var(--a) * .5px)); }
+  .fn { font-size: 1.6rem; } .fc { font-size: 13px; }
+  .win .final { padding: .6rem 1rem; }
+}
+@media (max-width: 899px) { .win .final { font-size: 13.5px; padding: .6rem 1rem; } .fn { font-size: 1.5rem; } }
+/* print: a plain page, the pipe in grey */
+@media print {
+  .hero-dark, .home .mast { background: #fff !important; box-shadow: none !important; clip-path: none !important; --ink: #000; --ink2: #222; --accent: #000; color: #000; }
+  .hero-dark h1, .hero-dark .lede, .hero-dark .kicker, .fn, .fn small, .fc, .winq, .key, .wincap, .win .final, .win .final code { color: #000 !important; text-shadow: none !important; }
+  .win { background: #fff !important; border: 1px solid #000; box-shadow: none !important; } .winbar { display: none; }
+  .fp { background: #bbb !important; animation: none !important; filter: none !important; } .hero-dark h1 .blk { background: #000; }
+  .hero-dark::before { display: none; } .hero-dark a.btn { color: #000 !important; border-color: #000 !important; background: #fff !important; }
+}
+/* round 2 tuning: one-line headline, a shorter pipe window on a phone */
+.hero-dark h1 { font-size: clamp(2.4rem, 11vw, 4.4rem); }
+@media (max-width: 899px) {
+  .fs, .fp { min-height: 2.8rem; } .fs { gap: 0 .9rem; } .fn { font-size: 1.35rem; } .fc { font-size: 13.5px; padding-bottom: .15rem; }
+  .winq .muted { display: none; } .winq { font-size: 14.5px; } .key { font-size: 13.5px; } .funnel { padding: .2rem 1rem .3rem; }
+  .win .final { padding: .5rem 1rem; } .wincap { padding: .6rem 1rem .8rem; font-size: 14.5px; }
+}
+.hero-dark .kicker { font: 600 15px/1.4 var(--sans); letter-spacing: 0; text-transform: none; color: #b8c7ce; margin: 0 0 .5rem; }
+.key { font-size: 15px; } .wincap { font-size: 15px; }

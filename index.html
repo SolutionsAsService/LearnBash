@@ -10,27 +10,30 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="home">
 <a class="skip" href="#main">Skip to the content</a>
 <header class="mast">
-  <a class="brand" href="index.html"><span class="ps" aria-hidden="true">$</span> learn-bash<span class="cur" aria-hidden="true">_</span></a>
+  <a class="brand" href="index.html"><span class="ps" aria-hidden="true">$</span> learn-bash</a>
   <nav aria-label="Pages"><a href="basics.html">Basics</a><a href="commands.html">Commands</a><a href="scripting.html">Scripts</a><a href="advanced.html">Advanced</a><a href="explain.html">Explain</a></nav>
 </header>
 <main id="main">
 
 <section class="hero hero-dark" aria-labelledby="h1">
-  <p class="kicker">The Bash shell, from first command to scripts</p>
-  <h1 id="h1"><span class="ps" aria-hidden="true">$ </span>learn bash<span class="blk" aria-hidden="true"></span></h1>
-  <p class="lede">Every example on this site was run for real, and the output you see is what Bash printed.</p>
-  <p class="cta"><a class="btn" href="basics.html">Start with the basics</a><a class="btn ghost" href="explain.html">Explain a command</a></p>
+  <div class="herohead">
+    <div class="ht"><p class="kicker">Learn the Bash shell, from your first command to real scripts</p>
+    <h1 id="h1"><span class="ps" aria-hidden="true">$ </span>learn bash<span class="blk" aria-hidden="true"></span></h1></div>
+    <div class="hc"><p class="lede">Every example on this site was run for real, and the output you see is what Bash printed.</p>
+    <p class="cta"><a class="btn" href="basics.html">Start with the basics</a><a class="btn ghost" href="explain.html">Explain a command</a></p></div>
+  </div>
   <figure class="win">
     <div class="winbar" aria-hidden="true"><i></i><i></i><i></i><span>~/demo: bash</span></div>
-    <p class="winq"><span class="ps" aria-hidden="true">$</span> Which pages are missing, and how often are they asked for? <span class="muted">(7 commands, joined by pipes)</span></p>
-    <ol class="funnel" aria-label="The pipeline, stage by stage; the number is how many lines come out of each stage"><li class="fs" style="--a:120;--b:48"><span class="fn">40<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">cat access.log</code></li><li class="fs" style="--a:48;--b:48"><span class="fn">16<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">grep &#x27; 404 &#x27;</code></li><li class="fs" style="--a:48;--b:48"><span class="fn">16<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">awk &#x27;{print $7}&#x27;</code></li><li class="fs" style="--a:48;--b:14"><span class="fn">16<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">sort</code></li><li class="fs" style="--a:14;--b:14"><span class="fn">3<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">uniq -c</code></li><li class="fs" style="--a:14;--b:14"><span class="fn">3<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">sort -rn</code></li><li class="fs" style="--a:14;--b:14"><span class="fn">3<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">head -n 3</code></li></ol>
+    <p class="winq"><span class="ps" aria-hidden="true">$</span> Which pages are missing, and how often are they asked for? <span class="muted">Seven small commands, one after another.</span></p>
+    <p class="key"><span aria-hidden="true">&#9654;</span> The pipe is as thick as the number of lines left after each command.</p>
+    <ol class="funnel" aria-label="The pipeline, stage by stage; the number is how many lines come out of each command"><li class="fs" style="--a:144.0;--b:144.0"><span class="fn">40<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">cat access.log</code></li><li class="fs" style="--a:144.0;--b:57.6"><span class="fn">16<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">grep &#x27; 404 &#x27;</code></li><li class="fs" style="--a:57.6;--b:57.6"><span class="fn">16<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">awk &#x27;{print $7}&#x27;</code></li><li class="fs" style="--a:57.6;--b:57.6"><span class="fn">16<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">sort</code></li><li class="fs" style="--a:57.6;--b:10.8"><span class="fn">3<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">uniq -c</code></li><li class="fs" style="--a:10.8;--b:10.8"><span class="fn">3<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">sort -rn</code></li><li class="fs" style="--a:10.8;--b:10.8"><span class="fn">3<small>lines</small></span><span class="fp" aria-hidden="true"></span><code class="fc">head -n 3</code></li></ol>
     <pre class="out final" aria-label="Final output of the pipeline"><code>      9 /old-page
       5 /missing.png
       2 /favicon.ico</code></pre>
-    <figcaption>The pipe gets thinner as each command throws lines away: 40 to 16 to 3 lines, measured by running every prefix of the pipeline on a sample log of 40 lines. <a class="more" href="scripting.html#example">See it explained, step by step</a></figcaption>
+    <p class="wincap">The pipe narrows where a command throws lines away: 40 to 16 to 3 lines, measured by running every prefix of the pipeline on a sample log of 40 lines. <a class="btn ghost small-btn" href="scripting.html#example">See it explained, step by step</a></p>
   </figure>
 </section>
 

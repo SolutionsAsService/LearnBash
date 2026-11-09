@@ -47,3 +47,43 @@ S1 not met (no R2). S2 not met (the changes were judged by measurement and a rea
 - External links were not checked from the build environment.
 - No inclusion seat; not shown on a real phone (copying a command, the keyboard over the explainer result, text zoom).
 - Not done: `2>&1` ordering in the explainer, rating every flag, a copy button on terminal blocks.
+
+---
+
+# Round 2: the landing (graded C by the owner)
+
+**Why.** The owner graded round 1 **C**: correct and well built, but "no bold landing graphic, nothing that stands out". The first screen was a headline, two buttons and a row of small boxes. Run type: **Landing** (only the home page's first screen and what sits under it change; the other pages, palette and type are frozen, the landing may push them), bounded to one panel round, with the social card regenerated to match.
+
+## Decisions
+**D7 The pipe is the hero.** The site's real idea is that you can *see* what each command does, so the first screen shows a real seven-command pipeline as one continuous pipe whose thickness is the measured number of lines still flowing through it, at an exact scale of 3.6 px per line (40 lines is 144 px, 3 lines is 10.8 px, the true ratio), with the real final output beneath it. It sits in a terminal window under an oversized `$ learn bash` headline with a block cursor. D8 **The poster is dark in both colour schemes,** and on the landing the header joins the dark band, so the first screen is one object and not a light bar over a black block. D9 **Green is rationed:** saturated green is only on the pipe and the primary button; the headline, counts and kicker are white and grey. D10 **The pipe narrows where lines are thrown away:** each segment runs from the lines that came into the command to the lines it let out, so `grep` and `uniq -c` (the real reducers) taper, and `cat`, `sort` and `awk` do not.
+
+## Panel R2 (3 seats; verdicts in `panel/R2/`)
+Arnheim (visual force and balance), Krug (the five-second test), Cairo (first-screen measurement in both colour schemes).
+
+| Seat(s): finding | Resolution |
+|---|---|
+| Arnheim (biggest change): the headline outweighed the pipe, which is the idea; make the pipe the hero, headline about 60%, one continuous pipe, everything above the fold | ADAPT: headline reduced (clamp 2.4rem to 4.4rem) and set beside the lede and buttons on desktop; seven segments joined with no gaps; the pipe, its commands and the real output now all fit above the fold at 1280 x 800 and 1440 x 900 (output ends at y=723) |
+| Arnheim: green on every element ranks nothing; the glow softens the pipe | ADAPT: green only on the pipe and the primary button; glow removed from text and the pipe |
+| Arnheim / Cairo: the 3-line stage was drawn at 0.117 of the 40-line height against a true 0.075 (a lie factor of 1.56), and the taper was on the wrong commands | ADAPT: exact scale, no minimum; thickness 144 to 10.8 px; each segment tapers from its input to its output. Verified by reading the rendered custom properties |
+| Arnheim: the light header against the black hero is a hard seam | ADAPT: on the landing the header sits on the dark band |
+| Arnheim: black-and-green terminal frame is the template; only the thickness-as-count pipe is not | ACCEPTED: the frame is kept because the site is about the terminal; the pipe is the distinction and is now the largest element |
+| Krug MAJOR: on a phone the demo ran 913 px and the first card sat at 1.8 screens | PARTLY ADAPTED: the funnel rows are shorter and the jargon line is hidden on a phone; the demo is 735 px and the first card is at y=1272 (about 1.5 screens). The demo stays as the second screen, as Krug advised |
+| Krug MAJOR: the pipe does not explain itself; the caption is off the first screen; "(7 commands, joined by pipes)" is jargon | ADAPT: a one-line key above the pipe ("as thick as the number of lines left after each command"), plain wording ("Seven small commands, one after another"), and "See it explained, step by step" is now a visible button |
+| Krug: two cursors with two spellings; the kicker (the only "who is it for" line) is too small | ADAPT: one cursor (the brand mark is static); the kicker is a 15 px sentence: "Learn the Bash shell, from your first command to real scripts" |
+| Cairo MAJOR: print unreadable (h1 1.09:1, pipe invisible) | ADAPT: a print stylesheet: black on white, the pipe in grey; verified in print emulation |
+| Cairo MAJOR: 200% text zoom clipped the no-wrap headline | ADAPT: the headline may wrap; verified no overflow at 320, 360, 390, 768, 1024, 1440, 2560 and at 200% text size on a 360 px viewport |
+| Cairo MAJOR: og:image / twitter:image relative (do not work for crawlers); no og:url or canonical | ADAPT: `data/site.json` holds the deployed URL; when it is set, og:image, twitter:image, og:url and a canonical link become absolute. It is empty now because no live address is known; set it after deploying |
+| Cairo MINOR: primary-button focus ring the same colour as its fill; 15 px body floor | ADAPT: white focus rings on the hero; kicker, key and caption raised to 15 px (the floor caught them) |
+| Cairo / Arnheim: the social card crops command names, the output and has no wordmark | ADAPT: regenerated with the headline, the whole pipe, the command names and the real output |
+| Arnheim: streak animation unjudged (stills only); Cairo: 8% of the pipe above the fold at 360 x 640 | NOT CHANGED: the animation measured 60 fps with 0 long tasks and stops under reduced motion; a 640 px tall phone shows only the top of the pipe |
+
+## Measured (after the fixes)
+Mobile Floor passes on all seven pages. Contrast preset n:0 on the home page at 360, 390, 430 and 1280. The pipe's custom properties: 144, 57.6 and 10.8 px for 40, 16 and 3 lines. Headline: one line at every width tested, no page overflow, no overflow at 200% text size. Print: black on white. First screen at 1280 x 800: h1 at y=172, primary button at 204, pipe at 377 to 626, real output at 626 to 723. Social card 1200 x 630 with a dark background to the edge.
+
+## Stop test
+S1 not met (no R3). S2 not met (round 2's changes were judged by measurement, not re-judged by the panel). **Reported as incomplete under the one-round bound.**
+
+## Open
+- Not shown on a real phone: thumb reach of the primary button (centre about a third of the way down), scroll feel past the pipe, the animation on a low-end device, sunlight legibility of the dark band.
+- The deployed URL is not set, so og:image is relative until `data/site.json` is filled in.
+- At 360 x 640 only the top of the pipe is above the fold.
