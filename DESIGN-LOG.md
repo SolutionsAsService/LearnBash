@@ -1,0 +1,49 @@
+# DESIGN-LOG: Learn Bash (redesign)
+
+**Run.** DADA, Adaptive mode, Full run type, **bounded to one panel round**. Look: the new design pack `shell-session` (SolutionsAsService/dada-changes, `skills/dada/designpacks/`). The pages are generated from `data/*.json` and the recorded outputs of real runs (`scripts/run_examples.py`); the previous version is kept on the branch `legacy/pre-redesign`.
+
+## R0. The inherited site
+Six pages and about 65 KB of decent outline: an introduction, 54 command entries (description, usage, one example each), scripting and advanced chapters, a resources list. But: no output shown for any example (a reader could not tell what a command prints), a README and a footer that were unfilled templates ("Your Name", `git clone .../yourusername/...`), a `script.js` referenced on every page that did not exist, a neon-green-on-black terminal costume with no structure behind it, nothing said about what a command can do to your files, and a link to a community wiki that has since moved. The Frontier: (1) real output for every example, (2) say what each command can do before you run it, (3) make the safe reading of a command line a tool, (4) the Mobile Floor.
+
+## Decisions
+**D1 Every output is real.** Each example runs in a throwaway sandbox of sample files with a minimal environment; the page prints what Bash printed, and the build refuses to run if any example lacks a recorded output. A `--check` re-runs everything and compares. D2 **The mark on every command.** Only reads / Changes things / Can delete data, as a rule style plus a word (solid, dashed, double warm), per command and per flag (`find` reads, but `-delete` deletes). D3 **The measured pipeline** as the home picture: seven stages of a real log pipeline, each box showing how many lines come out of it, counted by running every prefix of the pipeline. D4 **The explainer.** Paste a command line, see its parts and the worst it can do, without running it. D5 **Dark terminal by default, light page on request**; one breakpoint; system fonts; nothing loaded from elsewhere. D6 **Honest scope:** outputs are from GNU bash 5.2 on Linux; BSD and macOS differences are noted where known; external links were not checked from the build environment.
+
+## Panel R1 (3 seats, one agent per reference; verdicts in `panel/R1/`)
+Krug (usability), Debord (technical claims, verifying by running things), Cairo (measurement, including 114 adversarial command lines). Not seated, for the bound: an inclusion seat.
+
+| Seat(s): finding | Resolution |
+|---|---|
+| **All three, BLOCKER:** the explainer said "Only reads" about things it could not analyse: `sh -c 'rm -rf ~'`, `bash -c`, `env rm -rf /`, `eval`, `dd`, `shred`, `mkfs`, `git clean -fdx`, `for ... do rm -rf $f`, `echo $(rm -rf /)`, the fork bomb, `chmod -R 777 /`, unknown commands (24 of Cairo's 114 lines too safe) | ADAPT: a fourth verdict, **Can't tell**, for any part it cannot analyse; it never reassures when something is unanalysed. The analyser now looks inside `$( )` and backticks, `sh -c`, `env`, `xargs`, `sudo`, `timeout`, `nohup`, `find -exec`, loops and conditions, skips here-document text and comments, rates `git clean`/`reset --hard`, recognises the fork bomb, device redirects and recursive `chmod` from the root. 75 command lines in `scripts/check-explain.js` get the expected verdict (including a check that "reads" never comes with an unanalysed part) |
+| Krug F2: the banner used canned text; the real reason was three screens down | ADAPT: the banner lists the specific reasons (up to four) under the verdict |
+| Cairo F3: here-document text was judged as commands | ADAPT: heredoc bodies and comments are skipped; `ls # don't` no longer refused |
+| Cairo: `ls \|\|\| wc` accepted; 300 KB token overflowed the page; empty submit left a stale result | ADAPT: connector sequences validated, input capped at 2000 characters, empty submit gets a hint |
+| Cairo F2: advice to write `"$dir/*"` is wrong; `rm -rf "$dir"/*` got no empty-variable warning | ADAPT: advice now `"$dir"/*`, and the empty-variable warning fires for quoted forms too (quoting does not help when the variable is empty) |
+| Debord / Cairo F4: the legend said "remove or overwrite" but cp, mv, tee, sed -i, tar -x, curl -o, `>` were only "changes"; the home page said "a command that only reads is safe to try anywhere" (false for find, curl, awk, sort -o) | ADAPT: cp, mv, tee, `>` and the flags sed -i, tar -x, curl -o/-O, sort -o are marked Can delete data; legend reworded; the home sentence now says a command marked Only reads will not change your files in everyday form and to check flag marks; the legend notes cd, export and alias change the shell session |
+| Debord: dd, shred, mkfs missing from a "can delete" reference | ADAPT: added (45 commands); `xargs` and `awk` notes say they run other commands |
+| Debord lessons (each verified by running): "exit status 127" on the `set -u` example was a `bash -c` quirk (a script file exits 1) | ADAPT: the example is now a script file and shows exit status 1 |
+| Debord: "trap EXIT fires however it ends" is false for kill -9 and exec; `[ ]` with `==` fails in dash; basename/dirname note false for a trailing slash; Mac Terminal defaults to zsh so globbing and word-splitting lessons do not reproduce; set -e exceptions worded loosely | ADAPT: all five reworded, and a zsh note added at the start of Basics and in the quoting lesson |
+| Debord minor: unsorted `find -maxdepth` example contradicts its note; "120 flags" counted 17 non-flags; touch -d / date -d macOS claims; curl -s; cut -c; mtime; heredoc "Home" line; CONTRIBUTING said "no build step"; wiki.bash-hackers.org "moved" | ADAPT: example sorted; the flag count now counts only dashed flags (109); wordings corrected; heredoc example changed to a computed value; CONTRIBUTING rewritten for the real build; the wiki line now says it is not listed because it could not be checked |
+| Cairo F9: "149 examples" is the distinct count but 151 are printed | ADAPT: pages say "N examples, all run" per page, computed |
+| Krug F3 / Cairo F5: "copy folder", "duplicate", "delete", "recursive", "permissions", "download" found nothing; without JS there was no index (cp 5,705px down) | ADAPT: every command has everyday keywords and search matches every word you type; "copy folder" finds cp, "delete" finds find/rm/rmdir/shred/tr, "download" curl; a collapsible jump list of all 45 commands works without JavaScript |
+| Krug F4: lessons ended in a footer; "Getting help" came last | ADAPT: Previous/Next links on every page; Getting help is now the third lesson of Basics |
+| Krug F5: the home page led with an unexplained pipeline; "Where to go" was 2,200px down | ADAPT: the cards come first, the pipeline has a one-sentence setup, the marks follow |
+| Krug F6: nav wrapped to two rows (header 146px) | ADAPT: tighter nav; the header is 103px at 360, 390 and 430 |
+| Krug: a blank line above each terminal output; basics intro and contents pushed lesson 1 below the fold | ADAPT: stray newline removed; the contents list is a collapsed "On this page" control (first lesson at y=482 on a 390px phone) |
+| Cairo: placeholder 3.58:1 in dark, control borders 1.8 to 2.2:1 | ADAPT: placeholder opacity fixed, controls use a stronger border colour; contrast preset n:0 on home, commands and explain at 390 and 1280 |
+| Debord: the Rounded-versus-marks and "Only reads on cd" worries; spectacle risk of three marks | PARTLY ADAPTED: the marks mean "what it can do in ordinary use", stated; the explainer says it is a reading aid, not a safety scanner. Not done: rating every flag |
+| Krug F1 (the fourth state also for unknown commands in the reference) | ADAPT: unknown commands give Can't tell everywhere |
+| Cairo: `2>&1` ordering not explained; command-card flags stacked; search box below the legend | DEFERRED |
+
+## Measured
+Before the fixes (Cairo): Mobile Floor 12 of 12 on 7 pages at 360, 390 and 430px; contrast preset n:0; 0 horizontal overflow at 360, 390, 430, 1280; one h1 per page; 160 internal links resolve; 0 external requests; no-JS shows 45 cards and no dead controls; 12 of 12 recorded outputs re-run independently identical; pipeline counts 40, 16, 16, 16, 3, 3, 3 reproduced; 0 HTML injection and no hang in 114 adversarial lines. After the fixes (this log): Mobile Floor passes on all seven pages; contrast preset n:0 on home, commands and explain at 390 and 1280; `run_examples.py --check` and `build.py --check` pass; `check-explain.js` 75 of 75; in a real browser the explainer rates `git push --force`, `xyzzy` and `for ... rm -rf $f` as expected, an `<img onerror>` line is not injected, search finds `cp` for "copy folder"; the nav fits one row at 360, 390 and 430px.
+
+## Stop test
+S1 not met (no R2). S2 not met (the changes were judged by measurement and a real-browser check, not by the panel). S4 not run. **Reported as incomplete under the one-round bound.**
+
+## Open
+- The explainer is a reading aid, not a safety scanner. It covers 45 commands; anything else is "Can't tell". It does not model every shell feature (aliases, functions defined elsewhere, unusual quoting), and a verdict of Only reads can still be wrong for your situation.
+- Contrast was re-measured with the contrast preset after the fixes, not with Cairo's full both-schemes walk.
+- Examples ran in one environment (GNU bash 5.2.21 on Linux, as root in a container). Output on macOS or other systems can differ; the pages say where known. Several BSD and macOS claims are from memory.
+- External links were not checked from the build environment.
+- No inclusion seat; not shown on a real phone (copying a command, the keyboard over the explainer result, text zoom).
+- Not done: `2>&1` ordering in the explainer, rating every flag, a copy button on terminal blocks.

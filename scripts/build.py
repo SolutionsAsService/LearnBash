@@ -26,11 +26,14 @@ BASH = OUTS["bash"].replace("GNU bash, version ", "Bash ").split("(")[0]
 REPO = "https://github.com/SolutionsAsService/LearnBash"
 
 MARKS = {
-    "reads": ("Only reads", "Does not change files or the system. (It may change the current shell session.)"),
-    "changes": ("Changes things", "Creates, modifies or moves files or system state."),
-    "destroys": ("Can delete data", "Can permanently remove or overwrite data. There is no undo."),
+    "reads": ("Only reads", "Does not change your files or the system. It can still change the current shell session (cd, export and alias do)."),
+    "changes": ("Changes things", "Creates or modifies files or system state, without removing what was there."),
+    "destroys": ("Can delete data", "Can remove or overwrite existing data in ordinary use, and there is no undo."),
+    "unknown": ("Can't tell", "Part of the line could not be analysed, so it is not called safe."),
 }
-NAV = [("basics.html", "Basics"), ("commands.html", "Commands"), ("scripting.html", "Scripting"), ("advanced.html", "Advanced"), ("explain.html", "Explain")]
+NAV = [("basics.html", "Basics"), ("commands.html", "Commands"), ("scripting.html", "Scripts"), ("advanced.html", "Advanced"), ("explain.html", "Explain")]
+ORDER = ["basics", "commands", "scripting", "advanced", "explain"]
+TITLES = {"basics": "Bash basics", "commands": "The command reference", "scripting": "Scripting", "advanced": "Advanced topics", "explain": "Explain a command"}
 FOOTNAV = NAV + [("resources.html", "Resources")]
 
 
@@ -55,7 +58,8 @@ for p in LS["pages"]:
                 result(b["code"])
 N_EX = len(OUTS["examples"])
 N_CMD = len(commands)
-N_FLAGS = sum(len(c["flags"]) for c in commands)
+N_FLAGS = sum(1 for c in commands for f in c["flags"] if f["flag"].startswith("-"))
+N_PRINTED = sum(len(c["examples"]) for c in commands) + sum(1 for p in LS["pages"] for s in p["sections"] for b in s["blocks"] if b["run"])
 
 
 def mark(level):
@@ -103,7 +107,7 @@ def foot(*scripts):
 def term(code, run=True, note=None, status_ok=True):
     lines = code.split("\n")
     shown = "".join(
-        (f'<span class="ln"><span class="ps" aria-hidden="true">{"$" if i == 0 else " "}</span> {e(l)}</span>\n') for i, l in enumerate(lines))
+        (f'<span class="ln"><span class="ps" aria-hidden="true">{"$" if i == 0 else " "}</span> {e(l)}</span>') for i, l in enumerate(lines))
     out = ""
     if run:
         r = result(code)
@@ -129,16 +133,16 @@ def pipeline_strip():
 
 
 def index():
-    cards = [("basics.html", "Basics", f"{sum(len(s['blocks']) for s in pages['basics']['sections'])} runnable examples", pages["basics"]["summary"]),
+    cards = [("basics.html", "Basics", f"{sum(1 for s in pages['basics']['sections'] for b in s['blocks'] if b['run'])} examples, all run", pages["basics"]["summary"]),
              ("commands.html", "Commands", f"{N_CMD} commands, {N_FLAGS} flags", "A reference where every command says whether it only reads, changes things, or can delete data."),
-             ("scripting.html", "Scripting", f"{sum(len(s['blocks']) for s in pages['scripting']['sections'])} runnable examples", pages["scripting"]["summary"]),
-             ("advanced.html", "Advanced topics", f"{sum(len(s['blocks']) for s in pages['advanced']['sections'])} runnable examples", pages["advanced"]["summary"]),
+             ("scripting.html", "Scripting", f"{sum(1 for s in pages['scripting']['sections'] for b in s['blocks'] if b['run'])} examples, all run", pages["scripting"]["summary"]),
+             ("advanced.html", "Advanced topics", f"{sum(1 for s in pages['advanced']['sections'] for b in s['blocks'] if b['run'])} examples, all run", pages["advanced"]["summary"]),
              ("explain.html", "Explain a command", "paste one, get a breakdown", "Break a command line into its parts and see what each does, and whether it is safe. It never runs anything."),
              ("resources.html", "Resources", "a short, honest list", "The manual, ShellCheck and a few guides worth your time.")]
     ch = "".join(f'<li class="card"><p class="tag">{e(t)}</p><h3><a href="{h}">{e(n)}</a></h3><p>{e(d)}</p></li>' for h, n, t, d in cards)
-    lg = "".join(f'<li>{mark(k)}<span>{e(v[1])}</span></li>' for k, v in MARKS.items())
+    lg = "".join(f'<li>{mark(k)}<span>{e(v[1])}</span></li>' for k, v in MARKS.items() if k != "unknown")
     n_stage = len(PL["stages"])
-    return head("Learn Bash: every output is real", f"Learn the Bash shell with {N_EX} examples that were actually run, a command reference marked by what each command can do to your files, and a tool that explains a command line.", "index.html") + f'''
+    return head("Learn Bash: every output is real", f"Learn the Bash shell with {N_PRINTED} examples that were actually run, a command reference marked by what each command can do to your files, and a tool that explains a command line.", "index.html") + f'''
 <section class="hero" aria-labelledby="h1">
   <p class="kicker">The Bash shell, from first command to scripts</p>
   <h1 id="h1">Learn Bash</h1>
@@ -146,25 +150,34 @@ def index():
   <p class="cta"><a class="btn" href="basics.html">Start with the basics</a><a class="btn ghost" href="explain.html">Explain a command</a></p>
 </section>
 
-<section class="pipesec" aria-labelledby="h-pipe">
-  <h2 id="h-pipe" class="sech">{e(PL["question"])}</h2>
-  <p class="lede2">{n_stage} small commands joined by pipes answer it. Each box is the pipeline run up to that point on a sample web-server log of {OUTS["pipeline"]["counts"][0]} lines, and the number is how many lines come out of it.</p>
-  {pipeline_strip()}
-  <p class="small">The counts were measured by running each prefix of the pipeline, not typed in. <a class="more" href="scripting.html#example">See it explained, step by step</a></p>
-</section>
-
 <section aria-labelledby="h-where">
   <h2 id="h-where" class="sech">Where to go</h2>
   <ul class="cards">{ch}</ul>
 </section>
 
+<section class="pipesec" aria-labelledby="h-pipe">
+  <h2 id="h-pipe" class="sech">One example of what Bash is for</h2>
+  <p class="lede2">A web server keeps a log with one line per request. The question: <strong>{e(PL["question"][0].lower() + PL["question"][1:])}</strong> {n_stage} small commands joined by pipes answer it. Each box is the pipeline run up to that point on a sample log of {OUTS["pipeline"]["counts"][0]} lines, and the number is how many lines come out of it.</p>
+  {pipeline_strip()}
+  <p class="small">The counts were measured by running each prefix of the pipeline, not typed in. <a class="more" href="scripting.html#example">See it explained, step by step</a></p>
+</section>
+
 <section class="band" aria-labelledby="h-safe">
   <h2 id="h-safe" class="sech">Know what a command can do before you run it</h2>
-  <p class="lede2">Every command and flag in the reference carries a mark. A command that only reads is safe to try anywhere. One that changes things deserves a second look. One that can delete data deserves a pause.</p>
+  <p class="lede2">Every command in the reference carries a mark for what it can do in ordinary use, and a flag that is riskier than its command says so. A command marked "Only reads" will not change your files in its everyday form; check the marks on its flags too. One that changes things deserves a second look, and one that can delete data deserves a pause.</p>
   <ul class="legend">{lg}</ul>
   <p><a class="more" href="commands.html">Open the command reference</a></p>
 </section>
 ''' + foot()
+
+
+def next_link(pid):
+    i = ORDER.index(pid)
+    prev = (ORDER[i - 1], TITLES[ORDER[i - 1]]) if i > 0 else None
+    nxt = (ORDER[i + 1], TITLES[ORDER[i + 1]]) if i + 1 < len(ORDER) else None
+    pl = f'<a class="prev" href="{prev[0]}.html"><span>Previous</span>{e(prev[1])}</a>' if prev else "<span></span>"
+    nl = f'<a class="next" href="{nxt[0]}.html"><span>Next</span>{e(nxt[1])}</a>' if nxt else "<span></span>"
+    return f'<nav class="stepnav" aria-label="Previous and next">{pl}{nl}</nav>'
 
 
 def lesson_page(pid, kicker):
@@ -179,9 +192,10 @@ def lesson_page(pid, kicker):
     return head(f'{p["title"]}: Learn Bash', p["summary"], f"{pid}.html") + f'''
 <section class="page-head"><p class="kicker">{e(kicker)}</p><h1>{e(p["title"])}</h1>
 <p class="lede">{e(p["summary"])}</p>
-<p class="small">{nruns} examples on this page, all run with {e(BASH)}. The sandbox holds a few sample files (notes.txt, fruits.txt, data.csv, access.log and some folders); paths are shown as /home/you/demo.</p>
-<nav class="toc" aria-label="On this page"><ul>{toc}</ul></nav></section>
+<p class="small">{nruns} examples, all run with {e(BASH)}. Paths are shown as /home/you/demo.</p>
+<details class="toc"><summary>On this page ({len(p["sections"])} sections)</summary><ul>{toc}</ul></details></section>
 {"".join(secs)}
+{next_link(pid)}
 ''' + foot()
 
 
@@ -197,17 +211,19 @@ def commands_page():
         exs = f'<h4 class="h4">Examples, run for real</h4>{ex}' if ex else ""
         note = f'<p class="cnote">{e(c["note"])}</p>' if c.get("note") else ""
         arts.append(
-            f'<article class="cmd-card" id="cmd-{e(c["name"])}" data-group="{c["group"]}" data-name="{e(c["name"])}" data-text="{e(c["summary"].lower())}">'
+            f'<article class="cmd-card" id="cmd-{e(c["name"])}" data-group="{c["group"]}" data-name="{e(c["name"])}" data-text="{e((c["summary"] + " " + c.get("keywords", "")).lower())}">'
             f'<header><h3><code>{e(c["name"])}</code></h3>{mark(c["danger"])}</header>'
             f'<p class="sum">{e(c["summary"])}</p><p class="syn"><code>{e(c["synopsis"])}</code></p>{note}{flags}{exs}</article>')
-    legend = "".join(f'<li>{mark(k)}<span>{e(v[1])}</span></li>' for k, v in MARKS.items())
+    legend = "".join(f'<li>{mark(k)}<span>{e(v[1])}</span></li>' for k, v in MARKS.items() if k != "unknown")
+    index_links = "".join(f'<li><a href="#cmd-{e(c["name"])}"><code>{e(c["name"])}</code></a></li>' for c in commands)
     return head("Bash command reference: Learn Bash", f"{N_CMD} Bash commands with {N_FLAGS} flags, each marked as only reading, changing things or able to delete data, with examples that were actually run.", "commands.html") + f'''
 <section class="page-head"><p class="kicker">Reference</p><h1>{N_CMD} commands, and what each can do</h1>
-<p class="lede">Each command carries a mark for the worst it can do in its everyday form; a flag that is more dangerous than the command says so.</p>
+<p class="lede">Each command carries a mark for what it can do in ordinary use; a flag that is riskier than its command says so. Search by what you want to do: copy, delete, search, download.</p>
 <ul class="legend">{legend}</ul>
 <p class="small">GNU (Linux) flags are shown; where macOS/BSD differs, the entry says so.</p></section>
 <section aria-labelledby="h-find">
   <h2 id="h-find" class="sr">Find a command</h2>
+  <details class="toc cmdindex"><summary>Jump to a command ({N_CMD})</summary><ul>{index_links}</ul></details>
   <div class="tools" id="cmd-tools" hidden>
     <label class="f"><span class="label">Search commands</span><input id="q" type="search" placeholder="for example copy, count, search" autocomplete="off"></label>
     <div class="chips" id="group-chips" role="group" aria-label="Filter by kind of task">{chips}</div>
@@ -215,6 +231,7 @@ def commands_page():
   <p class="count" id="count" role="status" aria-live="polite"></p>
   <div class="cmds">{"".join(arts)}</div>
 </section>
+{next_link("commands")}
 ''' + foot("commands.js")
 
 
@@ -230,7 +247,7 @@ def explain_page():
   <h2 id="h-form" class="sr">Explainer</h2>
   <form id="explain-form" class="eform js-only" autocomplete="off" hidden>
     <label class="f" for="cmd"><span class="label">Command line</span></label>
-    <div class="row"><input id="cmd" name="cmd" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="rm -rf build/ && ls -la" required><button class="btn" type="submit">Explain</button></div>
+    <div class="row"><input id="cmd" name="cmd" type="text" maxlength="2000" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="rm -rf build/ && ls -la" required><button class="btn" type="submit">Explain</button></div>
   </form>
   <div id="result" class="result" role="status" aria-live="polite"></div>
   <div class="js-only" hidden id="examples"><p class="small">Try one:</p><div class="chips">{exb}</div></div>
@@ -241,11 +258,13 @@ def explain_page():
   <div><h2 id="h-limits" class="sech">What it knows, and what it does not</h2>
   <ul class="plain"><li>It knows the {N_CMD} commands and {N_FLAGS} flags in the command reference. Anything else is shown as unknown.</li>
   <li>It splits at pipes and operators (<code>|</code> <code>&amp;&amp;</code> <code>||</code> <code>;</code>), reads quotes, and notices redirections such as <code>&gt;</code>, which empties its target file before the command even starts.</li>
-  <li>It does not understand every shell feature: loops, functions and nested substitutions are shown as plain text.</li>
-  <li>It is a reading aid, not a safety scanner. A command it calls harmless can still be wrong for your situation.</li></ul>
+  <li>It looks inside <code>$( )</code>, <code>sh -c</code>, <code>env</code>, <code>xargs</code>, <code>find -exec</code> and loops, and rates what it finds there. It skips here-document text and comments.</li>
+  <li>When part of a line cannot be analysed (an unknown command, <code>eval</code>, a function, a script file), the verdict is <strong>Can't tell</strong>, never a reassuring one.</li>
+  <li>It is a reading aid, not a safety scanner. A line it rates "Only reads" can still be wrong for your situation, and nothing replaces reading a command before you run it.</li></ul>
   <p><a class="more" href="commands.html">Open the command reference</a></p></div>
   <div><h2 class="sech">The marks</h2><ul class="legend">{legend}</ul></div>
 </section>
+{next_link("explain")}
 ''' + foot("explain-core.js", "explain.js")
 
 
@@ -265,7 +284,7 @@ def resources_page():
 <section class="page-head"><p class="kicker">Resources</p><h1>Where to learn more</h1>
 <p class="lede">A short list, not a long one. Links were not checked from the build environment; if one is dead, <a href="{REPO}/issues/new">tell us</a>.</p></section>
 <section aria-labelledby="h-r"><h2 id="h-r" class="sr">The list</h2><ul class="reslist">{li}</ul>
-<p class="small">The old community wiki at wiki.bash-hackers.org, which the previous version of this site linked to, has moved; Greg's Wiki above covers much of the same ground.</p></section>
+<p class="small">The previous version of this site linked to wiki.bash-hackers.org. It is not listed here because it could not be checked, and Greg's Wiki above covers much of the same ground.</p></section>
 ''' + foot()
 
 

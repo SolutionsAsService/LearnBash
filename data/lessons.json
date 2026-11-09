@@ -10,7 +10,8 @@
      "title": "What the shell is",
      "body": [
       "A shell is a program that reads what you type, runs it, and shows you the result. Bash is the most common one on Linux and the default on many other systems. You type a line at the prompt, press Enter, and the shell finds the program or built-in command you named and runs it.",
-      "Everything on this site that shows a result was run in a real Bash 5.2 shell, in a sandbox folder with a few sample files, so the output you see is what Bash printed. Paths are shown as /home/you/demo."
+      "Everything on this site that shows a result was run in a real Bash 5.2 shell, in a sandbox folder with a few sample files, so the output you see is what Bash printed. Paths are shown as /home/you/demo.",
+      "One thing to know first: since macOS Catalina (2019) the Terminal app starts zsh, not Bash. Most commands behave the same, but a few lessons here (unquoted variables, some globbing) differ in zsh. Type bash to start Bash, or begin your scripts with #!/usr/bin/env bash."
      ],
      "blocks": []
     },
@@ -35,6 +36,30 @@
        "code": "ls -l notes.txt | cut -c1-10",
        "run": true,
        "note": "Here -l asks for the long format; cut keeps the first ten characters, the permissions."
+      }
+     ]
+    },
+    {
+     "id": "help",
+     "title": "Getting help",
+     "body": [
+      "Three places answer most questions. man NAME opens the manual page (press q to leave). NAME --help prints a short summary for most programs. type NAME tells you whether a word is a built-in, an alias, a function or a program, and help NAME documents the built-ins.",
+      "Manual pages describe your system's version of a tool. GNU (Linux) and BSD (macOS) versions of the same command differ in some flags; the command reference notes where."
+     ],
+     "blocks": [
+      {
+       "code": "type -t cd ls if",
+       "run": true,
+       "note": "builtin, file (a program on disk), keyword."
+      },
+      {
+       "code": "help pwd | head -n 3",
+       "run": true
+      },
+      {
+       "code": "ls --help | head -n 2",
+       "run": true,
+       "note": "GNU ls. On macOS use man ls, because BSD ls has no --help."
       }
      ]
     },
@@ -101,7 +126,7 @@
      "id": "quoting",
      "title": "Quoting",
      "body": [
-      "Quotes tell the shell how much to interpret. Double quotes keep spaces together but still expand variables. Single quotes keep everything exactly as typed. A backslash escapes one character. Leaving quotes off lets the shell split a value at its spaces, a common cause of bugs with file names that contain spaces.",
+      "Quotes tell the shell how much to interpret. Double quotes keep spaces together but still expand variables. Single quotes keep everything exactly as typed. A backslash escapes one character. Leaving quotes off lets Bash split a value at its spaces, a common cause of bugs with file names that contain spaces. (zsh does not split unquoted variables, so this example behaves differently there.)",
       "The rule that prevents most mistakes: put double quotes around every variable you expand, such as \"$name\"."
      ],
      "blocks": [
@@ -191,30 +216,6 @@
        "run": true
       }
      ]
-    },
-    {
-     "id": "help",
-     "title": "Getting help",
-     "body": [
-      "Three places answer most questions. man NAME opens the manual page (press q to leave). NAME --help prints a short summary for most programs. type NAME tells you whether a word is a built-in, an alias, a function or a program, and help NAME documents the built-ins.",
-      "Manual pages describe your system's version of a tool. GNU (Linux) and BSD (macOS) versions of the same command differ in some flags; the command reference notes where."
-     ],
-     "blocks": [
-      {
-       "code": "type -t cd ls if",
-       "run": true,
-       "note": "builtin, file (a program on disk), keyword."
-      },
-      {
-       "code": "help pwd | head -n 3",
-       "run": true
-      },
-      {
-       "code": "ls --help | head -n 2",
-       "run": true,
-       "note": "GNU ls. On macOS use man ls, because BSD ls has no --help."
-      }
-     ]
     }
    ]
   },
@@ -246,7 +247,7 @@
      "id": "tests",
      "title": "Making decisions",
      "body": [
-      "if runs a command and branches on its exit status. The usual command is a test: [[ ... ]] in Bash (a keyword, safer with spaces and empty values) or [ ... ] in any POSIX shell. Compare numbers with -eq, -lt, -gt and strings with == and !=. File tests include -f (a regular file), -d (a directory) and -e (exists).",
+      "if runs a command and branches on its exit status. The usual command is a test: [[ ... ]] in Bash (a keyword, safer with spaces and empty values) or [ ... ] in any POSIX shell. Compare numbers with -eq, -lt, -gt and strings with = and != (POSIX). == also works inside [[ ]] and in Bash's [ ], but not in dash. File tests include -f (a regular file), -d (a directory) and -e (exists).",
       "case matches a value against patterns and is tidier than a long if chain."
      ],
      "blocks": [
@@ -332,7 +333,7 @@
       {
        "code": "path=/home/you/demo/notes.txt\necho ${path##*/}\necho ${path%/*}",
        "run": true,
-       "note": "The same results as basename and dirname, without starting a program."
+       "note": "The same results as basename and dirname for an ordinary path, without starting a program. They differ for a trailing slash or a bare name."
       }
      ]
     },
@@ -359,7 +360,7 @@
      "title": "Failing safely",
      "body": [
       "By default a script carries on after an error. Three settings change that: set -e exits when a command fails, set -u treats an unset variable as an error, and set -o pipefail makes a pipeline fail if any stage fails (otherwise only the last stage counts). Together, set -euo pipefail at the top is a common safety net.",
-      "It is not a cure-all: set -e ignores failures inside if conditions and && lists, and it can surprise you. Check the cases you care about explicitly, and run ShellCheck over your scripts."
+      "It is not a cure-all: set -e does not exit for a failure inside a condition (an if or while test, or the left side of && and ||), and it can surprise you. Check the cases you care about explicitly, and run ShellCheck over your scripts."
      ],
      "blocks": [
       {
@@ -375,7 +376,7 @@
        "run": true
       },
       {
-       "code": "bash -c 'set -u; dir=\"\"; echo \"would run: rm -rf $dirr/\"'",
+       "code": "cat > guard.sh <<'EOF'\nset -u\ndir=\"\"\necho \"would run: rm -rf $dirr/\"\nEOF\nbash guard.sh; echo \"exit status: $?\"",
        "run": true,
        "note": "A typo in a variable name (dirr) is caught instead of silently expanding to nothing. Without set -u that command would read rm -rf /."
       }
@@ -459,7 +460,7 @@
      ],
      "blocks": [
       {
-       "code": "name=Ana\ncat <<EOF\nHello, $name\nHome is a variable here too.\nEOF",
+       "code": "name=Ana\ncat <<EOF\nHello, $name\nTwo plus two is $((2 + 2)).\nEOF",
        "run": true
       },
       {
@@ -542,7 +543,7 @@
      "id": "traps",
      "title": "Cleaning up with trap",
      "body": [
-      "trap 'commands' SIGNAL runs commands when the shell receives a signal or an event. The EXIT pseudo-signal fires whenever the script ends, however it ends, which makes it the right place to delete temporary files. Traps for INT (Ctrl-C) and TERM let a script clean up when interrupted."
+      "trap 'commands' SIGNAL runs commands when the shell receives a signal or an event. The EXIT pseudo-signal fires when the script ends, whether it finishes, calls exit or stops on an error, which makes it the right place to delete temporary files. It does not fire if the shell is killed with SIGKILL (kill -9) or replaced with exec. Traps for INT (Ctrl-C) and TERM let a script clean up when interrupted."
      ],
      "blocks": [
       {

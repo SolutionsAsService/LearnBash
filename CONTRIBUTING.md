@@ -13,15 +13,18 @@ docs, new features, data corrections and ideas.
 
 ## Getting set up
 
-This is a static site: no build step.
+The pages are generated from data, so edit the data and rebuild; do not edit the `.html` files by hand. You need Python 3, Bash with GNU tools, and Node for the explainer check.
 
 ```bash
 git clone https://github.com/SolutionsAsService/LearnBash
 cd LearnBash
-npx serve .
+python3 scripts/run_examples.py     # re-run every example and record its real output
+python3 scripts/build.py            # regenerate the pages
+python3 scripts/build.py --check && python3 scripts/run_examples.py --check && node scripts/check-explain.js
+npx serve .                         # then open the printed localhost URL
 ```
 
-Then open the printed localhost URL. Keep links relative so the site still deploys from any host.
+Commands, flags and their marks are in `data/commands.json`; lessons and their code blocks are in `data/lessons.json`. Every code block marked to run is executed for real, so an example that fails or prints something different shows up in the output. Keep links relative so the site still deploys from any host.
 
 ## Making a change
 

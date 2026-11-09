@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark light">
 <title>Learn Bash: every output is real</title>
-<meta name="description" content="Learn the Bash shell with 149 examples that were actually run, a command reference marked by what each command can do to your files, and a tool that explains a command line.">
-<meta property="og:title" content="Learn Bash: every output is real"><meta property="og:description" content="Learn the Bash shell with 149 examples that were actually run, a command reference marked by what each command can do to your files, and a tool that explains a command line."><meta property="og:type" content="website">
+<meta name="description" content="Learn the Bash shell with 151 examples that were actually run, a command reference marked by what each command can do to your files, and a tool that explains a command line.">
+<meta property="og:title" content="Learn Bash: every output is real"><meta property="og:description" content="Learn the Bash shell with 151 examples that were actually run, a command reference marked by what each command can do to your files, and a tool that explains a command line."><meta property="og:type" content="website">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -14,7 +14,7 @@
 <a class="skip" href="#main">Skip to the content</a>
 <header class="mast">
   <a class="brand" href="index.html"><span class="ps" aria-hidden="true">$</span> learn-bash<span class="cur" aria-hidden="true">_</span></a>
-  <nav aria-label="Pages"><a href="basics.html">Basics</a><a href="commands.html">Commands</a><a href="scripting.html">Scripting</a><a href="advanced.html">Advanced</a><a href="explain.html">Explain</a></nav>
+  <nav aria-label="Pages"><a href="basics.html">Basics</a><a href="commands.html">Commands</a><a href="scripting.html">Scripts</a><a href="advanced.html">Advanced</a><a href="explain.html">Explain</a></nav>
 </header>
 <main id="main">
 
@@ -25,9 +25,14 @@
   <p class="cta"><a class="btn" href="basics.html">Start with the basics</a><a class="btn ghost" href="explain.html">Explain a command</a></p>
 </section>
 
+<section aria-labelledby="h-where">
+  <h2 id="h-where" class="sech">Where to go</h2>
+  <ul class="cards"><li class="card"><p class="tag">28 examples, all run</p><h3><a href="basics.html">Basics</a></h3><p>Commands, paths, wildcards, quoting, variables, exit status, pipes and redirection.</p></li><li class="card"><p class="tag">45 commands, 109 flags</p><h3><a href="commands.html">Commands</a></h3><p>A reference where every command says whether it only reads, changes things, or can delete data.</p></li><li class="card"><p class="tag">25 examples, all run</p><h3><a href="scripting.html">Scripting</a></h3><p>Write scripts that take arguments, decide, loop, define functions and fail safely.</p></li><li class="card"><p class="tag">18 examples, all run</p><h3><a href="advanced.html">Advanced topics</a></h3><p>File descriptors, here-documents, process substitution, jobs, traps, debugging and portability.</p></li><li class="card"><p class="tag">paste one, get a breakdown</p><h3><a href="explain.html">Explain a command</a></h3><p>Break a command line into its parts and see what each does, and whether it is safe. It never runs anything.</p></li><li class="card"><p class="tag">a short, honest list</p><h3><a href="resources.html">Resources</a></h3><p>The manual, ShellCheck and a few guides worth your time.</p></li></ul>
+</section>
+
 <section class="pipesec" aria-labelledby="h-pipe">
-  <h2 id="h-pipe" class="sech">Which pages are missing, and how often are they asked for?</h2>
-  <p class="lede2">7 small commands joined by pipes answer it. Each box is the pipeline run up to that point on a sample web-server log of 40 lines, and the number is how many lines come out of it.</p>
+  <h2 id="h-pipe" class="sech">One example of what Bash is for</h2>
+  <p class="lede2">A web server keeps a log with one line per request. The question: <strong>which pages are missing, and how often are they asked for?</strong> 7 small commands joined by pipes answer it. Each box is the pipeline run up to that point on a sample log of 40 lines, and the number is how many lines come out of it.</p>
   <ol class="pipe" aria-label="The pipeline, stage by stage"><li class="stage"><code>cat access.log</code><span class="n">40<small> lines out</small></span></li><li class="stage"><code>grep &#x27; 404 &#x27;</code><span class="n">16<small> lines out</small></span></li><li class="stage"><code>awk &#x27;{print $7}&#x27;</code><span class="n">16<small> lines out</small></span></li><li class="stage"><code>sort</code><span class="n">16<small> lines out</small></span></li><li class="stage"><code>uniq -c</code><span class="n">3<small> lines out</small></span></li><li class="stage"><code>sort -rn</code><span class="n">3<small> lines out</small></span></li><li class="stage"><code>head -n 3</code><span class="n">3<small> lines out</small></span></li></ol>
 <pre class="out final" aria-label="Final output of the pipeline"><code>      9 /old-page
       5 /missing.png
@@ -35,20 +40,15 @@
   <p class="small">The counts were measured by running each prefix of the pipeline, not typed in. <a class="more" href="scripting.html#example">See it explained, step by step</a></p>
 </section>
 
-<section aria-labelledby="h-where">
-  <h2 id="h-where" class="sech">Where to go</h2>
-  <ul class="cards"><li class="card"><p class="tag">28 runnable examples</p><h3><a href="basics.html">Basics</a></h3><p>Commands, paths, wildcards, quoting, variables, exit status, pipes and redirection.</p></li><li class="card"><p class="tag">42 commands, 120 flags</p><h3><a href="commands.html">Commands</a></h3><p>A reference where every command says whether it only reads, changes things, or can delete data.</p></li><li class="card"><p class="tag">25 runnable examples</p><h3><a href="scripting.html">Scripting</a></h3><p>Write scripts that take arguments, decide, loop, define functions and fail safely.</p></li><li class="card"><p class="tag">18 runnable examples</p><h3><a href="advanced.html">Advanced topics</a></h3><p>File descriptors, here-documents, process substitution, jobs, traps, debugging and portability.</p></li><li class="card"><p class="tag">paste one, get a breakdown</p><h3><a href="explain.html">Explain a command</a></h3><p>Break a command line into its parts and see what each does, and whether it is safe. It never runs anything.</p></li><li class="card"><p class="tag">a short, honest list</p><h3><a href="resources.html">Resources</a></h3><p>The manual, ShellCheck and a few guides worth your time.</p></li></ul>
-</section>
-
 <section class="band" aria-labelledby="h-safe">
   <h2 id="h-safe" class="sech">Know what a command can do before you run it</h2>
-  <p class="lede2">Every command and flag in the reference carries a mark. A command that only reads is safe to try anywhere. One that changes things deserves a second look. One that can delete data deserves a pause.</p>
-  <ul class="legend"><li><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span><span>Does not change files or the system. (It may change the current shell session.)</span></li><li><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span><span>Creates, modifies or moves files or system state.</span></li><li><span class="mk mk-destroys"><i aria-hidden="true"></i>Can delete data</span><span>Can permanently remove or overwrite data. There is no undo.</span></li></ul>
+  <p class="lede2">Every command in the reference carries a mark for what it can do in ordinary use, and a flag that is riskier than its command says so. A command marked "Only reads" will not change your files in its everyday form; check the marks on its flags too. One that changes things deserves a second look, and one that can delete data deserves a pause.</p>
+  <ul class="legend"><li><span class="mk mk-reads"><i aria-hidden="true"></i>Only reads</span><span>Does not change your files or the system. It can still change the current shell session (cd, export and alias do).</span></li><li><span class="mk mk-changes"><i aria-hidden="true"></i>Changes things</span><span>Creates or modifies files or system state, without removing what was there.</span></li><li><span class="mk mk-destroys"><i aria-hidden="true"></i>Can delete data</span><span>Can remove or overwrite existing data in ordinary use, and there is no undo.</span></li></ul>
   <p><a class="more" href="commands.html">Open the command reference</a></p>
 </section>
 </main>
 <footer class="foot">
-  <nav class="footnav" aria-label="Pages"><a href="index.html">Home</a><a href="basics.html">Basics</a><a href="commands.html">Commands</a><a href="scripting.html">Scripting</a><a href="advanced.html">Advanced</a><a href="explain.html">Explain</a><a href="resources.html">Resources</a></nav>
+  <nav class="footnav" aria-label="Pages"><a href="index.html">Home</a><a href="basics.html">Basics</a><a href="commands.html">Commands</a><a href="scripting.html">Scripts</a><a href="advanced.html">Advanced</a><a href="explain.html">Explain</a><a href="resources.html">Resources</a></nav>
   <p><strong>Every output here is real.</strong> Each example was run in a sandbox with Bash 5.2.21 on Linux (GNU coreutils, mawk) when this site was built. macOS and BSD tools differ in some flags; the pages say where it matters. External links were not checked from the build environment.</p>
   <p class="small">Code and text are MIT-licensed. Nothing on this site loads from another domain, and the explainer never runs what you paste.</p>
 </footer>

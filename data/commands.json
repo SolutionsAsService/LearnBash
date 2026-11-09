@@ -34,7 +34,8 @@
    "synopsis": "alias [NAME=VALUE]",
    "flags": [],
    "examples": [],
-   "note": "Aliases are lost when the shell exits; put them in ~/.bashrc to keep them. Scripts do not see them."
+   "note": "Changes the current shell session only. Aliases are lost when the shell exits; put them in ~/.bashrc to keep them. Scripts do not see them.",
+   "keywords": "shortcut nickname rename command"
   },
   {
    "name": "awk",
@@ -65,7 +66,8 @@
     "awk -F, 'NR > 1 {sum += $3} END {print sum}' data.csv",
     "awk -F, '$2 == \"red\" {print $1}' data.csv"
    ],
-   "note": "Examples avoid features only GNU awk has, so they behave the same under mawk and macOS awk."
+   "note": "Examples avoid features only GNU awk has, so they behave the same under mawk and macOS awk. awk can run other commands from inside a script (system()), so read an awk script from someone else before you run it.",
+   "keywords": "columns fields report sum process text csv"
   },
   {
    "name": "cat",
@@ -83,7 +85,8 @@
     "cat notes.txt",
     "cat -n fruits.txt",
     "cat fruits.txt numbers.txt"
-   ]
+   ],
+   "keywords": "print show display read file join concatenate"
   },
   {
    "name": "cd",
@@ -109,7 +112,8 @@
     "cd projects && pwd",
     "cd projects/web && cd ../api && pwd"
    ],
-   "note": "A shell builtin: it changes where the shell is, not any file."
+   "note": "A builtin: it changes where the shell is, not any file. That is why a command can be 'Only reads' and still change your session.",
+   "keywords": "change directory folder move navigate go"
   },
   {
    "name": "chmod",
@@ -139,7 +143,8 @@
    "examples": [
     "ls -l scripts/hello.sh | cut -c1-10",
     "chmod u+x scripts/hello.sh && ls -l scripts/hello.sh | cut -c1-10 && scripts/hello.sh Ana"
-   ]
+   ],
+   "keywords": "permissions access executable mode rights read write"
   },
   {
    "name": "chown",
@@ -155,12 +160,13 @@
     }
    ],
    "examples": [],
-   "note": "Not run here: changing ownership needs administrator rights."
+   "note": "Not run here: changing ownership needs administrator rights.",
+   "keywords": "owner ownership group permissions"
   },
   {
    "name": "cp",
    "group": "files",
-   "danger": "changes",
+   "danger": "destroys",
    "summary": "Copy files and directories.",
    "synopsis": "cp [OPTION]... SOURCE... DEST",
    "flags": [
@@ -190,7 +196,8 @@
     "cp -r projects backup && ls backup",
     "cp -v notes.txt copy.txt"
    ],
-   "note": "By default cp overwrites an existing destination without asking. -i asks first; -n never overwrites (recent GNU versions warn that its behaviour is non-portable and suggest --update=none)."
+   "note": "By default cp overwrites an existing destination without asking, which is why it is marked as able to delete data. -i asks first; -n never overwrites (recent GNU versions warn that its behaviour is non-portable and suggest --update=none).",
+   "keywords": "copy duplicate clone backup folder directory file"
   },
   {
    "name": "curl",
@@ -201,17 +208,17 @@
    "flags": [
     {
      "flag": "-s",
-     "text": "Silent: no progress meter."
+     "text": "Silent: no progress meter and no error messages (add -S to keep the errors)."
     },
     {
      "flag": "-o",
      "text": "Write output to a file instead of the screen.",
-     "danger": "changes"
+     "danger": "destroys"
     },
     {
      "flag": "-O",
      "text": "Save under the name used in the URL.",
-     "danger": "changes"
+     "danger": "destroys"
     },
     {
      "flag": "-L",
@@ -235,7 +242,8 @@
     }
    ],
    "examples": [],
-   "note": "Not run here: it needs the network. Never pipe a download straight into a shell (curl ... | bash): you run code you have not read."
+   "note": "Not run here: it needs the network. Never pipe a download straight into a shell (curl ... | bash): you run code you have not read.",
+   "keywords": "download http fetch url web request api transfer"
   },
   {
    "name": "cut",
@@ -254,13 +262,14 @@
     },
     {
      "flag": "-c",
-     "text": "Which characters to keep."
+     "text": "Which characters to keep (bytes in some locales)."
     }
    ],
    "examples": [
     "cut -d, -f1,3 data.csv",
     "cut -c1-4 notes.txt"
-   ]
+   ],
+   "keywords": "columns fields extract split csv"
   },
   {
    "name": "date",
@@ -279,14 +288,49 @@
     },
     {
      "flag": "-d",
-     "text": "Use a given date instead of now (GNU; BSD uses -j -f)."
+     "text": "Use a given date instead of now (GNU date; BSD/macOS date has no -d: use -v, or -j -f)."
+    },
+    {
+     "flag": "-s",
+     "text": "Set the system clock (needs administrator rights).",
+     "danger": "changes"
     }
    ],
    "examples": [
     "date -d 2025-03-04 +%F",
     "date -d 2025-03-04 +%A"
    ],
-   "note": "Examples use a fixed date so the output does not change."
+   "note": "Examples use a fixed date so the output does not change.",
+   "keywords": "time clock today format"
+  },
+  {
+   "name": "dd",
+   "group": "system",
+   "danger": "destroys",
+   "summary": "Copy raw data from one place to another, byte for byte. Pointed at a disk, it overwrites it.",
+   "synopsis": "dd if=INPUT of=OUTPUT [bs=SIZE] [count=N]",
+   "flags": [
+    {
+     "flag": "if=",
+     "text": "The input file or device."
+    },
+    {
+     "flag": "of=",
+     "text": "The output file or device. Everything there is overwritten.",
+     "danger": "destroys"
+    },
+    {
+     "flag": "bs=",
+     "text": "Block size to read and write at a time."
+    },
+    {
+     "flag": "count=",
+     "text": "Copy only this many blocks."
+    }
+   ],
+   "examples": [],
+   "note": "Not run here. A wrong of= (for example a disk instead of a file) destroys that disk with no confirmation. Check the target with lsblk or df first.",
+   "keywords": "disk image clone wipe overwrite raw"
   },
   {
    "name": "df",
@@ -301,7 +345,8 @@
     }
    ],
    "examples": [],
-   "note": "Output depends on the machine, so no example is run."
+   "note": "Output depends on the machine, so no example is run.",
+   "keywords": "disk free space mounted filesystem"
   },
   {
    "name": "diff",
@@ -323,7 +368,8 @@
     "diff fruits.txt notes.txt | head -n 4",
     "diff -u projects/api/notes.txt docs/readme.md | head -n 6"
    ],
-   "note": "Exit status is 0 when the files are identical, 1 when they differ."
+   "note": "Exit status is 0 when the files are identical, 1 when they differ.",
+   "keywords": "compare difference changes files"
   },
   {
    "name": "du",
@@ -342,7 +388,8 @@
     }
    ],
    "examples": [],
-   "note": "Sizes depend on the file system, so no example is run."
+   "note": "Sizes depend on the file system, so no example is run.",
+   "keywords": "disk usage size space folder"
   },
   {
    "name": "echo",
@@ -364,7 +411,8 @@
     "echo hello world",
     "echo -n no newline; echo ' ... then this'",
     "echo \"two words\" | wc -w"
-   ]
+   ],
+   "keywords": "print say output text"
   },
   {
    "name": "export",
@@ -377,7 +425,8 @@
     "NAME=Ana; bash -c 'echo [$NAME]'",
     "export NAME=Ana; bash -c 'echo [$NAME]'"
    ],
-   "note": "A builtin. The first example shows an exported-less variable is invisible to a child shell."
+   "note": "A builtin that changes the shell's environment, not your files. The first example shows a variable that is not exported is invisible to a child shell.",
+   "keywords": "environment variable set share"
   },
   {
    "name": "find",
@@ -396,7 +445,7 @@
     },
     {
      "flag": "-mtime",
-     "text": "Modified N days ago; +N means more than N, -N less than N."
+     "text": "Data last modified N times 24 hours ago; +N means more than N days, -N means less."
     },
     {
      "flag": "-size",
@@ -420,10 +469,11 @@
    "examples": [
     "find . -name '*.txt' | sort",
     "find projects -type f | sort",
-    "find . -maxdepth 1 -type d",
+    "find . -maxdepth 1 -type d | sort",
     "find . -name '*.txt' -exec wc -l {} \\; | sort -k2"
    ],
-   "note": "Without -delete or -exec, find only reads. It lists matches in whatever order the file system gives them, so the examples sort the result."
+   "note": "Without -delete or -exec, find only reads. It lists matches in whatever order the file system gives them, so the examples sort the result.",
+   "keywords": "search locate files folders name age size delete recursive"
   },
   {
    "name": "grep",
@@ -481,7 +531,8 @@
     "grep -v bash notes.txt",
     "grep -E '^(ls|cd)' notes.txt"
    ],
-   "note": "Exit status is 0 if something matched, 1 if nothing did, which scripts use in if statements."
+   "note": "Exit status is 0 if something matched, 1 if nothing did, which scripts use in if statements.",
+   "keywords": "search find match text pattern regex filter lines"
   },
   {
    "name": "head",
@@ -498,7 +549,8 @@
    "examples": [
     "head -n 2 notes.txt",
     "head -n 3 access.log"
-   ]
+   ],
+   "keywords": "first lines top start of file"
   },
   {
    "name": "history",
@@ -517,7 +569,8 @@
     }
    ],
    "examples": [],
-   "note": "Interactive, so it is not run here."
+   "note": "Interactive, so it is not run here.",
+   "keywords": "previous commands past recall"
   },
   {
    "name": "kill",
@@ -538,7 +591,8 @@
    ],
    "examples": [
     "kill -l | head -n 3"
-   ]
+   ],
+   "keywords": "stop terminate end process signal"
   },
   {
    "name": "less",
@@ -561,7 +615,8 @@
     }
    ],
    "examples": [],
-   "note": "Interactive, so it cannot be run in a page; try it on a long file."
+   "note": "Interactive, so it cannot be run in a page; try it on a long file.",
+   "keywords": "page scroll view read long file"
   },
   {
    "name": "ln",
@@ -577,7 +632,8 @@
    ],
    "examples": [
     "ln -s notes.txt shortcut && cat shortcut | head -n 1"
-   ]
+   ],
+   "keywords": "link symlink shortcut alias"
   },
   {
    "name": "ls",
@@ -626,7 +682,8 @@
     "ls projects",
     "ls -R projects"
    ],
-   "note": "Colour and column layout depend on your terminal; output here is plain."
+   "note": "Colour and column layout depend on your terminal; output here is plain.",
+   "keywords": "list show files folder directory contents"
   },
   {
    "name": "man",
@@ -641,7 +698,8 @@
     }
    ],
    "examples": [],
-   "note": "Interactive (it opens a pager). Quit with q. For a short summary, try tldr."
+   "note": "Interactive (it opens a pager). Quit with q. For a short summary, try tldr.",
+   "keywords": "manual help documentation manpage"
   },
   {
    "name": "mkdir",
@@ -663,12 +721,29 @@
     "mkdir -pv backup/2025/jan && ls -R backup",
     "mkdir docs"
    ],
-   "note": "Without -p, creating an existing directory is an error, as the second example shows."
+   "note": "Without -p, creating an existing directory is an error, as the second example shows.",
+   "keywords": "make create folder directory new"
+  },
+  {
+   "name": "mkfs",
+   "group": "system",
+   "danger": "destroys",
+   "summary": "Create a new file system on a device, erasing what was there. Often named mkfs.ext4 or similar.",
+   "synopsis": "mkfs [-t TYPE] DEVICE",
+   "flags": [
+    {
+     "flag": "-t",
+     "text": "The file system type, such as ext4."
+    }
+   ],
+   "examples": [],
+   "note": "Not run here. Running it on the wrong device erases that device. Needs administrator rights.",
+   "keywords": "format disk partition erase"
   },
   {
    "name": "mv",
    "group": "files",
-   "danger": "changes",
+   "danger": "destroys",
    "summary": "Move or rename files and directories.",
    "synopsis": "mv [OPTION]... SOURCE... DEST",
    "flags": [
@@ -689,7 +764,8 @@
     "mv notes.txt renamed.txt && ls renamed.txt",
     "mv -v fruits.txt docs/"
    ],
-   "note": "Like cp, mv replaces an existing destination silently unless you give -i or -n."
+   "note": "Like cp, mv replaces an existing destination silently unless you give -i or -n, which is why it is marked as able to delete data.",
+   "keywords": "move rename relocate file folder directory"
   },
   {
    "name": "ps",
@@ -708,7 +784,8 @@
     }
    ],
    "examples": [],
-   "note": "Output depends on the machine, so no example is run."
+   "note": "Output depends on the machine, so no example is run.",
+   "keywords": "processes running list tasks"
   },
   {
    "name": "pwd",
@@ -728,7 +805,8 @@
    ],
    "examples": [
     "cd docs && pwd"
-   ]
+   ],
+   "keywords": "where current directory folder path"
   },
   {
    "name": "rm",
@@ -766,7 +844,8 @@
     "rm nothere.txt",
     "rm -f nothere.txt && echo ok"
    ],
-   "note": "Check what a pattern matches before deleting it: run ls with the same pattern first."
+   "note": "Check what a pattern matches before deleting it: run ls with the same pattern first.",
+   "keywords": "delete remove erase unlink recursive file folder directory"
   },
   {
    "name": "rmdir",
@@ -784,7 +863,8 @@
     "mkdir empty && rmdir empty && echo removed",
     "rmdir docs"
    ],
-   "note": "It refuses to remove a directory that has anything in it, which makes it a safe way to delete."
+   "note": "It refuses to remove a directory that has anything in it, which makes it a safe way to delete.",
+   "keywords": "remove delete folder directory empty"
   },
   {
    "name": "sed",
@@ -808,7 +888,7 @@
     {
      "flag": "-i",
      "text": "Edit the file in place, overwriting it. BSD/macOS sed needs -i '' (an argument).",
-     "danger": "changes"
+     "danger": "destroys"
     }
    ],
    "examples": [
@@ -817,7 +897,29 @@
     "sed 's/apple/pear/g' fruits.txt | head -n 2",
     "sed -i 's/bash/BASH/' notes.txt && head -n 1 notes.txt"
    ],
-   "note": "Without -i it prints the edited text and leaves the file alone."
+   "note": "Without -i it prints the edited text and leaves the file alone.",
+   "keywords": "replace substitute edit stream text find and replace"
+  },
+  {
+   "name": "shred",
+   "group": "files",
+   "danger": "destroys",
+   "summary": "Overwrite a file repeatedly so that it cannot be recovered, and optionally delete it.",
+   "synopsis": "shred [OPTION]... FILE...",
+   "flags": [
+    {
+     "flag": "-u",
+     "text": "Remove the file after overwriting it.",
+     "danger": "destroys"
+    },
+    {
+     "flag": "-n",
+     "text": "How many overwrite passes (default 3)."
+    }
+   ],
+   "examples": [],
+   "note": "Not run here. It is meant to make deletion permanent; it is not reliable on some file systems (journaling, snapshots, SSDs).",
+   "keywords": "secure delete erase wipe"
   },
   {
    "name": "sort",
@@ -845,6 +947,11 @@
     {
      "flag": "-t",
      "text": "Field separator for -k."
+    },
+    {
+     "flag": "-o",
+     "text": "Write the result to a file. Safe even if it is the input file, but it overwrites that file.",
+     "danger": "destroys"
     }
    ],
    "examples": [
@@ -852,7 +959,8 @@
     "sort numbers.txt",
     "sort -n numbers.txt",
     "sort -t, -k3 -n data.csv"
-   ]
+   ],
+   "keywords": "order sorting lines alphabetical numeric"
   },
   {
    "name": "sudo",
@@ -862,7 +970,8 @@
    "synopsis": "sudo COMMAND",
    "flags": [],
    "examples": [],
-   "note": "Everything the command does, it does with full rights. Read a command twice before putting sudo in front of it, and never pipe a download into sudo bash."
+   "note": "Everything the command does, it does with full rights. Read a command twice before putting sudo in front of it, and never pipe a download into sudo bash.",
+   "keywords": "administrator root superuser privileges run as"
   },
   {
    "name": "tail",
@@ -882,7 +991,8 @@
    ],
    "examples": [
     "tail -n 2 notes.txt"
-   ]
+   ],
+   "keywords": "last lines end follow log watch"
   },
   {
    "name": "tar",
@@ -898,7 +1008,7 @@
     {
      "flag": "-x",
      "text": "Extract an archive.",
-     "danger": "changes"
+     "danger": "destroys"
     },
     {
      "flag": "-t",
@@ -921,12 +1031,13 @@
     "tar -czf docs.tar.gz docs projects && tar -tzf docs.tar.gz | sort",
     "tar -czf p.tar.gz projects && mkdir out && tar -xzf p.tar.gz -C out && ls out"
    ],
-   "note": "-x overwrites existing files of the same name. Use -t first when you do not know what is inside."
+   "note": "-x overwrites existing files of the same name. Use -t first when you do not know what is inside.",
+   "keywords": "archive compress zip bundle extract unpack backup gzip"
   },
   {
    "name": "tee",
    "group": "text",
-   "danger": "changes",
+   "danger": "destroys",
    "summary": "Copy standard input to a file and also to standard output.",
    "synopsis": "tee [-a] FILE...",
    "flags": [
@@ -938,7 +1049,8 @@
    "examples": [
     "echo hi | tee out.txt && cat out.txt"
    ],
-   "note": "Without -a it overwrites the file."
+   "note": "Without -a it overwrites the file, which is why it is marked as able to delete data.",
+   "keywords": "save write copy output file and screen"
   },
   {
    "name": "touch",
@@ -953,12 +1065,13 @@
     },
     {
      "flag": "-d",
-     "text": "Use the given date instead of now (GNU; BSD uses -t)."
+     "text": "Use the given date instead of now. Accepted date formats differ between GNU and BSD; BSD/macOS also has -t."
     }
    ],
    "examples": [
     "touch new.txt && ls new.txt"
-   ]
+   ],
+   "keywords": "create empty file timestamp new"
   },
   {
    "name": "tr",
@@ -980,7 +1093,8 @@
     "echo hello | tr a-z A-Z",
     "echo 'a,b,c' | tr -d ,",
     "echo 'too    many   spaces' | tr -s ' '"
-   ]
+   ],
+   "keywords": "translate replace characters delete case upper lower"
   },
   {
    "name": "type",
@@ -998,7 +1112,8 @@
     "type cd",
     "type -t cd ls if"
    ],
-   "note": "'which' is a separate program; 'type' knows about builtins and functions. -t prints just the kind: builtin, file, alias, function or keyword."
+   "note": "'which' is a separate program; 'type' knows about builtins and functions. -t prints just the kind: builtin, file, alias, function or keyword.",
+   "keywords": "what is command builtin which kind"
   },
   {
    "name": "uniq",
@@ -1021,7 +1136,8 @@
     "sort fruits.txt | uniq -c",
     "uniq fruits.txt"
    ],
-   "note": "It only compares neighbouring lines, so sort the input first (the last example shows what happens if you do not)."
+   "note": "It only compares neighbouring lines, so sort the input first (the last example shows what happens if you do not).",
+   "keywords": "unique duplicate repeated lines count"
   },
   {
    "name": "wc",
@@ -1047,7 +1163,8 @@
     "wc -l access.log",
     "wc notes.txt",
     "cat fruits.txt | wc -l"
-   ]
+   ],
+   "keywords": "count lines words bytes length"
   },
   {
    "name": "xargs",
@@ -1073,7 +1190,8 @@
     "echo 'a b c' | xargs -n 1 echo item",
     "ls *.txt | xargs wc -l"
    ],
-   "note": "It runs whatever command you give it, so it is as dangerous as that command."
+   "note": "It runs whatever command you give it, so it is as dangerous as that command: xargs rm deletes. The explainer rates the command that follows.",
+   "keywords": "build run commands from input arguments batch"
   }
  ]
 }

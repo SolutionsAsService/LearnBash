@@ -105,8 +105,8 @@
    "out": "projects/api/notes.txt\nprojects/api/server.py\nprojects/web/index.html\nprojects/web/style.css",
    "status": 0
   },
-  "29e87d15d40aab78": {
-   "out": ".\n./projects\n./scripts\n./docs",
+  "bd6b9e1f81958a0b": {
+   "out": ".\n./docs\n./projects\n./scripts",
    "status": 0
   },
   "18be3e51f3f7e269": {
@@ -329,6 +329,14 @@
    "out": "-rw-r--r--",
    "status": 0
   },
+  "27142572730b3dcc": {
+   "out": "pwd: pwd [-LP]\n    Print the name of the current working directory.\n    ",
+   "status": 0
+  },
+  "9571d87c4d8575af": {
+   "out": "Usage: ls [OPTION]... [FILE]...\nList information about the FILEs (the current directory by default).",
+   "status": 0
+  },
   "37fa265330ad83ea": {
    "out": "/home/you/demo",
    "status": 0
@@ -417,14 +425,6 @@
    "out": "      3 apple\n      2 banana\n      1 cherry",
    "status": 0
   },
-  "27142572730b3dcc": {
-   "out": "pwd: pwd [-LP]\n    Print the name of the current working directory.\n    ",
-   "status": 0
-  },
-  "9571d87c4d8575af": {
-   "out": "Usage: ls [OPTION]... [FILE]...\nList information about the FILEs (the current directory by default).",
-   "status": 0
-  },
   "6ecbba593ce0060f": {
    "out": "Hello, world! (0 argument(s))\nHello, Ana! (1 argument(s))",
    "status": 0
@@ -505,9 +505,9 @@
    "out": "without pipefail: 0\nwith pipefail: 1",
    "status": 0
   },
-  "a1be9292fde67888": {
-   "out": "bash: line 1: dirr: unbound variable",
-   "status": 127
+  "fb79fdebb3ceedaa": {
+   "out": "guard.sh: line 3: dirr: unbound variable\nexit status: 1",
+   "status": 0
   },
   "610ebb9bdfc91d73": {
    "out": "      9 /old-page\n      5 /missing.png\n      2 /favicon.ico",
@@ -537,8 +537,8 @@
    "out": "status: 2",
    "status": 0
   },
-  "61c391b83a689ed1": {
-   "out": "Hello, Ana\nHome is a variable here too.",
+  "be24439beb4e187c": {
+   "out": "Hello, Ana\nTwo plus two is 4.",
    "status": 0
   },
   "2a1936f37e93dcd3": {
